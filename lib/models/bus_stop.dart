@@ -17,9 +17,9 @@ class BusStop {
     longitude = data['Longitude'];
   }
 
-  void setDistance(Position userPosition) {
+  void setDistance(Position position) {
     double distance = Geolocator.distanceBetween(
-        userPosition.latitude, userPosition.longitude, latitude, longitude);
+        position.latitude, position.longitude, latitude, longitude);
     distanceDisplay = (distance / 1000).toStringAsFixed(2);
     distanceInt = distance.toInt();
   }

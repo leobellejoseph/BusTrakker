@@ -43,15 +43,18 @@ class FavoritesList extends StatelessWidget {
   }
 
   Widget _listTile(Favorite favorite) {
-    return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(width: 150, height: 100),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      highlightColor: Colors.lightBlue.withOpacity(0.5),
-      onPressed: () => print(favorite.serviceNo),
-      child: Card(
-        shape: RoundedRectangleBorder(
+    return GestureDetector(
+      onTap: () => print(favorite.serviceNo),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFa1d036),
+                Colors.white,
+              ]),
+          //color: Color(0xFFa1d036),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -62,7 +65,6 @@ class FavoritesList extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(3),
               height: 30,
-              color: Color(0xFFa1d036),
               child: Center(
                 child: Text.rich(
                   TextSpan(children: [
@@ -90,8 +92,15 @@ class FavoritesList extends StatelessWidget {
             //const Divider(),
             Expanded(
               child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF00abeb),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                ),
                 padding: const EdgeInsets.all(8),
-                color: Color(0xFF00abeb),
                 child: Center(
                   child: Text(
                     'Arriving',

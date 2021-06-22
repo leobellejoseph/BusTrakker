@@ -6,9 +6,13 @@ abstract class BusStopEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class BusStopDownload extends BusStopEvent {}
+class BusStopsDownload extends BusStopEvent {}
 
-class BusStopNear extends BusStopEvent {
+class NearBusStopsFetch extends BusStopEvent {
   final int distance;
-  const BusStopNear({required this.distance});
+  final Position position;
+  const NearBusStopsFetch({required this.distance, required this.position});
+
+  @override
+  List<Object?> get props => [this.distance, this.position];
 }
