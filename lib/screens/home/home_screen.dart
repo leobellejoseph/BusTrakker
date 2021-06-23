@@ -10,8 +10,9 @@ class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(
         settings: const RouteSettings(name: HomeScreen.id),
         builder: (context) => BlocProvider(
-          create: (context) =>
-              NearStopsCubit(busStopBloc: context.read<BusStopBloc>()),
+          create: (context) => NearStopsCubit(
+            busStopBloc: context.read<BusStopBloc>(),
+          )..showNearBusStops(),
           child: HomeScreen(),
         ),
       );
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _textEditingController = TextEditingController();
+  int _tabIndex = 0;
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () => print(_textEditingController.text),
+            onPressed: () => context.read<NearStopsCubit>().showNearBusStops(_textEditingController.text),
             icon: Icon(
               Icons.search,
               color: Colors.blue,
@@ -49,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: Colors.white,
           actions: [
             IconButton(
-              onPressed: () => _textEditingController.clear(),
+              onPressed: (){
+                context.read<NearStopsCubit>().showNearBusStops();
+                _textEditingController.clear();
+              },
               icon: Icon(
                 Icons.cancel,
                 color: Colors.blue,
@@ -65,12 +70,16 @@ class _HomeScreenState extends State<HomeScreen>
         body: GestureDetector(
           onTap: () async => FocusScope.of(context).unfocus(),
           child: RefreshIndicator(
-            onRefresh: () async {},
+            onRefresh: () async {
+              if (_tabIndex == 0) {
+                context.read<NearStopsCubit>().showNearBusStops();
+              }
+            },
             child: CustomScrollView(
               slivers: [
                 _favoritesView(),
                 _tabView(),
-                _nearListView(),
+                _contentView(),
               ],
             ),
           ),
@@ -134,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen>
             text: 'Bus Stops',
           )
         ],
-        onTap: (index) => print(index),
+        onTap: (index) {
+          setState(() => _tabIndex = index);
+        },
       ),
     );
   }
@@ -157,7 +168,15 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _nearListView() {
-    return NearBusStops();
+  Widget _contentView() {
+    if (_tabIndex == 0) {
+      return NearBusStops();
+    } else if (_tabIndex == 1) {
+      return SliverToBoxAdapter(child: Center(child: Text('Bus Services')));
+    } else if (_tabIndex == 2) {
+      return SliverToBoxAdapter(child: Center(child: Text('Bus Stops')));
+    } else {
+      return SliverToBoxAdapter(child: Container());
+    }
   }
 }

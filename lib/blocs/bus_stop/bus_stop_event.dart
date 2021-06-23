@@ -7,12 +7,3 @@ abstract class BusStopEvent extends Equatable {
 }
 
 class BusStopsDownload extends BusStopEvent {}
-
-class NearBusStopsFetch extends BusStopEvent {
-  final int distance;
-  final Position position;
-  const NearBusStopsFetch({required this.distance, required this.position});
-
-  @override
-  List<Object?> get props => [this.distance, this.position];
-}

@@ -19,8 +19,6 @@ class BusStopBloc extends Bloc<BusStopEvent, BusStopState> {
     final currentState = state;
     if (event is BusStopsDownload) {
       yield* _mapBusStopDownloadEventState(currentState);
-    } else if (event is NearBusStopsFetch) {
-      yield* _mapBusStopNearEventState(currentState, event);
     }
   }
 
@@ -44,30 +42,29 @@ class BusStopBloc extends Bloc<BusStopEvent, BusStopState> {
     }
   }
 
-  Stream<BusStopState> _mapBusStopNearEventState(
-      BusStopState state, NearBusStopsFetch event) async* {
-    try {
-      yield state.copyWith(
-        status: BusStopStatus.loadNear,
-      );
-      final currentData = state.data;
-      List<BusStop> newData = [];
-      currentData.forEach((data) {
-        data.setDistance(event.position);
-        if (data.distanceInt <= event.distance) newData.add(data);
-      });
-      print(newData.length);
-      yield state.copyWith(
-        data: newData,
-        status: BusStopStatus.loadedNear,
-        failure: Failure.none(),
-      );
-    } on Failure catch (_) {
-      yield state.copyWith(
-        status: BusStopStatus.error,
-        failure:
-            Failure(code: 'BusStop', message: 'Failed to Download Bus Stops'),
-      );
-    }
-  }
+  // Stream<BusStopState> _mapBusStopNearEventState(
+  //     BusStopState state, NearBusStopsFetch event) async* {
+  //   try {
+  //     yield state.copyWith(
+  //       status: BusStopStatus.loadNear,
+  //     );
+  //     final currentData = state.data;
+  //     List<BusStop> newData = [];
+  //     currentData.forEach((data) {
+  //       data.setDistance(event.position);
+  //       if (data.distanceInt <= event.distance) newData.add(data);
+  //     });
+  //     yield state.copyWith(
+  //       data: newData,
+  //       status: BusStopStatus.loadedNear,
+  //       failure: Failure.none(),
+  //     );
+  //   } on Failure catch (_) {
+  //     yield state.copyWith(
+  //       status: BusStopStatus.error,
+  //       failure:
+  //           Failure(code: 'BusStop', message: 'Failed to Download Bus Stops'),
+  //     );
+  //   }
+  // }
 }

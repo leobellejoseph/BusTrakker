@@ -12,6 +12,33 @@ class LocationRequest {
         speed: 0,
       );
 
+  static Future<Position> getLocationPosition() async {
+    bool isValid = false;
+    Position _position = LocationRequest.defaultPosition();
+    // check if phone location setting is enabled
+    bool isLocationEnabled = await LocationRequest.isLocationEnabled();
+
+    // if not enabled, open location settings and let user enable.
+    if (!isLocationEnabled) LocationRequest.openLocationSettings();
+
+    // check if location permission is enabled
+    LocationPermission permission =
+        await LocationRequest.checkLocationPermission();
+
+    // check if permissions are valid
+    if (permission != LocationPermission.always ||
+        permission != LocationPermission.whileInUse) {
+      permission = await LocationRequest.requestPermission();
+    }
+
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      // get current location
+      _position = await LocationRequest.determinePosition();
+    }
+    return _position;
+  }
+
   static Future<bool> isLocationEnabled() async {
     final bool isLocationServiceEnabled =
         await Geolocator.isLocationServiceEnabled();
