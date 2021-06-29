@@ -8,15 +8,15 @@ import 'package:my_bus/models/models.dart';
 part 'near_stops_state.dart';
 
 class NearStopsCubit extends Cubit<NearStopsState> {
-  final BusStopBloc _busStopBloc;
-  NearStopsCubit({required BusStopBloc busStopBloc})
-      : _busStopBloc = busStopBloc,
+  final BusDataBloc _busData;
+  NearStopsCubit({required BusDataBloc busData})
+      : _busData = busData,
         super(NearStopsState.initial());
 
   void showNearBusStops([String query = '']) async {
     emit(state.copyWith(status: NearStopsStatus.loading));
     try {
-      final currentData = _busStopBloc.state.data;
+      final currentData = _busData.state.stopsData;
       List<BusStop> newData = [];
       Position _position = await LocationRequest.getLocationPosition();
       if (currentData.isNotEmpty) {

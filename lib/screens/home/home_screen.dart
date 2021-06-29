@@ -5,13 +5,15 @@ import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/screens/home/cubit/near_stops_cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 
+enum TabIndex { near, services, stops }
+
 class HomeScreen extends StatefulWidget {
   static const id = 'home';
   static Route route() => MaterialPageRoute(
         settings: const RouteSettings(name: HomeScreen.id),
         builder: (context) => BlocProvider(
           create: (context) => NearStopsCubit(
-            busStopBloc: context.read<BusStopBloc>(),
+            busData: context.read<BusDataBloc>(),
           )..showNearBusStops(),
           child: HomeScreen(),
         ),
@@ -34,14 +36,14 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final inset = MediaQuery.of(context).viewInsets;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () => context.read<NearStopsCubit>().showNearBusStops(_textEditingController.text),
+            onPressed: () => context
+                .read<NearStopsCubit>()
+                .showNearBusStops(_textEditingController.text),
             icon: Icon(
               Icons.search,
               color: Colors.blue,
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: Colors.white,
           actions: [
             IconButton(
-              onPressed: (){
+              onPressed: () {
                 context.read<NearStopsCubit>().showNearBusStops();
                 _textEditingController.clear();
               },
@@ -92,13 +94,9 @@ class _HomeScreenState extends State<HomeScreen>
     return SliverToBoxAdapter(
       child: Container(
         decoration: BoxDecoration(
-            // gradient: LinearGradient(
-            //   colors: [
-            //     Colors.lightBlue.withOpacity(0.2),
-            //     Colors.lightBlue.withOpacity(0.5),
-            //   ],
-            // ),
-            ),
+          color: Colors.grey.shade200,
+          border: Border.all(color: Colors.black45),
+        ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
           child: Column(
@@ -115,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               FavoritesList(),
-              const Divider(color: Colors.black45),
             ],
           ),
         ),
@@ -150,31 +147,13 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _nearGridView() {
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 2,
-        crossAxisSpacing: 2,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return Container(
-            color: Colors.red,
-          );
-        },
-        childCount: 4,
-      ),
-    );
-  }
-
   Widget _contentView() {
-    if (_tabIndex == 0) {
-      return NearBusStops();
-    } else if (_tabIndex == 1) {
-      return SliverToBoxAdapter(child: Center(child: Text('Bus Services')));
-    } else if (_tabIndex == 2) {
-      return SliverToBoxAdapter(child: Center(child: Text('Bus Stops')));
+    if (_tabIndex == TabIndex.near.index) {
+      return NearBusStopsView();
+    } else if (_tabIndex == TabIndex.services.index) {
+      return BusServiceView();
+    } else if (_tabIndex == TabIndex.stops.index) {
+      return BusStopsView();
     } else {
       return SliverToBoxAdapter(child: Container());
     }

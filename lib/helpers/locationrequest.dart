@@ -13,7 +13,6 @@ class LocationRequest {
       );
 
   static Future<Position> getLocationPosition() async {
-    bool isValid = false;
     Position _position = LocationRequest.defaultPosition();
     // check if phone location setting is enabled
     bool isLocationEnabled = await LocationRequest.isLocationEnabled();

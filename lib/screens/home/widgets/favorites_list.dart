@@ -45,17 +45,14 @@ class FavoritesList extends StatelessWidget {
   Widget _listTile(Favorite favorite) {
     return GestureDetector(
       onTap: () => print(favorite.serviceNo),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFFa1d036),
-                Colors.white,
-              ]),
-          //color: Color(0xFFa1d036),
-          borderRadius: BorderRadius.circular(8),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

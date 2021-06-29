@@ -5,6 +5,7 @@ import 'package:my_bus/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
   static const id = 'splash';
+
   static Route route() => MaterialPageRoute(
         settings: RouteSettings(name: SplashScreen.id),
         builder: (context) => SplashScreen(),
@@ -12,11 +13,10 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      body: BlocListener<BusStopBloc, BusStopState>(
-        listener: (context, state) async {
-          if (state.status == BusStopStatus.loaded) {
+      body: BlocListener<BusDataBloc, BusDataState>(
+        listener: (bloc, state) {
+          if (state.status == BusDataStatus.allLoaded) {
             Navigator.pushNamed(context, HomeScreen.id);
           }
         },
@@ -26,7 +26,22 @@ class SplashScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Loading...'),
+              BlocBuilder<BusDataBloc, BusDataState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case BusDataStatus.busServiceLoading:
+                      return Text('Loading Bus Services',
+                          style: TextStyle(color: Colors.green));
+                    case BusDataStatus.busStopsLoading:
+                      return Text('Loading Bus Stops',
+                          style: TextStyle(color: Colors.green.shade500));
+                    case BusDataStatus.allLoaded:
+                      return Text('Loading Complete...');
+                    default:
+                      return Text('Loading...');
+                  }
+                },
+              ),
               const SizedBox(height: 10),
               CircularProgressIndicator(
                 color: Colors.lightBlueAccent,
