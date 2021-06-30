@@ -8,3 +8,22 @@ class BusDataDownload extends BusDataEvent {
   @override
   List<Object?> get props => [];
 }
+
+class BusStopFetch extends BusDataEvent {
+  final String query;
+  BusStopFetch(this.query);
+  @override
+  List<Object?> get props => [this.query];
+}
+
+class BusServiceFetch extends BusDataEvent {
+  final String query;
+  BusServiceFetch(this.query);
+  @override
+  List<Object?> get props => [this.query];
+}
+
+class NearBusStopsFetch extends BusDataEvent {
+  @override
+  List<Object?> get props => [];
+}

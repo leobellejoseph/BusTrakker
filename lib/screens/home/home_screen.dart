@@ -34,49 +34,48 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
   }
 
+  void _onFilterData() {
+    final query = _textEditingController.text;
+    context.read<NearStopsCubit>().showNearBusStops(query);
+    context.read<BusDataBloc>().add(BusStopFetch(query));
+    context.read<BusDataBloc>().add(BusServiceFetch(query));
+  }
+
+  Future<void> _onRefreshData() async {
+    _textEditingController.clear();
+    _onFilterData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () => context
-                .read<NearStopsCubit>()
-                .showNearBusStops(_textEditingController.text),
-            icon: Icon(
-              Icons.search,
-              color: Colors.blue,
-              size: 30,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: _onFilterData,
+              icon: Icon(Icons.search, color: Colors.blue, size: 30),
             ),
-          ),
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.read<NearStopsCubit>().showNearBusStops();
-                _textEditingController.clear();
-              },
-              icon: Icon(
-                Icons.cancel,
-                color: Colors.blue,
-                size: 30,
+            backgroundColor: Colors.white,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _textEditingController.clear();
+                  _onFilterData();
+                },
+                icon: Icon(Icons.cancel, color: Colors.green[500], size: 30),
               ),
+              const SizedBox(width: 5),
+            ],
+            title: TextField(
+              controller: _textEditingController,
+              decoration: InputDecoration(hintText: 'Search'),
             ),
-          ],
-          title: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(hintText: 'Search'),
           ),
-        ),
-        body: GestureDetector(
-          onTap: () async => FocusScope.of(context).unfocus(),
-          child: RefreshIndicator(
-            onRefresh: () async {
-              if (_tabIndex == 0) {
-                context.read<NearStopsCubit>().showNearBusStops();
-              }
-            },
+          body: RefreshIndicator(
+            onRefresh: _onRefreshData,
             child: CustomScrollView(
               slivers: [
                 _favoritesView(),

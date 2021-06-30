@@ -2,10 +2,12 @@ part of 'bus_data_bloc.dart';
 
 enum BusDataStatus {
   initial,
+  nearBusStopsLoading,
   busServiceLoading,
   busStopsLoading,
   busServiceLoaded,
   busStopsLoaded,
+  nearBusStopsLoaded,
   allLoaded,
   error,
 }

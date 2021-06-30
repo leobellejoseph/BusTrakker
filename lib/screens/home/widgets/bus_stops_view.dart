@@ -5,29 +5,40 @@ import 'package:my_bus/blocs/blocs.dart';
 class BusStopsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<BusDataBloc>(context).state;
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final item = state.stopsData[index];
-          return Card(
-            color: Colors.lightBlueAccent,
-            child: Container(
-              height: 150,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(item.busStopCode),
-                  Text(item.description),
-                  Text(item.roadName),
-                ],
-              ),
+    return BlocBuilder<BusDataBloc, BusDataState>(
+      builder: (context, state) {
+        if (state.status == BusDataStatus.busStopsLoading) {
+          return SliverToBoxAdapter(
+            child: Center(
+              child: CircularProgressIndicator(color: Colors.green),
             ),
           );
-        },
-        childCount: state.stopsData.length,
-      ),
+        } else {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final item = state.stopsData[index];
+                return Card(
+                  color: Colors.lightBlueAccent,
+                  child: Container(
+                    height: 150,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(item.busStopCode),
+                        Text(item.description),
+                        Text(item.roadName),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              childCount: state.stopsData.length,
+            ),
+          );
+        }
+      },
     );
     // return SliverGrid(
     //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
