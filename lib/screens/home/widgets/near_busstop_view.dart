@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_bus/screens/home/cubit/cubit.dart';
+import 'package:my_bus/blocs/blocs.dart';
 
 class NearBusStopsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NearStopsCubit, NearStopsState>(
+    return BlocBuilder<BusDataBloc, BusDataState>(
       builder: (context, state) {
-        if (state.status == NearStopsStatus.loading) {
+        if (state.status == BusDataStatus.nearBusStopsLoading) {
           return SliverToBoxAdapter(
             child: Center(
               child: CircularProgressIndicator(),
@@ -18,7 +18,7 @@ class NearBusStopsView extends StatelessWidget {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final item = state.data[index];
+                final item = state.nearData[index];
                 return Card(
                   color: Colors.lightBlueAccent,
                   child: Container(
@@ -38,7 +38,7 @@ class NearBusStopsView extends StatelessWidget {
                   ),
                 );
               },
-              childCount: state.data.length,
+              childCount: state.nearData.length,
             ),
           );
         }

@@ -2,21 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
-import 'package:my_bus/screens/home/cubit/near_stops_cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
-
-enum TabIndex { near, services, stops }
 
 class HomeScreen extends StatefulWidget {
   static const id = 'home';
   static Route route() => MaterialPageRoute(
         settings: const RouteSettings(name: HomeScreen.id),
-        builder: (context) => BlocProvider(
-          create: (context) => NearStopsCubit(
-            busData: context.read<BusDataBloc>(),
-          )..showNearBusStops(),
-          child: HomeScreen(),
-        ),
+        builder: (context) => HomeScreen(),
       );
 
   @override
@@ -26,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final FocusNode _focusNode = FocusNode();
   final TextEditingController _textEditingController = TextEditingController();
   int _tabIndex = 0;
   @override
@@ -34,16 +27,28 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
+
   void _onFilterData() {
     final query = _textEditingController.text;
-    context.read<NearStopsCubit>().showNearBusStops(query);
-    context.read<BusDataBloc>().add(BusStopFetch(query));
-    context.read<BusDataBloc>().add(BusServiceFetch(query));
+    context.read<BusDataBloc>()
+      ..add(BusStopFetch(query))
+      ..add(BusServiceFetch(query))
+      ..add(NearBusStopsFetch(query));
   }
 
   Future<void> _onRefreshData() async {
+    // clear filters
     _textEditingController.clear();
+    // fetch fresh data
     _onFilterData();
+    // close keyboard
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -51,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen>
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
+        onLongPress: () => _focusNode.requestFocus(),
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           appBar: AppBar(
@@ -61,15 +67,14 @@ class _HomeScreenState extends State<HomeScreen>
             backgroundColor: Colors.white,
             actions: [
               IconButton(
-                onPressed: () {
-                  _textEditingController.clear();
-                  _onFilterData();
-                },
+                onPressed: _onRefreshData,
                 icon: Icon(Icons.cancel, color: Colors.green[500], size: 30),
               ),
               const SizedBox(width: 5),
             ],
             title: TextField(
+              onSubmitted: (data) => _onFilterData(),
+              focusNode: _focusNode,
               controller: _textEditingController,
               decoration: InputDecoration(hintText: 'Search'),
             ),
@@ -78,83 +83,17 @@ class _HomeScreenState extends State<HomeScreen>
             onRefresh: _onRefreshData,
             child: CustomScrollView(
               slivers: [
-                _favoritesView(),
-                _tabView(),
-                _contentView(),
+                FavoritesView(),
+                TabView(
+                  tabController: _tabController,
+                  onTap: (index) => setState(() => _tabIndex = index),
+                ),
+                ContentView(tabIndex: _tabIndex),
               ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  Widget _favoritesView() {
-    return SliverToBoxAdapter(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          border: Border.all(color: Colors.black45),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                'Favorites',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.blue,
-                ),
-              ),
-              FavoritesList(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _tabView() {
-    return SliverToBoxAdapter(
-      child: TabBar(
-        controller: _tabController,
-        labelColor: Theme.of(context).primaryColor,
-        unselectedLabelColor: Colors.grey,
-        indicatorWeight: 3,
-        tabs: [
-          Tab(
-            //icon: Icon(Icons.near_me_outlined, size: 28),
-            text: 'Near Me',
-          ),
-          Tab(
-              //icon: Icon(Icons.bus_alert_outlined, size: 28),
-              text: 'Bus Services'),
-          Tab(
-            //icon: Icon(Icons.directions_bus, size: 28),
-            text: 'Bus Stops',
-          )
-        ],
-        onTap: (index) {
-          setState(() => _tabIndex = index);
-        },
-      ),
-    );
-  }
-
-  Widget _contentView() {
-    if (_tabIndex == TabIndex.near.index) {
-      return NearBusStopsView();
-    } else if (_tabIndex == TabIndex.services.index) {
-      return BusServiceView();
-    } else if (_tabIndex == TabIndex.stops.index) {
-      return BusStopsView();
-    } else {
-      return SliverToBoxAdapter(child: Container());
-    }
   }
 }

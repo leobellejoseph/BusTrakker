@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:my_bus/helpers/helpers.dart';
-import 'package:my_bus/models/bus_service.dart';
-import 'package:my_bus/models/bus_stop.dart';
 import 'package:my_bus/models/models.dart';
 
 part 'bus_data_event.dart';
@@ -32,25 +31,43 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     } else if (event is BusServiceFetch) {
       yield* _mapEventBusServiceFetchToState(event);
     } else if (event is NearBusStopsFetch) {
-      yield* _mapEventNearBusStopsToState();
+      yield* _mapEventNearBusStopsToState(event);
     }
   }
 
-  Stream<BusDataState> _mapEventNearBusStopsToState() async* {
-    yield state.copyWith(status: BusDataStatus.busStopsLoading);
+  Stream<BusDataState> _mapEventNearBusStopsToState(
+      NearBusStopsFetch event) async* {
+    yield state.copyWith(status: BusDataStatus.nearBusStopsLoading);
     try {
-      final data = await HTTPRequest.loadBusStops();
-      _stops.addAll(data);
+      final List<BusStop> data = [];
+      if (_stops.isNotEmpty) {
+        Position _position = await LocationRequest.getLocationPosition();
+        _stops.map((e) => e.setDistance(_position));
+        final newData = _stops.where((data) {
+          data.setDistance(_position);
+          final _query = event.query.toLowerCase();
+          final _distance = data.distanceInt;
+          final _busStopCode = data.busStopCode.toLowerCase();
+          final _roadName = data.roadName.toLowerCase();
+          final _description = data.description.toLowerCase();
+          return data.distanceInt < 400 &&
+              (_busStopCode.contains(_query) ||
+                  _roadName.contains(_query) ||
+                  _description.contains(_query));
+        }).toList()
+          ..sort((a, b) => a.distanceInt - b.distanceInt);
+        data.addAll(newData);
+      }
       yield state.copyWith(
-        stopsData: data,
-        status: BusDataStatus.busStopsLoaded,
+        nearData: data,
+        status: BusDataStatus.nearBusStopsLoaded,
       );
     } on Failure catch (_) {
       yield state.copyWith(
         status: BusDataStatus.error,
         failure: Failure(
           code: 'Bus Stops',
-          message: 'Unable to download Bus Stops',
+          message: 'Unable to fetch Near Bus Stops',
         ),
       );
     }

@@ -1,1 +1,1 @@
-export 'near_stops_cubit.dart';
+export 'bus_arrival_cubit.dart';
