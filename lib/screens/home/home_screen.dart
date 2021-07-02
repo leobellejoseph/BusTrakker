@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _textEditingController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   int _tabIndex = 0;
   @override
   void initState() {
@@ -56,33 +57,59 @@ class _HomeScreenState extends State<HomeScreen>
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
-        onLongPress: () => _focusNode.requestFocus(),
+        onLongPress: () {
+          _focusNode.requestFocus();
+          _scrollController.jumpTo(0);
+        },
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: _onFilterData,
-              icon: Icon(Icons.search, color: Colors.blue, size: 30),
-            ),
-            backgroundColor: Colors.white,
-            actions: [
-              IconButton(
-                onPressed: _onRefreshData,
-                icon: Icon(Icons.cancel, color: Colors.green[500], size: 30),
-              ),
-              const SizedBox(width: 5),
-            ],
-            title: TextField(
-              onSubmitted: (data) => _onFilterData(),
-              focusNode: _focusNode,
-              controller: _textEditingController,
-              decoration: InputDecoration(hintText: 'Search'),
-            ),
-          ),
+          // appBar: AppBar(
+          //   leading: IconButton(
+          //     onPressed: _onFilterData,
+          //     icon: Icon(Icons.search, color: Colors.blue, size: 30),
+          //   ),
+          //   backgroundColor: Colors.white,
+          //   actions: [
+          //     IconButton(
+          //       onPressed: _onRefreshData,
+          //       icon: Icon(Icons.cancel, color: Colors.green[500], size: 30),
+          //     ),
+          //     const SizedBox(width: 5),
+          //   ],
+          //   title: TextField(
+          //     onSubmitted: (data) => _onFilterData(),
+          //     focusNode: _focusNode,
+          //     controller: _textEditingController,
+          //     decoration: InputDecoration(hintText: 'Search'),
+          //   ),
+          // ),
           body: RefreshIndicator(
             onRefresh: _onRefreshData,
             child: CustomScrollView(
+              controller: _scrollController,
               slivers: [
+                SliverAppBar(
+                  expandedHeight: MediaQuery.of(context).size.height * 0.3,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background:
+                        Image.asset('images/MyBusLogo.jpg', fit: BoxFit.cover),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        onSubmitted: (data) => _onFilterData(),
+                        focusNode: _focusNode,
+                        controller: _textEditingController,
+                        decoration: InputDecoration(hintText: 'Search'),
+                      ),
+                    ),
+                  ),
+                ),
                 FavoritesView(),
                 TabView(
                   tabController: _tabController,
