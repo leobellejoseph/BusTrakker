@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_bus/screens/home/widgets/widgets.dart';
+
+import 'widgets.dart';
 
 class FavoritesView extends StatelessWidget {
   @override

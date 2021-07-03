@@ -37,10 +37,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _onFilterData() {
     final query = _textEditingController.text;
-    context.read<BusDataBloc>()
-      ..add(BusStopFetch(query))
-      ..add(BusServiceFetch(query))
-      ..add(NearBusStopsFetch(query));
+    if (query.isNotEmpty) {
+      context.read<BusDataBloc>()
+        ..add(BusStopFetch(query))
+        ..add(BusServiceFetch(query))
+        ..add(NearBusStopsFetch(query));
+    }
   }
 
   Future<void> _onRefreshData() async {
@@ -52,17 +54,23 @@ class _HomeScreenState extends State<HomeScreen>
     FocusScope.of(context).unfocus();
   }
 
+  void _requestFocus() {
+    _focusNode.requestFocus();
+    _scrollController.jumpTo(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
-        onLongPress: () {
-          _focusNode.requestFocus();
-          _scrollController.jumpTo(0);
-        },
+        onLongPress: _requestFocus,
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: _requestFocus,
+          //   child: Icon(Icons.search),
+          // ),
           // appBar: AppBar(
           //   leading: IconButton(
           //     onPressed: _onFilterData,
@@ -89,24 +97,41 @@ class _HomeScreenState extends State<HomeScreen>
               controller: _scrollController,
               slivers: [
                 SliverAppBar(
+                  backgroundColor: Colors.transparent,
                   expandedHeight: MediaQuery.of(context).size.height * 0.3,
                   flexibleSpace: FlexibleSpaceBar(
-                    background:
-                        Image.asset('images/MyBusLogo.jpg', fit: BoxFit.cover),
+                    background: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset('images/MyBusLogo.jpg',
+                          fit: BoxFit.cover),
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(
+                  child: Container(
                     width: double.infinity,
                     height: 50,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        onSubmitted: (data) => _onFilterData(),
-                        focusNode: _focusNode,
-                        controller: _textEditingController,
-                        decoration: InputDecoration(hintText: 'Search'),
-                      ),
+                    child: TextField(
+                      textInputAction: TextInputAction.search,
+                      textAlignVertical: TextAlignVertical.center,
+                      onSubmitted: (data) => _onFilterData(),
+                      focusNode: _focusNode,
+                      controller: _textEditingController,
+                      decoration: InputDecoration(
+                          fillColor: Colors.grey[200],
+                          filled: true,
+                          border: InputBorder.none,
+                          prefixIcon: IconButton(
+                            onPressed: _onFilterData,
+                            icon: Icon(Icons.search,
+                                color: Colors.blue, size: 30),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => _onRefreshData(),
+                            icon:
+                                Icon(Icons.close, color: Colors.blue, size: 30),
+                          ),
+                          hintText: 'Search'),
                     ),
                   ),
                 ),

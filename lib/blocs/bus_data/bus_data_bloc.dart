@@ -42,7 +42,6 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       final List<BusStop> data = [];
       if (_stops.isNotEmpty) {
         Position _position = await LocationRequest.getLocationPosition();
-        _stops.map((e) => e.setDistance(_position));
         final newData = _stops.where((data) {
           data.setDistance(_position);
           final _query = event.query.toLowerCase();

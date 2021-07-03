@@ -14,7 +14,12 @@ class BusServiceView extends StatelessWidget {
             ),
           );
         } else {
-          return SliverList(
+          return SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 2,
+              crossAxisSpacing: 2,
+            ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final item = state.serviceData[index];
@@ -36,6 +41,28 @@ class BusServiceView extends StatelessWidget {
               childCount: state.serviceData.length,
             ),
           );
+          // return SliverList(
+          //   delegate: SliverChildBuilderDelegate(
+          //     (context, index) {
+          //       final item = state.serviceData[index];
+          //       return Card(
+          //         color: Colors.lightBlueAccent,
+          //         child: Container(
+          //           height: 150,
+          //           width: double.infinity,
+          //           child: Column(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             children: [
+          //               Text(item.serviceNo),
+          //               Text(item.operator),
+          //             ],
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //     childCount: state.serviceData.length,
+          //   ),
+          // );
         }
       },
     );

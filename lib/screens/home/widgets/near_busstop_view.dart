@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class NearBusStopsView extends StatelessWidget {
   @override
@@ -19,24 +20,7 @@ class NearBusStopsView extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final item = state.nearData[index];
-                return Card(
-                  color: Colors.lightBlueAccent,
-                  child: Container(
-                    //margin: const EdgeInsets.all(5),
-                    //color: Colors.lightBlueAccent,
-                    height: 150,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(item.busStopCode),
-                        Text(item.description),
-                        Text(item.roadName),
-                        Text('${item.distanceDisplay}km')
-                      ],
-                    ),
-                  ),
-                );
+                return BusStopTile(item: item, showDistance: true);
               },
               childCount: state.nearData.length,
             ),
