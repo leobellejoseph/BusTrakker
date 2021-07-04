@@ -24,15 +24,9 @@ class BusServiceView extends StatelessWidget {
               (context, index) {
                 final item = state.serviceData[index];
                 return Card(
-                  //shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(20),
-                  // ),
-                  color: Colors.lightBlueAccent,
+                  //color: Colors.lightBlueAccent,
                   child: RawMaterialButton(
                     highlightColor: Colors.blue,
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(20),
-                    // ),
                     onPressed: () {},
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
@@ -41,8 +35,12 @@ class BusServiceView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(item.operatorName,
-                              style: TextStyle(color: Colors.grey.shade800)),
+                          Text(
+                            item.operatorName,
+                            style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w600),
+                          ),
                           Expanded(
                             child: Container(
                               color: Colors.white,
