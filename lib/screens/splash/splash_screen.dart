@@ -30,20 +30,20 @@ class SplashScreen extends StatelessWidget {
                 builder: (context, state) {
                   switch (state.status) {
                     case BusDataStatus.busServiceLoading:
-                      return Text('Loading Bus Services',
+                      return const Text('Loading Bus Services',
                           style: TextStyle(color: Colors.green));
                     case BusDataStatus.busStopsLoading:
-                      return Text('Loading Bus Stops',
-                          style: TextStyle(color: Colors.green.shade500));
+                      return const Text('Loading Bus Stops',
+                          style: TextStyle(color: Colors.black54));
                     case BusDataStatus.allLoaded:
-                      return Text('Loading Complete...');
+                      return const Text('Loading Complete...');
                     default:
-                      return Text('Loading...');
+                      return const Text('Loading...');
                   }
                 },
               ),
               const SizedBox(height: 10),
-              CircularProgressIndicator(
+              const CircularProgressIndicator(
                 color: Colors.lightBlueAccent,
               ),
             ],

@@ -13,14 +13,14 @@ class TabView extends StatelessWidget {
         unselectedLabelColor: Colors.grey,
         indicatorWeight: 3,
         tabs: [
-          Tab(
+          const Tab(
             //icon: Icon(Icons.near_me_outlined, size: 28),
             text: 'Near Me',
           ),
-          Tab(
+          const Tab(
               //icon: Icon(Icons.bus_alert_outlined, size: 28),
               text: 'Bus Services'),
-          Tab(
+          const Tab(
             //icon: Icon(Icons.directions_bus, size: 28),
             text: 'Bus Stops',
           )

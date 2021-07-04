@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BusArrivalScreen extends StatelessWidget {
+class BusRouteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();

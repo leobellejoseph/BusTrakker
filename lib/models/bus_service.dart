@@ -10,7 +10,14 @@ class BusService {
   late String pmPeakFreq;
   late String pmOffPeakFreq;
   late String loopDesc;
-
+  late String operatorName;
+  Map<String, String> _operatorName = {
+    'GAS': 'Go Ahead',
+    'SMRT': 'SMRT',
+    'SBST': 'SBS Transport',
+    'TTS': 'Tower Transit',
+    'NA': 'NA'
+  };
   BusService.fromJson(Map<String, dynamic> data) {
     serviceNo = data['ServiceNo'] ?? 'NA';
     operator = data['Operator'] ?? 'NA';
@@ -23,5 +30,6 @@ class BusService {
     pmPeakFreq = data['PM_Peak_Freq'] ?? 'NA';
     pmOffPeakFreq = data['PM_Offpeak_Freq'] ?? 'NA';
     loopDesc = data['LoopDesc'] ?? 'NA';
+    operatorName = _operatorName[operator] ?? operator;
   }
 }

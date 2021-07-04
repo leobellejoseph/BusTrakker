@@ -18,12 +18,8 @@ class NearCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 2.0,
-        right: 2.0,
-        top: 2.0,
-        bottom: 0.0,
-      ),
+      padding:
+          const EdgeInsets.only(left: 2.0, right: 2.0, top: 2.0, bottom: 0.0),
       child: SizeTransition(
         axis: Axis.vertical,
         sizeFactor: animation,

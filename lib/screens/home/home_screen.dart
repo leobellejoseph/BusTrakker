@@ -37,12 +37,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _onFilterData() {
     final query = _textEditingController.text;
-    if (query.isNotEmpty) {
-      context.read<BusDataBloc>()
-        ..add(BusStopFetch(query))
-        ..add(BusServiceFetch(query))
-        ..add(NearBusStopsFetch(query));
-    }
+    context.read<BusDataBloc>()
+      ..add(BusStopFetch(query))
+      ..add(BusServiceFetch(query))
+      ..add(NearBusStopsFetch(query));
   }
 
   Future<void> _onRefreshData() async {
@@ -54,43 +52,13 @@ class _HomeScreenState extends State<HomeScreen>
     FocusScope.of(context).unfocus();
   }
 
-  void _requestFocus() {
-    _focusNode.requestFocus();
-    _scrollController.jumpTo(0);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
-        onLongPress: _requestFocus,
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: _requestFocus,
-          //   child: Icon(Icons.search),
-          // ),
-          // appBar: AppBar(
-          //   leading: IconButton(
-          //     onPressed: _onFilterData,
-          //     icon: Icon(Icons.search, color: Colors.blue, size: 30),
-          //   ),
-          //   backgroundColor: Colors.white,
-          //   actions: [
-          //     IconButton(
-          //       onPressed: _onRefreshData,
-          //       icon: Icon(Icons.cancel, color: Colors.green[500], size: 30),
-          //     ),
-          //     const SizedBox(width: 5),
-          //   ],
-          //   title: TextField(
-          //     onSubmitted: (data) => _onFilterData(),
-          //     focusNode: _focusNode,
-          //     controller: _textEditingController,
-          //     decoration: InputDecoration(hintText: 'Search'),
-          //   ),
-          // ),
           body: RefreshIndicator(
             onRefresh: _onRefreshData,
             child: CustomScrollView(
@@ -123,13 +91,13 @@ class _HomeScreenState extends State<HomeScreen>
                           border: InputBorder.none,
                           prefixIcon: IconButton(
                             onPressed: _onFilterData,
-                            icon: Icon(Icons.search,
+                            icon: const Icon(Icons.search,
                                 color: Colors.blue, size: 30),
                           ),
                           suffixIcon: IconButton(
                             onPressed: () => _onRefreshData(),
-                            icon:
-                                Icon(Icons.close, color: Colors.blue, size: 30),
+                            icon: const Icon(Icons.close,
+                                color: Colors.blue, size: 30),
                           ),
                           hintText: 'Search'),
                     ),
