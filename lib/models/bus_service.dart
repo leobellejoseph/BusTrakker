@@ -1,3 +1,39 @@
+import 'package:flutter/material.dart';
+
+enum BusOperator { GAS, SMRT, SBST, TTS, NA }
+
+extension BusOperatorExtension on BusOperator {
+  String get name {
+    switch (this) {
+      case BusOperator.GAS:
+        return 'Go Ahead';
+      case BusOperator.SMRT:
+        return 'SMRT';
+      case BusOperator.SBST:
+        return 'SBS Transport';
+      case BusOperator.TTS:
+        return 'Tower Transit';
+      default:
+        return 'NA';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case BusOperator.GAS:
+        return Colors.yellow;
+      case BusOperator.SMRT:
+        return Colors.red;
+      case BusOperator.SBST:
+        return Colors.deepPurple;
+      case BusOperator.TTS:
+        return Colors.green;
+      default:
+        return Colors.white;
+    }
+  }
+}
+
 class BusService {
   late String serviceNo;
   late String operator;
@@ -10,14 +46,15 @@ class BusService {
   late String pmPeakFreq;
   late String pmOffPeakFreq;
   late String loopDesc;
-  late String operatorName;
-  Map<String, String> _operatorName = {
-    'GAS': 'Go Ahead',
-    'SMRT': 'SMRT',
-    'SBST': 'SBS Transport',
-    'TTS': 'Tower Transit',
-    'NA': 'NA'
-  };
+  late BusOperator busOperator;
+  //late String operatorName;
+  // Map<String, String> _operatorName = {
+  //   'GAS': 'Go Ahead',
+  //   'SMRT': 'SMRT',
+  //   'SBST': 'SBS Transport',
+  //   'TTS': 'Tower Transit',
+  //   'NA': 'NA'
+  // };
   BusService.fromJson(Map<String, dynamic> data) {
     serviceNo = data['ServiceNo'] ?? 'NA';
     operator = data['Operator'] ?? 'NA';
@@ -30,6 +67,22 @@ class BusService {
     pmPeakFreq = data['PM_Peak_Freq'] ?? 'NA';
     pmOffPeakFreq = data['PM_Offpeak_Freq'] ?? 'NA';
     loopDesc = data['LoopDesc'] ?? 'NA';
-    operatorName = _operatorName[operator] ?? operator;
+    busOperator = _getBusOperator(operator);
+    // operatorName = _operatorName[operator] ?? operator;
+  }
+
+  BusOperator _getBusOperator(String operator) {
+    switch (operator) {
+      case 'GAS':
+        return BusOperator.GAS;
+      case 'SMRT':
+        return BusOperator.SMRT;
+      case 'SBST':
+        return BusOperator.SBST;
+      case 'TTS':
+        return BusOperator.TTS;
+      default:
+        return BusOperator.NA;
+    }
   }
 }
