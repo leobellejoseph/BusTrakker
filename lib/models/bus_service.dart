@@ -21,17 +21,19 @@ extension BusOperatorExtension on BusOperator {
   Color get color {
     switch (this) {
       case BusOperator.GAS:
-        return Colors.yellow;
+        return Colors.yellow.shade800;
       case BusOperator.SMRT:
-        return Colors.red;
+        return Colors.red.shade800;
       case BusOperator.SBST:
-        return Colors.deepPurple;
+        return Colors.deepPurple.shade600;
       case BusOperator.TTS:
-        return Colors.green;
+        return Colors.green.shade800;
       default:
         return Colors.white;
     }
   }
+
+  Color get textColor => Colors.white;
 }
 
 class BusService {
@@ -47,14 +49,6 @@ class BusService {
   late String pmOffPeakFreq;
   late String loopDesc;
   late BusOperator busOperator;
-  //late String operatorName;
-  // Map<String, String> _operatorName = {
-  //   'GAS': 'Go Ahead',
-  //   'SMRT': 'SMRT',
-  //   'SBST': 'SBS Transport',
-  //   'TTS': 'Tower Transit',
-  //   'NA': 'NA'
-  // };
   BusService.fromJson(Map<String, dynamic> data) {
     serviceNo = data['ServiceNo'] ?? 'NA';
     operator = data['Operator'] ?? 'NA';
