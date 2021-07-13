@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_bus/cubit/cubit.dart';
 
 class BusStopWidget extends StatelessWidget {
   final String code;
@@ -91,7 +93,14 @@ class BusStopWidget extends StatelessWidget {
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Color(0xFF1b7b90),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF1b7b90).withOpacity(0.6),
+                  Color(0xFF1b7b90).withOpacity(0.2),
+                ],
+              ),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(5),
                 bottomRight: Radius.circular(5),
@@ -99,16 +108,25 @@ class BusStopWidget extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(2.5),
-              child: Center(
-                child: TextButton(
-                  style: TextButton.styleFrom(primary: Colors.lightBlue),
-                  onPressed: () {},
-                  child: Text(
-                    'Tap to show bus services',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.white),
-                  ),
-                ),
+              child: BlocBuilder<BusArrivalCubit, BusArrivalState>(
+                builder: (context, state) {
+                  if (state.status == Status.loading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state.status == Status.no_service) {
+                    return Center(child: Text('No Service'));
+                  } else if (state.status == Status.loaded) {
+                    return BusServiceList(state: state);
+                  } else {
+                    return Center(
+                      child: TextButton(
+                        onPressed: () => context
+                            .read<BusArrivalCubit>()
+                            .getBusServices(code),
+                        child: Text('Show Bus Services'),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
           ),
@@ -119,22 +137,29 @@ class BusStopWidget extends StatelessWidget {
 }
 
 class BusServiceList extends StatelessWidget {
+  final BusArrivalState state;
+  BusServiceList({required this.state});
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: 20,
+      itemCount: state.data.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
       itemBuilder: (context, index) {
+        final item = state.data[index];
         return Container(
-          color: Color(0xFF008b8b),
+          decoration: BoxDecoration(
+            color: Color(0xFF008b8b),
+            borderRadius: BorderRadius.circular(2),
+          ),
           child: RawMaterialButton(
             highlightColor: Colors.lightBlueAccent,
             onPressed: () {},
             child: Center(
               child: Text(
-                '1234',
+                item.serviceNo,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
               ),
             ),
@@ -142,5 +167,49 @@ class BusServiceList extends StatelessWidget {
         );
       },
     );
+    // return BlocBuilder<BusArrivalCubit, BusArrivalState>(
+    //   builder: (context, state) {
+    //     if (state.status == Status.loading) {
+    //       return Center(child: CircularProgressIndicator());
+    //     } else if (state.status == Status.no_service) {
+    //       return Center(child: Text('No Service'));
+    //     } else if (state.status == Status.loaded) {
+    //       return GridView.builder(
+    //         scrollDirection: Axis.horizontal,
+    //         itemCount: state.data.length,
+    //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //             mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
+    //         itemBuilder: (context, index) {
+    //           final item = state.data[index];
+    //           return Container(
+    //             decoration: BoxDecoration(
+    //               color: Color(0xFF008b8b),
+    //               borderRadius: BorderRadius.circular(2),
+    //             ),
+    //             child: RawMaterialButton(
+    //               highlightColor: Colors.lightBlueAccent,
+    //               onPressed: () {},
+    //               child: Center(
+    //                 child: Text(
+    //                   item.serviceNo,
+    //                   style:
+    //                       TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+    //                 ),
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //       );
+    //     } else {
+    //       return Center(
+    //         child: TextButton(
+    //           onPressed: () =>
+    //               context.read<BusArrivalCubit>().getBusServices(code),
+    //           child: Text('Show Bus Services'),
+    //         ),
+    //       );
+    //     }
+    //   },
+    // );
   }
 }

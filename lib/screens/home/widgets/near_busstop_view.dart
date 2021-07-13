@@ -10,10 +10,8 @@ class NearBusStopsView extends StatelessWidget {
     return BlocBuilder<BusDataBloc, BusDataState>(
       builder: (context, state) {
         if (state.status == BusDataStatus.nearBusStopsLoading) {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          return Center(
+            child: CircularProgressIndicator(),
           );
         } else {
           return ListView.builder(

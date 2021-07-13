@@ -18,8 +18,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          BusDataBloc()..add(BusDataDownload())..add(NearBusStopsFetch('')),
+      create: (context) => BusDataBloc()
+        ..add(
+          BusDataDownload(),
+        )
+        ..add(
+          NearBusStopsFetch(''),
+        ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: '',

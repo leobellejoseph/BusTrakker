@@ -16,6 +16,15 @@ class BusArrival {
     required this.thirdBus,
   });
 
+  factory BusArrival.noSvc() => BusArrival(
+        busStopCode: 'No Svc',
+        serviceNo: 'No Svc',
+        operator: 'No Svc',
+        firstBus: NextBus.empty(),
+        secondBus: NextBus.empty(),
+        thirdBus: NextBus.empty(),
+      );
+
   factory BusArrival.empty() => BusArrival(
         busStopCode: 'NA',
         serviceNo: 'NA',

@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'home';
   static Route route() => MaterialPageRoute(
         settings: const RouteSettings(name: HomeScreen.id),
-        builder: (context) => HomeScreen(),
+        builder: (context) => BlocProvider<BusArrivalCubit>(
+          create: (context) => BusArrivalCubit(),
+          child: HomeScreen(),
+        ),
       );
 
   @override
