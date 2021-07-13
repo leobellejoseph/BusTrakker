@@ -15,18 +15,26 @@ class BusStopsView extends StatelessWidget {
             ),
           );
         } else {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final item = state.stopsData[index];
-                return BusStopTile(item: item, showDistance: false);
-              },
-              childCount: state.stopsData.length,
-            ),
+          return ListView.builder(
+            itemCount: state.stopsData.length,
+            itemBuilder: (context, index) {
+              final item = state.stopsData[index];
+              return BusStopTile(item: item, showDistance: false);
+            },
           );
         }
       },
     );
+    // return SliverList(
+    //   delegate: SliverChildBuilderDelegate(
+    //         (context, index) {
+    //       final item = state.stopsData[index];
+    //       return BusStopTile(item: item, showDistance: false);
+    //     },
+    //     childCount: state.stopsData.length,
+    //   ),
+    // );
+
     // return SliverGrid(
     //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
     //     crossAxisCount: 2,

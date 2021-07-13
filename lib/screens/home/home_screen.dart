@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
@@ -22,10 +23,22 @@ class _HomeScreenState extends State<HomeScreen>
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   int _tabIndex = 0;
+  bool _isVisible = false;
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() => _isVisible = true);
+      } else {
+        if (_scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          setState(() => _isVisible = false);
+        }
+      }
+    });
   }
 
   @override
@@ -54,61 +67,34 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    EdgeInsets insets = MediaQuery.of(context).viewInsets;
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          body: RefreshIndicator(
-            onRefresh: _onRefreshData,
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  expandedHeight: MediaQuery.of(context).size.height * 0.3,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset('images/MyBusLogo.jpg',
-                          fit: BoxFit.cover),
-                    ),
-                  ),
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(
+            bottom: false,
+            left: false,
+            right: false,
+            child: Column(
+              children: [
+                SizedBox(height: 155, child: FavoritesView()),
+                SearchView(
+                  textEditingController: _textEditingController,
+                  focusNode: _focusNode,
+                  onFilterData: (value) => _onFilterData(),
+                  onRefreshData: _onRefreshData,
                 ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    child: TextField(
-                      textInputAction: TextInputAction.search,
-                      textAlignVertical: TextAlignVertical.center,
-                      onSubmitted: (data) => _onFilterData(),
-                      focusNode: _focusNode,
-                      controller: _textEditingController,
-                      decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(
-                            onPressed: _onFilterData,
-                            icon: const Icon(Icons.search,
-                                color: Colors.blue, size: 30),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => _onRefreshData(),
-                            icon: const Icon(Icons.close,
-                                color: Colors.blue, size: 30),
-                          ),
-                          hintText: 'Search'),
-                    ),
-                  ),
-                ),
-                FavoritesView(),
                 TabView(
                   tabController: _tabController,
                   onTap: (index) => setState(() => _tabIndex = index),
                 ),
-                ContentView(tabIndex: _tabIndex),
+                Expanded(
+                  child: ContentView(tabIndex: _tabIndex),
+                ),
               ],
             ),
           ),

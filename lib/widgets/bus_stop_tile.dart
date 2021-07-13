@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class BusStopTile extends StatelessWidget {
   final BusStop item;
@@ -7,22 +8,16 @@ class BusStopTile extends StatelessWidget {
   BusStopTile({required this.item, required this.showDistance});
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.lightBlueAccent,
-      child: Container(
-        //margin: const EdgeInsets.all(5),
-        //color: Colors.lightBlueAccent,
-        height: 150,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(item.busStopCode),
-            Text(item.description),
-            Text(item.roadName),
-            if (showDistance) Text('${item.distanceDisplay}km')
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+      height: 200,
+      width: double.infinity,
+      child: BusStopWidget(
+        code: item.busStopCode,
+        roadName: item.roadName,
+        description: item.description,
+        distance: showDistance ? '${item.distanceDisplay}km' : '',
+        showServices: false,
       ),
     );
   }

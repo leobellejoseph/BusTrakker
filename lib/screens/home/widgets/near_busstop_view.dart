@@ -16,14 +16,12 @@ class NearBusStopsView extends StatelessWidget {
             ),
           );
         } else {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final item = state.nearData[index];
-                return BusStopTile(item: item, showDistance: true);
-              },
-              childCount: state.nearData.length,
-            ),
+          return ListView.builder(
+            itemCount: state.nearData.length,
+            itemBuilder: (context, index) {
+              final item = state.nearData[index];
+              return BusStopTile(item: item, showDistance: true);
+            },
           );
         }
       },
