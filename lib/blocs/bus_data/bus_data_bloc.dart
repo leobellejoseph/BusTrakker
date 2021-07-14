@@ -42,14 +42,14 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       final List<BusStop> data = [];
       if (_stops.isNotEmpty) {
         Position _position = await LocationRequest.getLocationPosition();
-        final newData = _stops.where((data) {
-          data.setDistance(_position);
+        final newData = _stops.where((stop) {
+          stop.setDistance(_position);
           final _query = event.query.toLowerCase();
-          final _distance = data.distanceInt;
-          final _busStopCode = data.busStopCode.toLowerCase();
-          final _roadName = data.roadName.toLowerCase();
-          final _description = data.description.toLowerCase();
-          return data.distanceInt < 400 &&
+          final _distance = stop.distanceInt;
+          final _busStopCode = stop.busStopCode.toLowerCase();
+          final _roadName = stop.roadName.toLowerCase();
+          final _description = stop.description.toLowerCase();
+          return stop.distanceInt < 400 &&
               (_busStopCode.contains(_query) ||
                   _roadName.contains(_query) ||
                   _description.contains(_query));

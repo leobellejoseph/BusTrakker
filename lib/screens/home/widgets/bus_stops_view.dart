@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class BusStopsView extends StatelessWidget {
@@ -19,36 +20,15 @@ class BusStopsView extends StatelessWidget {
             itemCount: state.stopsData.length,
             itemBuilder: (context, index) {
               final item = state.stopsData[index];
-              return BusStopTile(item: item, showDistance: false);
+              return BlocProvider<BusArrivalCubit>(
+                create: (context) => BusArrivalCubit(),
+                child: BusStopTile(item: item, showDistance: false),
+              );
+              //return BusStopTile(item: item, showDistance: false);
             },
           );
         }
       },
     );
-    // return SliverList(
-    //   delegate: SliverChildBuilderDelegate(
-    //         (context, index) {
-    //       final item = state.stopsData[index];
-    //       return BusStopTile(item: item, showDistance: false);
-    //     },
-    //     childCount: state.stopsData.length,
-    //   ),
-    // );
-
-    // return SliverGrid(
-    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 2,
-    //     mainAxisSpacing: 2,
-    //     crossAxisSpacing: 2,
-    //   ),
-    //   delegate: SliverChildBuilderDelegate(
-    //     (context, index) {
-    //       return Card(
-    //         color: Colors.grey,
-    //       );
-    //     },
-    //     childCount: 4,
-    //   ),
-    // );
   }
 }

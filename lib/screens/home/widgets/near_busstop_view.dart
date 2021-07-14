@@ -18,7 +18,7 @@ class NearBusStopsView extends StatelessWidget {
             itemCount: state.nearData.length,
             itemBuilder: (context, index) {
               final item = state.nearData[index];
-              return BusStopTile(item: item, showDistance: true);
+              return BusStopTile(item: item, showDistance: false);
             },
           );
         }

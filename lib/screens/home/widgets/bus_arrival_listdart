@@ -1,17 +1,12 @@
-import 'package:flip_card/flip_card.dart';
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_bus/cubit/bus_arrival_cubit.dart';
 
-class BusStopWidget extends StatelessWidget {
+class BusArrivalWidget extends StatelessWidget {
   final String code;
   final String roadName;
   final String description;
   final String distance;
   final bool showServices;
-  final FlipCardController _flipCardController = FlipCardController();
-  BusStopWidget({
+  BusArrivalWidget({
     required this.code,
     required this.roadName,
     required this.description,
@@ -25,7 +20,6 @@ class BusStopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    BlocProvider.of<BusArrivalCubit>(context).getBusServices(code);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.max,
@@ -112,84 +106,16 @@ class BusStopWidget extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(2.5),
-              child: BlocBuilder<BusArrivalCubit, BusArrivalState>(
-                builder: (context, state) {
-                  if (state.status == Status.loading) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state.status == Status.no_service) {
-                    return Center(child: Text('No Service'));
-                  } else {
-                    return FlipCard(
-                      controller: _flipCardController,
-                      flipOnTouch: false,
-                      direction: FlipDirection.VERTICAL,
-                      front: BusServiceList(
-                          state: state,
-                          onFlip: (value) {
-                            print(value);
-                            _flipCardController.state?.toggleCard();
-                          }),
-                      back: BusArrivalList(
-                          state: state,
-                          onFlip: (value) =>
-                              _flipCardController.state?.toggleCard()),
-                    );
-                  }
-                },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF008b8b),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class BusServiceList extends StatelessWidget {
-  final BusArrivalState state;
-  final Function onFlip;
-  BusServiceList({required this.state, required this.onFlip});
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: state.data.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
-      itemBuilder: (context, index) {
-        final item = state.data[index];
-        return Container(
-          decoration: BoxDecoration(
-            color: Color(0xFF008b8b),
-            borderRadius: BorderRadius.circular(2),
-          ),
-          child: RawMaterialButton(
-            highlightColor: Colors.lightBlueAccent,
-            onPressed: () => onFlip(item.serviceNo),
-            child: Center(
-              child: Text(
-                item.serviceNo,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class BusArrivalList extends StatelessWidget {
-  final BusArrivalState state;
-  final Function onFlip;
-  BusArrivalList({required this.state, required this.onFlip});
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onFlip('test'),
-      child: Container(
-        child: Text('Arrivals'),
-      ),
     );
   }
 }

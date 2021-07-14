@@ -8,7 +8,6 @@ class BusStop {
   late double longitude;
   String distanceDisplay = '';
   int distanceInt = 0;
-
   BusStop.fromJson(Map<String, dynamic> data) {
     busStopCode = data['BusStopCode'];
     roadName = data['RoadName'];
