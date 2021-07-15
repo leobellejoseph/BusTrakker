@@ -7,22 +7,20 @@ part 'bus_arrival_state.dart';
 
 class BusArrivalCubit extends Cubit<BusArrivalState> {
   BusArrivalCubit() : super(BusArrivalState.initial());
-  void getBusServices(String code) async {
-    emit(state.copyWith(data: [], status: Status.loading));
+
+  void getBusArrival(String code, String service) async {
+    emit(state.copyWith(status: BusArrivalStatus.loading));
     try {
-      List<BusArrival> data = await HTTPRequest.loadBusStopArrivals(code);
-      print('$code: ${data.length}');
-      if (data.isNotEmpty)
-        emit(state.copyWith(data: data, status: Status.loaded));
-      else
-        emit(state.copyWith(data: data, status: Status.no_service));
+      BusArrival arrival = await HTTPRequest.loadBusArrivals(code, service);
+      emit(
+        state.copyWith(data: arrival, status: BusArrivalStatus.loaded),
+      );
     } on Failure catch (_) {
       emit(
         state.copyWith(
-          status: Status.error,
+          status: BusArrivalStatus.error,
           failure: Failure(
-              code: 'Bus Arrival',
-              message: 'Failed to fetch Bus Arrival Services'),
+              code: 'Bus Arrival', message: 'Failed to fetch Bus Arrival'),
         ),
       );
     }

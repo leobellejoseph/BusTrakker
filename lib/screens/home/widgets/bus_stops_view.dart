@@ -20,8 +20,8 @@ class BusStopsView extends StatelessWidget {
             itemCount: state.stopsData.length,
             itemBuilder: (context, index) {
               final item = state.stopsData[index];
-              return BlocProvider<BusArrivalCubit>(
-                create: (context) => BusArrivalCubit(),
+              return BlocProvider<BusArrivalsCubit>(
+                create: (context) => BusArrivalsCubit(),
                 child: BusStopTile(item: item, showDistance: false),
               );
               //return BusStopTile(item: item, showDistance: false);

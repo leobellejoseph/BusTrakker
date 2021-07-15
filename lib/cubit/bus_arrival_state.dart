@@ -1,24 +1,21 @@
 part of 'bus_arrival_cubit.dart';
 
-// abstract class BusArrivalState extends Equatable {
-//   const BusArrivalState();
-// }
-enum Status { initial, loading, loaded, error, no_service }
+enum BusArrivalStatus { initial, loading, loaded, error, no_service }
 
 class BusArrivalState extends Equatable {
-  final List<BusArrival> data;
-  final Status status;
+  final BusArrival data;
+  final BusArrivalStatus status;
   final Failure failure;
 
   factory BusArrivalState.initial() => BusArrivalState(
-        data: [],
-        status: Status.initial,
+        data: BusArrival.empty(),
+        status: BusArrivalStatus.initial,
         failure: Failure.none(),
       );
 
   BusArrivalState copyWith({
-    List<BusArrival>? data,
-    Status? status,
+    BusArrival? data,
+    BusArrivalStatus? status,
     Failure? failure,
   }) {
     return BusArrivalState(
@@ -35,9 +32,5 @@ class BusArrivalState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        this.data,
-        this.status,
-        this.failure,
-      ];
+  List<Object> get props => [this.data, this.status, this.failure];
 }
