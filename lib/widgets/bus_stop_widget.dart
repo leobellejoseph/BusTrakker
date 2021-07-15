@@ -15,7 +15,6 @@ class BusStopWidget extends StatefulWidget {
 
 class _BusStopWidgetState extends State<BusStopWidget> {
   final FlipCardController _flipCardController = FlipCardController();
-  String _selectedService = '';
   @override
   void initState() {
     super.initState();
@@ -39,8 +38,7 @@ class _BusStopWidgetState extends State<BusStopWidget> {
             front: BusServiceList(
                 state: state,
                 onFlip: (value) {
-                  _selectedService = value;
-                  if (_selectedService.isNotEmpty && widget.code.isNotEmpty) {
+                  if (value.isNotEmpty && widget.code.isNotEmpty) {
                     context
                         .read<BusArrivalCubit>()
                         .getBusArrival(widget.code, value);
@@ -48,9 +46,9 @@ class _BusStopWidgetState extends State<BusStopWidget> {
                   }
                 }),
             back: BusArrivalList(
-              onFlip: (value) => _flipCardController.state?.toggleCard(),
-              code: widget.code,
-              service: _selectedService,
+              onFlip: () {
+                _flipCardController.state?.toggleCard();
+              },
             ),
           );
         }
