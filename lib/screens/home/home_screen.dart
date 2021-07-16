@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
@@ -27,17 +28,6 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
-    // _scrollController.addListener(() {
-    //   if (_scrollController.position.userScrollDirection ==
-    //       ScrollDirection.reverse) {
-    //     setState(() => _isVisible = true);
-    //   } else {
-    //     if (_scrollController.position.userScrollDirection ==
-    //         ScrollDirection.forward) {
-    //       setState(() => _isVisible = false);
-    //     }
-    //   }
-    // });
   }
 
   @override
@@ -66,35 +56,34 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
-    // EdgeInsets insets = MediaQuery.of(context).viewInsets;
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SafeArea(
-            bottom: false,
-            left: false,
-            right: false,
-            child: Column(
-              children: [
-                SizedBox(height: 155, child: FavoritesView()),
-                SearchView(
-                  textEditingController: _textEditingController,
-                  focusNode: _focusNode,
-                  onFilterData: (value) => _onFilterData(),
-                  onRefreshData: _onRefreshData,
-                ),
-                TabView(
-                  tabController: _tabController,
-                  onTap: (index) => setState(() => _tabIndex = index),
-                ),
-                Expanded(
-                  child: ContentView(tabIndex: _tabIndex),
-                ),
-              ],
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.dark,
+      child: WillPopScope(
+        onWillPop: () async => false,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Column(
+                children: [
+                  SizedBox(height: 155, child: FavoritesView()),
+                  SearchView(
+                    textEditingController: _textEditingController,
+                    focusNode: _focusNode,
+                    onFilterData: (value) => _onFilterData(),
+                    onRefreshData: _onRefreshData,
+                  ),
+                  TabView(
+                    tabController: _tabController,
+                    onTap: (index) => setState(() => _tabIndex = index),
+                  ),
+                  Expanded(
+                    child: ContentView(tabIndex: _tabIndex),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

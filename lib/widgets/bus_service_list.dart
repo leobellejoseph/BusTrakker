@@ -20,6 +20,9 @@ class BusServiceList extends StatelessWidget {
             borderRadius: BorderRadius.circular(2),
           ),
           child: RawMaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2.5),
+            ),
             highlightColor: Colors.lightBlueAccent,
             onPressed: () => onFlip(item.serviceNo),
             child: Center(

@@ -6,7 +6,7 @@ import 'package:my_bus/models/models.dart';
 const kMinuteArrival = TextStyle(
     fontWeight: FontWeight.bold, fontSize: 24, color: Colors.blueAccent);
 const kArriving =
-    TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.blue);
+    TextStyle(fontWeight: FontWeight.w600, fontSize: 24, color: Colors.blue);
 const kBusLoad = {'SEA': 'Seats Avl.', 'SDA': 'Standing', 'LSD': 'Limited'};
 const kBusFeature = {'WAB': Icons.wheelchair_pickup_outlined};
 const kOperators = {
@@ -75,7 +75,7 @@ class BusArrivalList extends StatelessWidget {
                               ),
                               onPressed: () => onFlip(),
                               child: Icon(
-                                Icons.menu,
+                                Icons.keyboard_arrow_up_sharp,
                                 color: Colors.blue.shade700,
                                 size: 30,
                               ),
@@ -93,10 +93,6 @@ class BusArrivalList extends StatelessWidget {
               Expanded(
                 child: _nextBus(bus: state.data.secondBus, index: 2),
               ),
-              // Expanded(
-              //   flex: 3,
-              //   child: _nextBus(bus: state.data.thirdBus, index: 3),
-              // ),
             ],
           ),
         );
