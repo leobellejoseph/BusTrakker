@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
@@ -21,24 +20,24 @@ class _HomeScreenState extends State<HomeScreen>
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _textEditingController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  //final ScrollController _scrollController = ScrollController();
   int _tabIndex = 0;
-  bool _isVisible = false;
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        setState(() => _isVisible = true);
-      } else {
-        if (_scrollController.position.userScrollDirection ==
-            ScrollDirection.forward) {
-          setState(() => _isVisible = false);
-        }
-      }
-    });
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.userScrollDirection ==
+    //       ScrollDirection.reverse) {
+    //     setState(() => _isVisible = true);
+    //   } else {
+    //     if (_scrollController.position.userScrollDirection ==
+    //         ScrollDirection.forward) {
+    //       setState(() => _isVisible = false);
+    //     }
+    //   }
+    // });
   }
 
   @override
@@ -67,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    EdgeInsets insets = MediaQuery.of(context).viewInsets;
+    // Size size = MediaQuery.of(context).size;
+    // EdgeInsets insets = MediaQuery.of(context).viewInsets;
     return WillPopScope(
       onWillPop: () async => false,
       child: GestureDetector(

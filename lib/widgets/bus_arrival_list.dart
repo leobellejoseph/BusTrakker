@@ -20,7 +20,7 @@ class BusArrivalList extends StatelessWidget {
   final Function onFlip;
   final Map<int, String> label = {
     1: 'Incoming',
-    2: 'Second',
+    2: 'Next',
     3: 'Third',
   };
   BusArrivalList({required this.onFlip});
@@ -33,17 +33,70 @@ class BusArrivalList extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.lightBlue.withOpacity(0.6),
+                          Colors.lightBlue.withOpacity(0.2),
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              state.data.serviceNo,
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                        ),
+                        const Divider(),
+                        Expanded(
+                          child: Container(
+                            child: RawMaterialButton(
+                              highlightColor: Colors.lightBlue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              onPressed: () => onFlip(),
+                              child: Icon(
+                                Icons.menu,
+                                color: Colors.blue.shade700,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
                 child: _nextBus(bus: state.data.firstBus, index: 1),
               ),
               Expanded(
-                flex: 3,
                 child: _nextBus(bus: state.data.secondBus, index: 2),
               ),
-              Expanded(
-                flex: 3,
-                child: _nextBus(bus: state.data.thirdBus, index: 3),
-              ),
+              // Expanded(
+              //   flex: 3,
+              //   child: _nextBus(bus: state.data.thirdBus, index: 3),
+              // ),
             ],
           ),
         );
@@ -52,38 +105,42 @@ class BusArrivalList extends StatelessWidget {
   }
 
   Widget _nextBus({required NextBus bus, required int index}) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(label[index] ?? 'No Svc',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black54,
-                decoration: TextDecoration.underline)),
-        Text.rich(
-          TextSpan(children: [
-            TextSpan(
-                text: bus.eta,
-                style: bus.eta == 'Arriving' ? kArriving : kMinuteArrival),
-            bus.eta == 'Arriving' ? TextSpan(text: '') : TextSpan(text: 'min'),
-          ]),
-        ),
-        Text(kBusLoad[bus.load] ?? 'No Svc'),
-        Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
-        index == 1
-            ? GestureDetector(
-                onTap: () => onFlip(),
-                child: Text('Back',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15)),
-              )
-            : Container(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(label[index] ?? 'No Svc',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black54,
+                  decoration: TextDecoration.underline)),
+          bus.eta == 'NA'
+              ? Text('No Svc', style: kArriving)
+              : Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                            text: bus.eta,
+                            style: bus.eta == 'Arriving'
+                                ? kArriving
+                                : kMinuteArrival),
+                        bus.eta == 'Arriving'
+                            ? TextSpan(text: '')
+                            : TextSpan(text: 'min'),
+                      ]),
+                    ),
+                    Text(kBusLoad[bus.load] ?? 'No Svc'),
+                    Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
+                  ],
+                ),
+        ],
+      ),
     );
   }
 }

@@ -14,12 +14,17 @@ class NearBusStopsView extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return ListView.builder(
-            itemCount: state.nearData.length,
-            itemBuilder: (context, index) {
-              final item = state.nearData[index];
-              return BusStopTile(item: item, showDistance: false);
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<BusDataBloc>()..add(NearBusStopsFetch(''));
             },
+            child: ListView.builder(
+              itemCount: state.nearData.length,
+              itemBuilder: (context, index) {
+                final item = state.nearData[index];
+                return BusStopTile(item: item, showDistance: false);
+              },
+            ),
           );
         }
       },

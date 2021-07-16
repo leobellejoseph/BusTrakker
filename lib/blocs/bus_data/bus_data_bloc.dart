@@ -45,7 +45,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
         final newData = _stops.where((stop) {
           stop.setDistance(_position);
           final _query = event.query.toLowerCase();
-          final _distance = stop.distanceInt;
+
           final _busStopCode = stop.busStopCode.toLowerCase();
           final _roadName = stop.roadName.toLowerCase();
           final _description = stop.description.toLowerCase();
