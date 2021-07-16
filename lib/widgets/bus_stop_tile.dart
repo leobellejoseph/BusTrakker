@@ -52,7 +52,7 @@ class BusStopTile extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        item.distanceDisplay.isNotEmpty
+                        showDistance == true && item.distanceDisplay.isNotEmpty
                             ? TextSpan(
                                 text: ' @ ${item.distanceDisplay}km',
                                 style: TextStyle(

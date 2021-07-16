@@ -67,18 +67,14 @@ class BusArrivalList extends StatelessWidget {
                         ),
                         const Divider(),
                         Expanded(
-                          child: Container(
-                            child: RawMaterialButton(
-                              highlightColor: Colors.lightBlue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              onPressed: () => onFlip(),
-                              child: Icon(
-                                Icons.keyboard_arrow_up_sharp,
-                                color: Colors.blue.shade700,
-                                size: 30,
-                              ),
+                          child: RawMaterialButton(
+                            highlightColor: Colors.lightBlue,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            onPressed: () => onFlip(),
+                            child: Icon(
+                              Icons.keyboard_arrow_up_sharp,
+                              color: Colors.blue.shade700,
                             ),
                           ),
                         ),

@@ -20,8 +20,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
-  final TextEditingController _textEditingController = TextEditingController();
-  //final ScrollController _scrollController = ScrollController();
+  TextEditingController _textEditingController = TextEditingController();
   int _tabIndex = 0;
 
   @override
@@ -37,21 +36,11 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
-  void _onFilterData() {
-    final query = _textEditingController.text;
+  void _onFilterData(String query) {
     context.read<BusDataBloc>()
       ..add(BusStopFetch(query))
       ..add(BusServiceFetch(query))
       ..add(NearBusStopsFetch(query));
-  }
-
-  Future<void> _onRefreshData() async {
-    // clear filters
-    _textEditingController.clear();
-    // fetch fresh data
-    _onFilterData();
-    // close keyboard
-    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -69,12 +58,12 @@ class _HomeScreenState extends State<HomeScreen>
               child: Column(
                 children: [
                   SizedBox(height: 155, child: FavoritesView()),
-                  SearchView(
-                    textEditingController: _textEditingController,
-                    focusNode: _focusNode,
-                    onFilterData: (value) => _onFilterData(),
-                    onRefreshData: _onRefreshData,
-                  ),
+                  _searchView(),
+                  // SearchView(
+                  //   // textEditingController: _textEditingController,
+                  //   // focusNode: _focusNode,
+                  //   onFilterData: (value) => _onFilterData(value),
+                  // ),
                   TabView(
                     tabController: _tabController,
                     onTap: (index) => setState(() => _tabIndex = index),
@@ -87,6 +76,39 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _searchView() {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: TextField(
+        textInputAction: TextInputAction.search,
+        textAlignVertical: TextAlignVertical.center,
+        onSubmitted: (value) {
+          _onFilterData(value);
+        },
+        controller: _textEditingController,
+        decoration: InputDecoration(
+            fillColor: Colors.grey[200],
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            prefixIcon: IconButton(
+              onPressed: () => _onFilterData(_textEditingController.text),
+              icon: const Icon(Icons.search, color: Colors.blue, size: 30),
+            ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                _textEditingController.clear();
+                FocusScope.of(context).unfocus();
+                _onFilterData('');
+              },
+              icon: const Icon(Icons.close, color: Colors.blue, size: 30),
+            ),
+            hintText: 'Search'),
       ),
     );
   }
