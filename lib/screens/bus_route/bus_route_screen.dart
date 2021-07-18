@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 
 class BusRouteScreen extends StatelessWidget {
@@ -24,8 +25,8 @@ class BusRouteScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(14),
+                          bottomRight: Radius.circular(14),
                         ),
                       ),
                       padding:
@@ -40,7 +41,7 @@ class BusRouteScreen extends StatelessWidget {
                     child: Container(),
                   ),
                 ],
-              )),
+              )), //Service Label
           const Divider(height: 0, color: Colors.white),
           Container(
             height: 40,
@@ -57,16 +58,16 @@ class BusRouteScreen extends StatelessWidget {
                         child: Text('Road Name',
                             style: TextStyle(fontWeight: FontWeight.w600)),
                       )),
-                  Container(height: 40, color: Colors.white, width: 1),
+                  //Container(height: 40, color: Colors.white54, width: 1),
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 2.0),
+                      padding: const EdgeInsets.only(right: 2.0),
                       child: Text('Bus Stop Code',
                           style: TextStyle(fontWeight: FontWeight.w600)),
                     ),
                   ),
-                  Container(height: 40, color: Colors.white, width: 1),
+                  //Container(height: 40, color: Colors.white, width: 1),
                   Expanded(
                       flex: 4,
                       child: Padding(
@@ -86,10 +87,16 @@ class BusRouteScreen extends StatelessWidget {
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
                       final item = state.data[index];
-
+                      final previous = state.data[index - index == 0 ? 0 : 1];
+                      final BusStop info = context
+                          .read<BusRouteCubit>()
+                          .fetchBusStopInfo(item.busStopCode);
+                      final BusStop prevInfo = context
+                          .read<BusRouteCubit>()
+                          .fetchBusStopInfo(previous.busStopCode);
                       return Container(
-                        height: 50,
-                        color: Colors.white,
+                        height: 35,
+                        color: Colors.lightBlueAccent.shade100,
                         width: double.infinity,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,16 +104,26 @@ class BusRouteScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: Text('road name'),
+                              child: prevInfo.roadName == info.roadName &&
+                                      index > 0
+                                  ? Container()
+                                  : Text(info.roadName),
                             ),
                             Expanded(
                               flex: 2,
-                              child: Text(item.busStopCode,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      height: 35, color: Colors.red, width: 2),
+                                  Text(item.busStopCode,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20)),
+                                ],
+                              ),
                             ),
-                            Expanded(flex: 4, child: Text('description')),
+                            Expanded(flex: 4, child: Text(info.description)),
                           ],
                         ),
                       );

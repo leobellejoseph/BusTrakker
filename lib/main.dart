@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
-import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 
 import 'helpers/helpers.dart';
+import 'screens/bus_route/cubit/cubit.dart';
 import 'screens/screens.dart';
 
 void main() {
@@ -15,26 +15,19 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.black,
   ));
-  runApp(MyApp());
+  runApp(MyApp(busDataBloc: BusDataBloc()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-
+  final BusDataBloc busDataBloc;
+  MyApp({required this.busDataBloc});
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider(
-    //   create: (context) => BusDataBloc()
-    //     ..add(
-    //       BusDataDownload(),
-    //     )
-    //     ..add(
-    //       NearBusStopsFetch(''),
-    //     ),
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => BusDataBloc()
+          create: (context) => busDataBloc
             ..add(
               BusDataDownload(),
             )
@@ -42,7 +35,8 @@ class MyApp extends StatelessWidget {
               NearBusStopsFetch(''),
             ),
         ),
-        BlocProvider(create: (context) => BusRouteCubit()),
+        BlocProvider(
+            create: (context) => BusRouteCubit(busDataBloc: busDataBloc)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

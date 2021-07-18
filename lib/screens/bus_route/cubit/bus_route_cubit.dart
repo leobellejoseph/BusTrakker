@@ -1,12 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/models/models.dart';
 
 part 'bus_route_state.dart';
 
 class BusRouteCubit extends Cubit<BusRouteState> {
-  BusRouteCubit() : super(BusRouteState.initial());
+  final BusDataBloc busDataBloc;
+  final List<BusStop> _stops = [];
+  final List<BusService> _services = [];
+  BusRouteCubit({required this.busDataBloc}) : super(BusRouteState.initial()) {
+    _stops.addAll(busDataBloc.state.stopsData);
+    _services.addAll(busDataBloc.state.serviceData);
+  }
+
+  BusStop fetchBusStopInfo(String code) =>
+      _stops.where((element) => element.busStopCode == code).first;
+
+  BusService fetchBusServiceInfo(String service) =>
+      _services.where((element) => element.serviceNo == service).first;
 
   void fetchRoute({required String service}) async {
     emit(state.copyWith(status: BusRouteStatus.loading));

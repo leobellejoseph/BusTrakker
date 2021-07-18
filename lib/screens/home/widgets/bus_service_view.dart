@@ -27,15 +27,14 @@ class BusServiceView extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: RawMaterialButton(
                     onPressed: () {
+                      context
+                          .read<BusRouteCubit>()
+                          .fetchRoute(service: item.serviceNo);
                       showModalBottomSheet(
-                        enableDrag: false,
                         backgroundColor: Colors.white,
                         elevation: 2,
                         context: context,
                         builder: (context) {
-                          context
-                              .read<BusRouteCubit>()
-                              .fetchRoute(service: item.serviceNo);
                           return BusRouteScreen(service: item.serviceNo);
                         },
                       );

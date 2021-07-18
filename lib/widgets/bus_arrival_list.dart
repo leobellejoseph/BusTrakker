@@ -25,7 +25,9 @@ class BusArrivalList extends StatelessWidget {
     2: 'Next',
     3: 'Third',
   };
+
   BusArrivalList({required this.onFlip});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BusArrivalCubit, BusArrivalState>(
@@ -66,8 +68,10 @@ class BusArrivalList extends StatelessWidget {
                             ),
                             highlightColor: Colors.lightBlue,
                             onPressed: () {
+                              context
+                                  .read<BusRouteCubit>()
+                                  .fetchRoute(service: state.data.serviceNo);
                               showModalBottomSheet(
-                                enableDrag: false,
                                 backgroundColor: Colors.white,
                                 elevation: 2,
                                 context: context,
