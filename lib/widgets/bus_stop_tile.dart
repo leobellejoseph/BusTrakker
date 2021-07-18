@@ -12,7 +12,7 @@ class BusStopTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
-      height: 200,
+      height: 210,
       width: double.infinity,
       child: MultiBlocProvider(
         providers: [

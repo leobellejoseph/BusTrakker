@@ -59,11 +59,6 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   SizedBox(height: 155, child: FavoritesView()),
                   _searchView(),
-                  // SearchView(
-                  //   // textEditingController: _textEditingController,
-                  //   // focusNode: _focusNode,
-                  //   onFilterData: (value) => _onFilterData(value),
-                  // ),
                   TabView(
                     tabController: _tabController,
                     onTap: (index) => setState(() => _tabIndex = index),

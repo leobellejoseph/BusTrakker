@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/screens/screens.dart';
 
 const kMinuteArrival = TextStyle(
     fontWeight: FontWeight.bold, fontSize: 24, color: Colors.blueAccent);
@@ -34,7 +35,7 @@ class BusArrivalList extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: Container(
                     height: double.infinity,
                     width: double.infinity,
@@ -55,22 +56,47 @@ class BusArrivalList extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: Center(
-                            child: Text(
-                              state.data.serviceNo,
-                              style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
+                          child: RawMaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                            ),
+                            highlightColor: Colors.lightBlue,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                enableDrag: false,
+                                backgroundColor: Colors.white,
+                                elevation: 2,
+                                context: context,
+                                builder: (context) {
+                                  return BusRouteScreen(
+                                      service: state.data.serviceNo);
+                                },
+                              );
+                            },
+                            child: Center(
+                              child: Text(
+                                state.data.serviceNo,
+                                style: TextStyle(
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54),
+                              ),
                             ),
                           ),
                         ),
-                        const Divider(),
+                        const Divider(color: Colors.white, height: 0),
                         Expanded(
                           child: RawMaterialButton(
                             highlightColor: Colors.lightBlue,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                              ),
+                            ),
                             onPressed: () => onFlip(),
                             child: Icon(
                               Icons.keyboard_arrow_up_sharp,

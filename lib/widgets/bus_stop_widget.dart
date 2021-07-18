@@ -23,7 +23,6 @@ class _BusStopWidgetState extends State<BusStopWidget> {
 
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return BlocBuilder<BusArrivalsCubit, BusArrivalsState>(
       builder: (context, state) {
         if (state.status == Status.loading) {

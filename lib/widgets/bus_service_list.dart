@@ -16,7 +16,15 @@ class BusServiceList extends StatelessWidget {
         final item = state.data[index];
         return Container(
           decoration: BoxDecoration(
-            color: Color(0xFF008b8b),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                color: Colors.grey,
+              ),
+            ],
+            //shape: BoxShape(),
+            //color: Color(0xFF008b8b),
+            color: Colors.green.shade100,
             borderRadius: BorderRadius.circular(2),
           ),
           child: RawMaterialButton(
@@ -28,7 +36,7 @@ class BusServiceList extends StatelessWidget {
             child: Center(
               child: Text(
                 item.serviceNo,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
               ),
             ),
           ),
