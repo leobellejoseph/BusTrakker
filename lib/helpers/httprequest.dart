@@ -60,11 +60,8 @@ class HTTPRequest {
         if (resp == null) break;
         final dynamic services = resp['value'];
         if (services == null) break;
-        final List<BusService> svcs = (services as List)
-            .map((e) => BusService.fromJson(e))
-            .where((element) {
-          return element.direction == 1;
-        }).toList();
+        final List<BusService> svcs =
+            (services as List).map((e) => BusService.fromJson(e)).toList();
         _services.addAll(svcs);
         skip += 500;
       }
@@ -146,21 +143,23 @@ class HTTPRequest {
     return _routes;
   }
 
-  static Future<List<BusRoute>> loadBusRouteService() async {
+  static Future<List<BusRoute>> loadBusRouteByService(
+      {required String service, int direction = 1}) async {
     List<BusRoute> _routes = [];
     try {
       final String baseUrl = APISettings.routesUrl;
       int skip = 0;
       bool flag = true;
-      while (flag == true) {
-        final String url = baseUrl + (skip == 0 ? '' : '?skip=$skip');
+      while (skip < 30000 || flag) {
+        final String url =
+            baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
         final dynamic resp = await HTTPRequest.getRequest(url);
         if (resp == 'nodata' || resp['value'] == null) flag = false;
         final dynamic routes = resp['value'];
-        if (routes == null || (routes as List).length == 0) flag = false;
+        if (routes == null || (routes as List).length == 0) break;
         final data =
             (routes as List).map((e) => BusRoute.fromJson(e)).where((element) {
-          return element.direction == 1;
+          return element.serviceNo == service && element.direction == direction;
         }).toList();
         _routes.addAll(data);
         skip += 500;

@@ -99,8 +99,10 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     try {
       final data = await HTTPRequest.loadBusServices();
       _services.addAll(data);
+      final dir1 =
+          _services.where((element) => element.direction == 1).toList();
       yield state.copyWith(
-          serviceData: data, status: BusDataStatus.busServiceLoaded);
+          serviceData: dir1, status: BusDataStatus.busServiceLoaded);
     } on Failure catch (_) {
       yield state.copyWith(
         status: BusDataStatus.error,
@@ -127,7 +129,6 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
               desc.contains(query);
         },
       ).toList();
-
       yield state.copyWith(
         stopsData: data,
         status: BusDataStatus.busStopsLoaded,

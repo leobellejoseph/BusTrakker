@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/bus_route/bus_route_screen.dart';
+import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 
 class BusServiceView extends StatelessWidget {
   @override
@@ -32,6 +33,9 @@ class BusServiceView extends StatelessWidget {
                         elevation: 2,
                         context: context,
                         builder: (context) {
+                          context
+                              .read<BusRouteCubit>()
+                              .fetchRoute(service: item.serviceNo);
                           return BusRouteScreen(service: item.serviceNo);
                         },
                       );

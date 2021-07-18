@@ -24,7 +24,6 @@ class BusStopsView extends StatelessWidget {
                 create: (context) => BusArrivalsCubit(),
                 child: BusStopTile(item: item, showDistance: false),
               );
-              //return BusStopTile(item: item, showDistance: false);
             },
           );
         }

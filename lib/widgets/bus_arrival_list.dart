@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 
 const kMinuteArrival = TextStyle(
@@ -71,6 +72,8 @@ class BusArrivalList extends StatelessWidget {
                                 elevation: 2,
                                 context: context,
                                 builder: (context) {
+                                  context.read<BusRouteCubit>().fetchRoute(
+                                      service: state.data.serviceNo);
                                   return BusRouteScreen(
                                       service: state.data.serviceNo);
                                 },
