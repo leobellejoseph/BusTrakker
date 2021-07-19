@@ -10,6 +10,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
   final BusDataBloc busDataBloc;
   final List<BusStop> _stops = [];
   final List<BusService> _services = [];
+
   BusRouteCubit({required this.busDataBloc}) : super(BusRouteState.initial()) {
     _stops.addAll(busDataBloc.state.stopsData);
     _services.addAll(busDataBloc.state.serviceData);
@@ -21,11 +22,16 @@ class BusRouteCubit extends Cubit<BusRouteState> {
   BusService fetchBusServiceInfo(String service) =>
       _services.where((element) => element.serviceNo == service).first;
 
-  void fetchRoute({required String service}) async {
-    emit(state.copyWith(status: BusRouteStatus.loading));
+  void fetchRoute({required String service, String code = ''}) async {
+    emit(state.copyWith(data: [], status: BusRouteStatus.loading));
     try {
       final routes = await HTTPRequest.loadBusRouteByService(service: service);
-      emit(state.copyWith(data: routes, status: BusRouteStatus.loaded));
+      final directionRoute =
+          routes.where((element) => element.busStopCode.contains(code)).first;
+      final filtered = routes
+          .where((element) => element.direction == directionRoute.direction)
+          .toList();
+      emit(state.copyWith(data: filtered, status: BusRouteStatus.loaded));
     } on Failure catch (_) {
       emit(state.copyWith(
           status: BusRouteStatus.error,

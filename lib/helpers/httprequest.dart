@@ -144,7 +144,7 @@ class HTTPRequest {
   }
 
   static Future<List<BusRoute>> loadBusRouteByService(
-      {required String service, int direction = 1}) async {
+      {required String service}) async {
     List<BusRoute> _routes = [];
     try {
       final String baseUrl = APISettings.routesUrl;
@@ -159,7 +159,7 @@ class HTTPRequest {
         if (routes == null || (routes as List).length == 0) break;
         final data =
             (routes as List).map((e) => BusRoute.fromJson(e)).where((element) {
-          return element.serviceNo == service && element.direction == direction;
+          return element.serviceNo == service;
         }).toList();
         _routes.addAll(data);
         skip += 500;

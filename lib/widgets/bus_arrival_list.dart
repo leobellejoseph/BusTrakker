@@ -68,16 +68,17 @@ class BusArrivalList extends StatelessWidget {
                             ),
                             highlightColor: Colors.lightBlue,
                             onPressed: () {
-                              context
-                                  .read<BusRouteCubit>()
-                                  .fetchRoute(service: state.data.serviceNo);
+                              context.read<BusRouteCubit>().fetchRoute(
+                                  service: state.data.serviceNo,
+                                  code: state.data.busStopCode);
                               showModalBottomSheet(
                                 backgroundColor: Colors.white,
                                 elevation: 2,
                                 context: context,
                                 builder: (context) {
                                   context.read<BusRouteCubit>().fetchRoute(
-                                      service: state.data.serviceNo);
+                                      service: state.data.serviceNo,
+                                      code: state.data.busStopCode);
                                   return BusRouteScreen(
                                       service: state.data.serviceNo,
                                       code: state.data.busStopCode);
