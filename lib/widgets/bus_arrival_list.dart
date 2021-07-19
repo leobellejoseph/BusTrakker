@@ -79,7 +79,8 @@ class BusArrivalList extends StatelessWidget {
                                   context.read<BusRouteCubit>().fetchRoute(
                                       service: state.data.serviceNo);
                                   return BusRouteScreen(
-                                      service: state.data.serviceNo);
+                                      service: state.data.serviceNo,
+                                      code: state.data.busStopCode);
                                 },
                               );
                             },

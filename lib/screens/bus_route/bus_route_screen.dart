@@ -5,8 +5,8 @@ import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 
 class BusRouteScreen extends StatelessWidget {
   final String service;
-
-  BusRouteScreen({required this.service});
+  final String code;
+  BusRouteScreen({required this.service, required this.code});
 
   @override
   Widget build(BuildContext context) {
@@ -87,49 +87,108 @@ class BusRouteScreen extends StatelessWidget {
                     itemCount: state.data.length,
                     itemBuilder: (context, index) {
                       final item = state.data[index];
-                      final previous = state.data[index - index == 0 ? 0 : 1];
+                      final prev = index - 1;
+                      final prevIndex = prev < 0 ? index : prev;
+                      final prevData = state.data[prevIndex];
                       final BusStop info = context
                           .read<BusRouteCubit>()
                           .fetchBusStopInfo(item.busStopCode);
                       final BusStop prevInfo = context
                           .read<BusRouteCubit>()
-                          .fetchBusStopInfo(previous.busStopCode);
+                          .fetchBusStopInfo(prevData.busStopCode);
+                      final showRoadName =
+                          (prevInfo.roadName != info.roadName ||
+                              prevIndex == 0);
+                      final currentBusStop = code == info.busStopCode;
                       return Container(
                         height: 35,
-                        color: Colors.lightBlueAccent.shade100,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Colors.lightBlueAccent.withOpacity(0.8),
+                                Colors.lightBlueAccent.withOpacity(0.4),
+                              ]),
+                        ),
                         width: double.infinity,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
                               flex: 2,
-                              child: prevInfo.roadName == info.roadName &&
-                                      index > 0
-                                  ? Container()
-                                  : Text(info.roadName),
+                              child: Visibility(
+                                visible: showRoadName,
+                                child: Container(
+                                  height: double.infinity,
+                                  color: currentBusStop
+                                      ? Colors.red
+                                      : Colors.transparent,
+                                  child: Text(
+                                    info.roadName,
+                                    style: TextStyle(
+                                      color: currentBusStop
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                             Expanded(
                               flex: 2,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: 35, color: Colors.red, width: 2),
-                                  Text(item.busStopCode,
+                              child: Container(
+                                height: double.infinity,
+                                color: currentBusStop
+                                    ? Colors.red
+                                    : Colors.transparent,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        height: 35,
+                                        color: Colors.red,
+                                        width: 2),
+                                    const SizedBox(width: 2),
+                                    Text(
+                                      item.busStopCode,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20)),
-                                ],
+                                        color: currentBusStop
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            Expanded(flex: 4, child: Text(info.description)),
+                            Expanded(
+                                flex: 4,
+                                child: Container(
+                                  height: double.infinity,
+                                  color: currentBusStop
+                                      ? Colors.red
+                                      : Colors.transparent,
+                                  child: Text(
+                                    info.description,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: currentBusStop
+                                          ? Colors.white
+                                          : Colors.black54,
+                                    ),
+                                  ),
+                                )),
                           ],
                         ),
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(height: 0, color: Colors.grey),
+                        const Divider(height: 0, color: Colors.black54),
                   );
                 } else if (state.status == BusRouteStatus.error) {
                   return Center(

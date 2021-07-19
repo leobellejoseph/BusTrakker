@@ -35,7 +35,8 @@ class BusServiceView extends StatelessWidget {
                         elevation: 2,
                         context: context,
                         builder: (context) {
-                          return BusRouteScreen(service: item.serviceNo);
+                          return BusRouteScreen(
+                              service: item.serviceNo, code: '');
                         },
                       );
                     },
