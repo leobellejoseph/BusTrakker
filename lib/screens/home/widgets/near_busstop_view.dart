@@ -16,7 +16,13 @@ class NearBusStopsView extends StatelessWidget {
         } else {
           return RefreshIndicator(
             onRefresh: () async {
-              context.read<BusDataBloc>()..add(NearBusStopsFetch(''));
+              if (state.nearData.isEmpty) {
+                context.read<BusDataBloc>()
+                  ..add(BusDataDownload())
+                  ..add(NearBusStopsFetch(''));
+              } else {
+                context.read<BusDataBloc>()..add(NearBusStopsFetch(''));
+              }
             },
             child: ListView.builder(
               itemCount: state.nearData.length,

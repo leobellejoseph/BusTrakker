@@ -25,7 +25,7 @@ class BusStopTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              height: 45,
+              height: 40,
               decoration: BoxDecoration(
                 color: Color(0xFF1b7b90),
                 borderRadius: BorderRadius.only(
@@ -33,34 +33,34 @@ class BusStopTile extends StatelessWidget {
                   topRight: Radius.circular(5),
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    item.busStopCode,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20),
+                  Expanded(
+                    flex: 4,
+                    child: Center(
+                      child: Text(
+                        item.description,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 16),
+                      ),
+                    ),
                   ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: item.roadName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        showDistance == true && item.distanceDisplay.isNotEmpty
-                            ? TextSpan(
-                                text: ' @ ${item.distanceDisplay}km',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black54),
-                              )
-                            : TextSpan(),
-                      ],
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: Text(
+                        item.busStopCode,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20),
+                      ),
                     ),
                   ),
                 ],
@@ -71,16 +71,36 @@ class BusStopTile extends StatelessWidget {
               height: 0.4,
             ),
             Container(
-              height: 25,
+              height: 20,
               color: Color(0xFF79ab8c),
               child: Center(
-                  child: Text(
-                item.description,
-                style: TextStyle(
-                    color: Color(0xFF1b7b90),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14),
-              )),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      showDistance == true && item.distanceDisplay.isNotEmpty
+                          ? TextSpan(
+                              text: '${item.distanceDisplay}km @ ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            )
+                          : TextSpan(),
+                      TextSpan(
+                        text: item.roadName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                // child: Text(
+                //   item.roadName,
+                //   style: TextStyle(
+                //       color: Color(0xFF1b7b90),
+                //       fontWeight: FontWeight.w600,
+                //       fontSize: 14),
+                // ),
+              ),
             ),
             const Divider(
               color: Colors.white,

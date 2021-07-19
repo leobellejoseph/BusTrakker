@@ -48,9 +48,8 @@ class BusRouteScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                    color: Colors.greenAccent.shade200,
+                    color: Colors.green.shade200,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,
@@ -58,12 +57,10 @@ class BusRouteScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.green,
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(14),
-                                bottomRight: Radius.circular(14),
+                                topRight: Radius.circular(16),
+                                bottomRight: Radius.circular(16),
                               ),
                             ),
-                            padding: const EdgeInsets.only(
-                                left: 6, top: 2, bottom: 2),
                             child: Center(
                               child: Text(service,
                                   style: TextStyle(
@@ -92,7 +89,6 @@ class BusRouteScreen extends StatelessWidget {
                     )), //Service Label
                 const Divider(height: 0, color: Colors.white),
                 Container(
-                  height: 30,
                   color: Colors.grey,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
