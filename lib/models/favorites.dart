@@ -1,11 +1,10 @@
-import 'package:my_bus/models/bus_arrival.dart';
+import 'package:equatable/equatable.dart';
 
-class Favorite {
+class Favorite extends Equatable {
   final String busStopCode;
   final String serviceNo;
-  final BusArrival arrival;
-  Favorite(
-      {required this.busStopCode,
-      required this.serviceNo,
-      required this.arrival});
+  Favorite({required this.busStopCode, required this.serviceNo});
+
+  @override
+  List<Object?> get props => [this.busStopCode, this.serviceNo];
 }

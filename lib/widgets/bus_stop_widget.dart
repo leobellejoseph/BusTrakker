@@ -3,6 +3,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/widgets/centered_text.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
@@ -30,6 +31,7 @@ class _BusStopWidgetState extends State<BusStopWidget> {
         } else if (state.status == Status.no_service) {
           return CenteredText(text: 'No Service');
         } else {
+          final repository = context.read<BusRepository>();
           return FlipCard(
             controller: _flipCardController,
             flipOnTouch: false,
@@ -43,7 +45,8 @@ class _BusStopWidgetState extends State<BusStopWidget> {
                         .getBusArrival(widget.code, value);
                     _flipCardController.state?.toggleCard();
                   }
-                }),
+                },
+                repository: repository),
             back: BusArrivalList(
               onFlip: () {
                 _flipCardController.state?.toggleCard();

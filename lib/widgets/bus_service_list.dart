@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 
 class BusServiceList extends StatelessWidget {
   final BusArrivalsState state;
   final Function onFlip;
-  BusServiceList({required this.state, required this.onFlip});
+  final BusRepository repository;
+  BusServiceList(
+      {required this.state, required this.onFlip, required this.repository});
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -14,8 +17,8 @@ class BusServiceList extends StatelessWidget {
           mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
       itemBuilder: (context, index) {
         final item = state.data[index];
-
-        final favorite = true;
+        final isFavorite = repository.isFavorite(
+            service: item.serviceNo, code: item.busStopCode);
         return Stack(
           alignment: AlignmentDirectional.topStart,
           children: [
@@ -45,7 +48,7 @@ class BusServiceList extends StatelessWidget {
               ),
             ),
             Visibility(
-                visible: favorite,
+                visible: isFavorite,
                 child:
                     Icon(Icons.star, size: 15, color: Colors.yellow.shade500)),
           ],

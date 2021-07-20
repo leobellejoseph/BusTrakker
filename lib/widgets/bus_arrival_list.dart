@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
-
-const kMinuteArrival = TextStyle(
-    fontWeight: FontWeight.bold, fontSize: 24, color: Colors.blueAccent);
-const kArriving =
-    TextStyle(fontWeight: FontWeight.w600, fontSize: 24, color: Colors.blue);
-const kBusLoad = {'SEA': 'Seats Avl.', 'SDA': 'Standing', 'LSD': 'Limited'};
-const kBusFeature = {'WAB': Icons.wheelchair_pickup_outlined};
-const kOperators = {
-  'SBST': 'SBS',
-  'SMRT': 'SMRT',
-  'TTS': 'Tower Transit',
-  'GAS': 'Go Ahead',
-};
 
 class BusArrivalList extends StatelessWidget {
   final Function onFlip;

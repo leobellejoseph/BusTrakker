@@ -27,6 +27,42 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
+  void addFavorite({required String code, required String service}) {
+    emit(state.copyWith(status: FavoriteStatus.loading));
+    try {
+      final favorite = Favorite(busStopCode: code, serviceNo: service);
+      final data = _busRepository.removeFavorite(favorite: favorite);
+      emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
+    } on Failure catch (_) {
+      emit(
+        state.copyWith(
+          status: FavoriteStatus.error,
+          failure:
+              Failure(code: 'Favorites', message: 'Unable to Add Favorite.'),
+        ),
+      );
+    }
+  }
+
+  void removeFavorite({required String code, required String service}) {
+    emit(state.copyWith(status: FavoriteStatus.loading));
+    try {
+      final favorite = Favorite(busStopCode: code, serviceNo: service);
+      //final data = _busRepository.removeFavorite(favorite: favorite);
+      final list = state.data;
+      list.remove(favorite);
+      emit(state.copyWith(data: list, status: FavoriteStatus.loaded));
+    } on Failure catch (_) {
+      emit(
+        state.copyWith(
+          status: FavoriteStatus.error,
+          failure: Failure(
+              code: 'Favorites', message: 'Unable to Remove Favorites.'),
+        ),
+      );
+    }
+  }
+
   bool isFavorite({required String code, required String service}) =>
       _busRepository.isFavorite(service: service, code: code);
 }

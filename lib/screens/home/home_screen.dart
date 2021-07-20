@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
               padding: const EdgeInsets.only(top: 40),
               child: Column(
                 children: [
-                  SizedBox(height: 155, child: FavoritesView()),
+                  SizedBox(height: 158, child: FavoritesView()),
                   _searchView(),
                   TabView(
                     tabController: _tabController,

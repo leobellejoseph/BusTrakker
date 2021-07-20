@@ -55,24 +55,15 @@ class BusRepository extends BaseBusRepository {
   @override
   Future<List<Favorite>> fetchFavorites() async {
     final List<Favorite> data = [
-      Favorite(
-          serviceNo: '106', busStopCode: '43629', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '106', busStopCode: '02049', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '185', busStopCode: '11381', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '48', busStopCode: '11381', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '970', busStopCode: '11401', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '95', busStopCode: '11401', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '61', busStopCode: '11409', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '74', busStopCode: '11389', arrival: BusArrival.empty()),
-      Favorite(
-          serviceNo: '111', busStopCode: '11189', arrival: BusArrival.empty()),
+      Favorite(serviceNo: '106', busStopCode: '11401'),
+      Favorite(serviceNo: '106', busStopCode: '11409'),
+      Favorite(serviceNo: '185', busStopCode: '11381'),
+      Favorite(serviceNo: '48', busStopCode: '11381'),
+      Favorite(serviceNo: '970', busStopCode: '11401'),
+      Favorite(serviceNo: '95', busStopCode: '11401'),
+      Favorite(serviceNo: '61', busStopCode: '11409'),
+      Favorite(serviceNo: '74', busStopCode: '11389'),
+      Favorite(serviceNo: '111', busStopCode: '11189'),
     ];
     _favorites.addAll(data);
     return _favorites;
@@ -87,7 +78,20 @@ class BusRepository extends BaseBusRepository {
 
   @override
   bool isFavorite({required String service, required String code}) => _favorites
-      .where((element) =>
-          element.busStopCode == code && element.serviceNo == service)
+      .where((e) => e.busStopCode == code && e.serviceNo == service)
       .isNotEmpty;
+
+  @override
+  List<Favorite> addFavorite({required Favorite favorite}) {
+    _favorites.add(favorite);
+    return _favorites;
+  }
+
+  @override
+  List<Favorite> removeFavorite({required Favorite favorite}) {
+    print(_favorites.length);
+    _favorites.remove(favorite);
+    print(_favorites.length);
+    return _favorites;
+  }
 }
