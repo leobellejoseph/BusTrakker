@@ -1,0 +1,32 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
+
+part 'favorites_state.dart';
+
+class FavoritesCubit extends Cubit<FavoritesState> {
+  final BusRepository _busRepository;
+  FavoritesCubit({required BusRepository busRepository})
+      : _busRepository = busRepository,
+        super(FavoritesState.initial());
+
+  void fetch() async {
+    emit(state.copyWith(status: FavoriteStatus.loading));
+    try {
+      final data = await _busRepository.fetchFavorites();
+      emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
+    } on Failure catch (_) {
+      emit(
+        state.copyWith(
+          status: FavoriteStatus.error,
+          failure:
+              Failure(code: 'Favorites', message: 'Unable to fetch Favorites.'),
+        ),
+      );
+    }
+  }
+
+  bool isFavorite({required String code, required String service}) =>
+      _busRepository.isFavorite(service: service, code: code);
+}

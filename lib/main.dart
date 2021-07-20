@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/favorites_cubit.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 
 import 'helpers/helpers.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => BusRouteCubit(busRepository: busRepository),
+          ),
+          BlocProvider(
+            create: (context) => FavoritesCubit(busRepository: busRepository),
           ),
         ],
         child: MaterialApp(

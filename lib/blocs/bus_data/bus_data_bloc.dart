@@ -16,9 +16,6 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       : _busRepository = busRepository,
         super(BusDataState.initial());
 
-  // List<BusStop> _stops = [];
-  // List<BusService> _services = [];
-
   @override
   Stream<BusDataState> mapEventToState(
     BusDataEvent event,

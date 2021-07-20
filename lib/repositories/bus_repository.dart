@@ -6,6 +6,8 @@ class BusRepository extends BaseBusRepository {
   final List<BusStop> _stops = [];
   final List<BusService> _services = [];
   final List<BusRoute> _routes = [];
+  final List<Favorite> _favorites = [];
+
   @override
   List<BusStop> getNearStops(int distance) {
     return _stops;
@@ -49,4 +51,43 @@ class BusRepository extends BaseBusRepository {
     _routes.addAll(data);
     return _routes;
   }
+
+  @override
+  Future<List<Favorite>> fetchFavorites() async {
+    final List<Favorite> data = [
+      Favorite(
+          serviceNo: '106', busStopCode: '43629', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '106', busStopCode: '02049', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '185', busStopCode: '11381', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '48', busStopCode: '11381', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '970', busStopCode: '11401', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '95', busStopCode: '11401', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '61', busStopCode: '11409', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '74', busStopCode: '11389', arrival: BusArrival.empty()),
+      Favorite(
+          serviceNo: '111', busStopCode: '11189', arrival: BusArrival.empty()),
+    ];
+    _favorites.addAll(data);
+    return _favorites;
+  }
+
+  @override
+  Favorite getFavorite({required String service, required String code}) =>
+      _favorites
+          .where((element) =>
+              element.serviceNo == service && element.busStopCode == code)
+          .first;
+
+  @override
+  bool isFavorite({required String service, required String code}) => _favorites
+      .where((element) =>
+          element.busStopCode == code && element.serviceNo == service)
+      .isNotEmpty;
 }

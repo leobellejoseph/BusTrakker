@@ -60,7 +60,6 @@ class BusServiceView extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                             flex: 1,

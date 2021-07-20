@@ -14,6 +14,8 @@ class BusServiceList extends StatelessWidget {
           mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
       itemBuilder: (context, index) {
         final item = state.data[index];
+
+        final favorite = true;
         return Stack(
           alignment: AlignmentDirectional.topStart,
           children: [
@@ -42,7 +44,10 @@ class BusServiceList extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.star, size: 15, color: Colors.yellow.shade500),
+            Visibility(
+                visible: favorite,
+                child:
+                    Icon(Icons.star, size: 15, color: Colors.yellow.shade500)),
           ],
         );
       },

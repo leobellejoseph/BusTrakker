@@ -164,16 +164,18 @@ class BusArrivalList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text.rich(
-                      TextSpan(children: [
-                        TextSpan(
-                            text: bus.eta,
-                            style: bus.eta == 'Arriving'
-                                ? kArriving
-                                : kMinuteArrival),
-                        bus.eta == 'Arriving'
-                            ? TextSpan(text: '')
-                            : TextSpan(text: 'min'),
-                      ]),
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                              text: bus.eta,
+                              style: bus.eta == 'Arriving'
+                                  ? kArriving
+                                  : kMinuteArrival),
+                          bus.eta == 'Arriving'
+                              ? TextSpan(text: '')
+                              : TextSpan(text: 'min'),
+                        ],
+                      ),
                     ),
                     Text(kBusLoad[bus.load] ?? 'No Svc'),
                     Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
