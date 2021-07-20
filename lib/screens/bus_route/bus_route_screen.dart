@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 
 class BusRouteScreen extends StatelessWidget {
@@ -14,7 +15,14 @@ class BusRouteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BusRouteCubit, BusRouteState>(
       builder: (context, state) {
-        if (state.status == BusRouteStatus.error) {
+        if (state.status == BusRouteStatus.loading_all) {
+          return Center(
+            child: Text(
+              'Data is still being downloaded.Please try again later.',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          );
+        } else if (state.status == BusRouteStatus.error) {
           return Center(
             child: Text(
               'Unable to Retrieve Data',
@@ -40,8 +48,8 @@ class BusRouteScreen extends StatelessWidget {
           );
         } else {
           final BusStop info = context
-              .read<BusRouteCubit>()
-              .fetchBusStopInfo(state.data.last.busStopCode);
+              .read<BusRepository>()
+              .getBusStop(state.data.last.busStopCode);
           return Container(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -130,16 +138,15 @@ class BusRouteScreen extends StatelessWidget {
                       final prevIndex = prev < 0 ? index : prev;
                       final prevData = state.data[prevIndex];
                       final BusStop info = context
-                          .read<BusRouteCubit>()
-                          .fetchBusStopInfo(item.busStopCode);
+                          .read<BusRepository>()
+                          .getBusStop(item.busStopCode);
                       final BusStop prevInfo = context
-                          .read<BusRouteCubit>()
-                          .fetchBusStopInfo(prevData.busStopCode);
+                          .read<BusRepository>()
+                          .getBusStop(prevData.busStopCode);
                       final showRoadName =
                           (prevInfo.roadName != info.roadName ||
                               prevIndex == 0);
                       final currentBusStop = code == info.busStopCode;
-
                       return Container(
                         height: 35,
                         decoration: BoxDecoration(

@@ -14,32 +14,36 @@ class BusServiceList extends StatelessWidget {
           mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
       itemBuilder: (context, index) {
         final item = state.data[index];
-        return Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 1,
-                color: Colors.grey,
+        return Stack(
+          alignment: AlignmentDirectional.topStart,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(2),
               ),
-            ],
-            //shape: BoxShape(),
-            //color: Color(0xFF008b8b),
-            color: Colors.green.shade100,
-            borderRadius: BorderRadius.circular(2),
-          ),
-          child: RawMaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2.5),
-            ),
-            highlightColor: Colors.lightBlueAccent,
-            onPressed: () => onFlip(item.serviceNo),
-            child: Center(
-              child: Text(
-                item.serviceNo,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
+              child: RawMaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2.5),
+                ),
+                highlightColor: Colors.lightBlueAccent,
+                onPressed: () => onFlip(item.serviceNo),
+                child: Center(
+                  child: Text(
+                    item.serviceNo,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
+                  ),
+                ),
               ),
             ),
-          ),
+            Icon(Icons.star, size: 15, color: Colors.yellow.shade500),
+          ],
         );
       },
     );

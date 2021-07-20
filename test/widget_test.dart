@@ -7,13 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/main.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(busDataBloc: BusDataBloc()));
+    await tester.pumpWidget(MyApp(busRepository: BusRepository()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

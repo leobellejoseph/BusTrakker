@@ -29,3 +29,8 @@ class NearBusStopsFetch extends BusDataEvent {
   @override
   List<Object?> get props => [this.query];
 }
+
+class BusRoutesFetch extends BusDataEvent {
+  @override
+  List<Object?> get props => [];
+}

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 
 import 'helpers/helpers.dart';
 import 'screens/bus_route/cubit/cubit.dart';
@@ -15,38 +16,42 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.black,
   ));
-  runApp(MyApp(busDataBloc: BusDataBloc()));
+  runApp(MyApp(busRepository: BusRepository()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  final BusDataBloc busDataBloc;
-  MyApp({required this.busDataBloc});
+  final BusRepository busRepository;
+  MyApp({required this.busRepository});
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => busDataBloc
-            ..add(
-              BusDataDownload(),
-            )
-            ..add(
-              NearBusStopsFetch(''),
-            ),
+    return RepositoryProvider(
+      create: (context) => busRepository,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => BusDataBloc(busRepository: busRepository)
+              ..add(
+                BusDataDownload(),
+              )
+              ..add(
+                NearBusStopsFetch(''),
+              ),
+          ),
+          BlocProvider(
+            create: (context) => BusRouteCubit(busRepository: busRepository),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: '',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          //home: SplashScreen(),
+          onGenerateRoute: CustomRoute.onGenerateRoute,
+          initialRoute: SplashScreen.id,
         ),
-        BlocProvider(
-            create: (context) => BusRouteCubit(busDataBloc: busDataBloc)),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: '',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        //home: SplashScreen(),
-        onGenerateRoute: CustomRoute.onGenerateRoute,
-        initialRoute: SplashScreen.id,
       ),
     );
   }

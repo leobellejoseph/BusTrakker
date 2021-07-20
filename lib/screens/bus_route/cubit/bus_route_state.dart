@@ -1,6 +1,14 @@
 part of 'bus_route_cubit.dart';
 
-enum BusRouteStatus { initial, loading, loaded, error }
+enum BusRouteStatus {
+  initial,
+  loading,
+  loaded,
+  error,
+  no_data,
+  loading_all,
+  loaded_all,
+}
 
 class BusRouteState extends Equatable {
   final List<BusRoute> data;

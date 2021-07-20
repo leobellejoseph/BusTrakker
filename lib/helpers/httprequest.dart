@@ -29,6 +29,7 @@ class HTTPRequest {
     try {
       final String baseUrl = APISettings.stopsUrl;
       int skip = 0;
+      bool hasRows = true;
       while (skip < 10000) {
         final String url =
             baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');

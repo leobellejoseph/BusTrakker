@@ -5,15 +5,19 @@ import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 
 part 'bus_data_event.dart';
 part 'bus_data_state.dart';
 
 class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
-  BusDataBloc() : super(BusDataState.initial());
+  final BusRepository _busRepository;
+  BusDataBloc({required BusRepository busRepository})
+      : _busRepository = busRepository,
+        super(BusDataState.initial());
 
-  List<BusStop> _stops = [];
-  List<BusService> _services = [];
+  // List<BusStop> _stops = [];
+  // List<BusService> _services = [];
 
   @override
   Stream<BusDataState> mapEventToState(
@@ -40,6 +44,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.nearBusStopsLoading);
     try {
       final List<BusStop> data = [];
+      final _stops = _busRepository.getAllBusStops();
       if (_stops.isNotEmpty) {
         Position _position = await LocationRequest.getLocationPosition();
         final newData = _stops.where((stop) {
@@ -76,8 +81,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
   Stream<BusDataState> _mapEventBusStopsToState() async* {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
-      final data = await HTTPRequest.loadBusStops();
-      _stops.addAll(data);
+      final data = await _busRepository.fetchBusStops();
       yield state.copyWith(
         stopsData: data,
         status: BusDataStatus.busStopsLoaded,
@@ -97,10 +101,8 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
   Stream<BusDataState> _mapEventBusServiceToState() async* {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
-      final data = await HTTPRequest.loadBusServices();
-      _services.addAll(data);
-      final dir1 =
-          _services.where((element) => element.direction == 1).toList();
+      final data = await _busRepository.fetchBusServices();
+      final dir1 = data.where((element) => element.direction == 1).toList();
       yield state.copyWith(
           serviceData: dir1, status: BusDataStatus.busServiceLoaded);
     } on Failure catch (_) {
@@ -119,6 +121,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
       final query = event.query.toLowerCase();
+      final _stops = _busRepository.getAllBusStops();
       final data = _stops.where(
         (element) {
           final code = element.busStopCode.toLowerCase();
@@ -149,6 +152,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
       final _query = event.query.toLowerCase();
+      final _services = _busRepository.getAllBusService();
       final data = _services
           .where((element) => element.serviceNo.contains(_query))
           .toList();

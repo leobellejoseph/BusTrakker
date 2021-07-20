@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -17,6 +18,9 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) {
           if (state.status == BusDataStatus.allLoaded) {
+            // load bus routes in the background
+            context.read<BusRouteCubit>().fetchAllRoutes();
+            // navigate to home screen
             Navigator.pushNamed(context, HomeScreen.id);
           }
         },
