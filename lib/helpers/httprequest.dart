@@ -1,8 +1,16 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/settings/settings.dart';
+
+class StorageKey {
+  static const BusStops = 'busstops';
+  static const BusServices = 'busservices';
+  static const BusRoutes = 'busroutes';
+  static const Favorites = 'favorites';
+}
 
 class HTTPRequest {
   static Future<dynamic> getRequest(String url) async {
@@ -27,21 +35,31 @@ class HTTPRequest {
   static Future<List<BusStop>> loadBusStops([String query = '']) async {
     List<BusStop> _stops = [];
     try {
-      final String baseUrl = APISettings.stopsUrl;
-      int skip = 0;
+      dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusStops);
+      if (fromJson == null) {
+        final String baseUrl = APISettings.stopsUrl;
+        int skip = 0;
+        while (skip < 10000) {
+          final String url =
+              baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
+          final dynamic resp = await HTTPRequest.getRequest(url);
+          if (resp == 'nodata' || resp == null) break;
+          final dynamic data = resp['value'];
 
-      while (skip < 10000) {
-        final String url =
-            baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
-        final dynamic resp = await HTTPRequest.getRequest(url);
-        if (resp == 'nodata' || resp == null) break;
-        final dynamic data = resp['value'];
-        if (data == null) break;
+          if (data == null) break;
 
-        List<BusStop> stops =
-            (data as List).map((e) => BusStop.fromJson(e)).toList();
-        _stops.addAll(stops);
-        skip += 500;
+          List<BusStop> stops =
+              (data as List).map((e) => BusStop.fromJson(e)).toList();
+          _stops.addAll(stops);
+          skip += 500;
+        }
+        final dynamic data = _stops.map((e) => e.toJson()).toList();
+        HydratedBloc.storage.write(StorageKey.BusStops, jsonEncode(data));
+      } else {
+        final List<BusStop> data = (jsonDecode(fromJson) as List)
+            .map((e) => BusStop.fromJson(e))
+            .toList();
+        _stops.addAll(data);
       }
     } catch (e) {
       print('Load Bus Stops: $e');
@@ -52,19 +70,29 @@ class HTTPRequest {
   static Future<List<BusService>> loadBusServices([String query = '']) async {
     List<BusService> _services = [];
     try {
-      final String baseUrl = APISettings.serviceUrl;
-      int skip = 0;
-      while (skip < 10000) {
-        final String url =
-            baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
-        final dynamic resp = await HTTPRequest.getRequest(url);
-        if (resp == null) break;
-        final dynamic services = resp['value'];
-        if (services == null) break;
-        final List<BusService> svcs =
-            (services as List).map((e) => BusService.fromJson(e)).toList();
-        _services.addAll(svcs);
-        skip += 500;
+      dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusServices);
+      if (fromJson == null) {
+        final String baseUrl = APISettings.serviceUrl;
+        int skip = 0;
+        while (skip < 10000) {
+          final String url =
+              baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
+          final dynamic resp = await HTTPRequest.getRequest(url);
+          if (resp == null) break;
+          final dynamic services = resp['value'];
+          if (services == null) break;
+          final List<BusService> svcs =
+              (services as List).map((e) => BusService.fromJson(e)).toList();
+          _services.addAll(svcs);
+          skip += 500;
+        }
+        final dynamic data = _services.map((e) => e.toJson()).toList();
+        HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(data));
+      } else {
+        final List<BusService> data = (jsonDecode(fromJson) as List)
+            .map((e) => BusService.fromJson(e))
+            .toList();
+        _services.addAll(data);
       }
     } catch (e) {
       print('Load Bus Services: $e');
@@ -124,19 +152,29 @@ class HTTPRequest {
   static Future<List<BusRoute>> loadBusRoutes([String query = '']) async {
     List<BusRoute> _routes = [];
     try {
-      final String baseUrl = APISettings.routesUrl;
-      int skip = 0;
-      while (skip < 30000) {
-        final String url =
-            baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
-        final dynamic resp = await HTTPRequest.getRequest(url);
-        if (resp == null) break;
-        final dynamic data = resp['value'];
-        if (data == null) break;
-        List<BusRoute> routes =
-            (data as List).map((e) => BusRoute.fromJson(e)).toList();
+      dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
+      if (fromJson == null) {
+        final String baseUrl = APISettings.routesUrl;
+        int skip = 0;
+        while (skip < 30000) {
+          final String url =
+              baseUrl + (skip == 0 ? '' : '\$skip=${skip.toString()}');
+          final dynamic resp = await HTTPRequest.getRequest(url);
+          if (resp == null) break;
+          final dynamic data = resp['value'];
+          if (data == null) break;
+          List<BusRoute> routes =
+              (data as List).map((e) => BusRoute.fromJson(e)).toList();
+          _routes.addAll(routes);
+          skip += 500;
+        }
+        dynamic data = _routes.map((e) => e.toJson()).toList();
+        HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(data));
+      } else {
+        List<BusRoute> routes = (jsonDecode(fromJson) as List)
+            .map((e) => BusRoute.fromJson(e))
+            .toList();
         _routes.addAll(routes);
-        skip += 500;
       }
     } catch (e) {
       print('Load Bus Routes: $e');

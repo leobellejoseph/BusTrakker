@@ -23,4 +23,13 @@ class BusRoute {
     busStopCode = data['BusStopCode'];
     distance = data['Distance'].toString();
   }
+
+  Map<String, dynamic> toJson() => {
+        'ServiceNo': serviceNo,
+        'Operator': operator,
+        'Direction': direction,
+        'StopSequence': stopSequence,
+        'BusStopCode': busStopCode,
+        'Distance': distance,
+      };
 }

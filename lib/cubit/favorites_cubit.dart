@@ -15,7 +15,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(state.copyWith(status: FavoriteStatus.loading));
     try {
       final data = await _busRepository.fetchFavorites();
-      emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
+      if (data.isEmpty) {
+        emit(state.copyWith(data: data, status: FavoriteStatus.no_data));
+      } else {
+        emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
+      }
     } on Failure catch (_) {
       emit(
         state.copyWith(
@@ -28,11 +32,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   void addFavorite({required String code, required String service}) {
-    emit(state.copyWith(status: FavoriteStatus.loading));
+    emit(state.copyWith(status: FavoriteStatus.loading, index: 0));
     try {
       final favorite = Favorite(busStopCode: code, serviceNo: service);
       final data = _busRepository.addFavorite(favorite: favorite);
-      emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
+      emit(state.copyWith(data: data, status: FavoriteStatus.loaded, index: 0));
     } on Failure catch (_) {
       emit(
         state.copyWith(

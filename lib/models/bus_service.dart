@@ -62,8 +62,21 @@ class BusService {
     pmOffPeakFreq = data['PM_Offpeak_Freq'] ?? 'NA';
     loopDesc = data['LoopDesc'] ?? 'NA';
     busOperator = _getBusOperator(operator);
-    // operatorName = _operatorName[operator] ?? operator;
   }
+
+  Map<String, dynamic> toJson() => {
+        'ServiceNo': serviceNo,
+        'Operator': operator,
+        'Direction': direction,
+        'Category': category,
+        'OriginCode': originCode,
+        'DestinationCode': destinationCode,
+        'AM_Peak_Freq': amPeakFreq,
+        'AM_Offpeak_Freq': amOffPeakFreq,
+        'PM_Peak_Freq': pmPeakFreq,
+        'PM_Offpeak_Freq': pmOffPeakFreq,
+        'LoopDesc': loopDesc
+      };
 
   BusOperator _getBusOperator(String operator) {
     switch (operator) {

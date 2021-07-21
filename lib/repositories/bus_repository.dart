@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/base_bus_repository.dart';
@@ -54,18 +57,14 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<Favorite>> fetchFavorites() async {
-    final List<Favorite> data = [
-      Favorite(serviceNo: '106', busStopCode: '11401'),
-      Favorite(serviceNo: '106', busStopCode: '11409'),
-      Favorite(serviceNo: '185', busStopCode: '11381'),
-      Favorite(serviceNo: '48', busStopCode: '11381'),
-      Favorite(serviceNo: '970', busStopCode: '11401'),
-      Favorite(serviceNo: '95', busStopCode: '11401'),
-      Favorite(serviceNo: '61', busStopCode: '11409'),
-      Favorite(serviceNo: '74', busStopCode: '11389'),
-      Favorite(serviceNo: '111', busStopCode: '11189'),
-    ];
-    _favorites.addAll(data);
+    final List<Favorite> data = [];
+    dynamic fromJson = HydratedBloc.storage.read(StorageKey.Favorites);
+    if (fromJson != null) {
+      List<Favorite> temp = (jsonDecode(fromJson) as List)
+          .map((e) => Favorite.fromJson(e))
+          .toList();
+      _favorites.addAll(temp);
+    }
     return _favorites;
   }
 
@@ -88,6 +87,9 @@ class BusRepository extends BaseBusRepository {
       temp.addAll(_favorites);
       _favorites.clear();
       _favorites.addAll(temp);
+
+      dynamic data = _favorites.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
     }
     return _favorites;
   }

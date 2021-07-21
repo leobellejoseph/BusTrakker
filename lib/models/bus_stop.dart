@@ -8,6 +8,7 @@ class BusStop {
   late double longitude;
   String distanceDisplay = '';
   int distanceInt = 0;
+
   BusStop.fromJson(Map<String, dynamic> data) {
     busStopCode = data['BusStopCode'];
     roadName = data['RoadName'];
@@ -15,6 +16,14 @@ class BusStop {
     latitude = data['Latitude'];
     longitude = data['Longitude'];
   }
+
+  Map<String, dynamic> toJson() => {
+        'BusStopCode': busStopCode,
+        'RoadName': roadName,
+        'Description': description,
+        'Latitude': latitude,
+        'Longitude': longitude
+      };
 
   void setDistance(Position position) {
     double distance = Geolocator.distanceBetween(
