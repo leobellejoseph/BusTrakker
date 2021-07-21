@@ -31,7 +31,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(state.copyWith(status: FavoriteStatus.loading));
     try {
       final favorite = Favorite(busStopCode: code, serviceNo: service);
-      final data = _busRepository.removeFavorite(favorite: favorite);
+      final data = _busRepository.addFavorite(favorite: favorite);
       emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
     } on Failure catch (_) {
       emit(
@@ -48,7 +48,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(state.copyWith(status: FavoriteStatus.loading));
     try {
       final favorite = Favorite(busStopCode: code, serviceNo: service);
-      //final data = _busRepository.removeFavorite(favorite: favorite);
       final list = state.data;
       list.remove(favorite);
       emit(state.copyWith(data: list, status: FavoriteStatus.loaded));

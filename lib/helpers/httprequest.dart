@@ -158,8 +158,7 @@ class HTTPRequest {
         if (resp == 'nodata' || resp['value'] == null) flag = false;
         final dynamic routes = resp['value'];
         if (routes == null || (routes as List).length == 0) break;
-        final data =
-            (routes as List).map((e) => BusRoute.fromJson(e)).where((element) {
+        final data = routes.map((e) => BusRoute.fromJson(e)).where((element) {
           return element.serviceNo == service;
         }).toList();
         _routes.addAll(data);

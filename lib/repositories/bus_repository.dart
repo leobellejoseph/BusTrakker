@@ -83,15 +83,18 @@ class BusRepository extends BaseBusRepository {
 
   @override
   List<Favorite> addFavorite({required Favorite favorite}) {
-    _favorites.add(favorite);
+    if (!_favorites.contains(favorite)) {
+      List<Favorite> temp = [favorite];
+      temp.addAll(_favorites);
+      _favorites.clear();
+      _favorites.addAll(temp);
+    }
     return _favorites;
   }
 
   @override
   List<Favorite> removeFavorite({required Favorite favorite}) {
-    print(_favorites.length);
-    _favorites.remove(favorite);
-    print(_favorites.length);
+    if (_favorites.contains(favorite)) _favorites.remove(favorite);
     return _favorites;
   }
 }

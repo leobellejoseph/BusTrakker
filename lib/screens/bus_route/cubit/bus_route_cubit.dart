@@ -14,7 +14,6 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
     try {
       final data = await _busRepository.fetchBusRoutes();
-      print('Fetching routes completed: ${data.length}');
       emit(state.copyWith(data: data, status: BusRouteStatus.loaded_all));
     } on Failure catch (_) {
       emit(state.copyWith(
@@ -31,6 +30,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       if (currentState.status == BusRouteStatus.loaded_all ||
           currentState.status == BusRouteStatus.loaded) {
         final routes = _busRepository.getBusRoute(service: service, code: code);
+
         if (routes.isNotEmpty) {
           final directionRoute = routes
               .where((element) => element.busStopCode.contains(code))

@@ -42,7 +42,7 @@ class _BusStopWidgetState extends State<BusStopWidget> {
                   if (value.isNotEmpty && widget.code.isNotEmpty) {
                     context
                         .read<BusArrivalCubit>()
-                        .getBusArrival(widget.code, value);
+                        .getBusArrival(widget.code, value, false);
                     _flipCardController.state?.toggleCard();
                   }
                 },
