@@ -16,7 +16,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     try {
       final data = await _busRepository.fetchFavorites();
       if (data.isEmpty) {
-        emit(state.copyWith(data: data, status: FavoriteStatus.no_data));
+        emit(state.copyWith(data: [], status: FavoriteStatus.no_data));
       } else {
         emit(state.copyWith(data: data, status: FavoriteStatus.loaded));
       }

@@ -10,7 +10,7 @@ class BusRepository extends BaseBusRepository {
   final List<BusService> _services = [];
   final List<BusRoute> _routes = [];
   final List<Favorite> _favorites = [];
-
+  SelectedRoute selected = SelectedRoute(code: '', service: '');
   @override
   List<BusStop> getNearStops(int distance) {
     return _stops;
@@ -83,10 +83,11 @@ class BusRepository extends BaseBusRepository {
   @override
   List<Favorite> addFavorite({required Favorite favorite}) {
     if (!_favorites.contains(favorite)) {
-      List<Favorite> temp = [favorite];
-      temp.addAll(_favorites);
-      _favorites.clear();
-      _favorites.addAll(temp);
+      _favorites.add(favorite);
+      // List<Favorite> temp = [favorite];
+      // temp.addAll(_favorites);
+      // _favorites.clear();
+      // _favorites.addAll(temp);
 
       dynamic data = _favorites.map((e) => e.toJson()).toList();
       HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
@@ -98,5 +99,13 @@ class BusRepository extends BaseBusRepository {
   List<Favorite> removeFavorite({required Favorite favorite}) {
     if (_favorites.contains(favorite)) _favorites.remove(favorite);
     return _favorites;
+  }
+
+  @override
+  SelectedRoute getSelectedRoute() => selected;
+
+  @override
+  void setSelectedRoute({required String code, required String service}) {
+    selected = SelectedRoute(code: code, service: service);
   }
 }

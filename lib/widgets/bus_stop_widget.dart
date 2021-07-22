@@ -16,6 +16,7 @@ class BusStopWidget extends StatefulWidget {
 
 class _BusStopWidgetState extends State<BusStopWidget> {
   final FlipCardController _flipCardController = FlipCardController();
+  String service = '';
   @override
   void initState() {
     super.initState();
@@ -37,12 +38,13 @@ class _BusStopWidgetState extends State<BusStopWidget> {
             flipOnTouch: false,
             direction: FlipDirection.VERTICAL,
             front: BusServiceList(
+                code: widget.code,
                 state: state,
-                onFlip: (value) {
-                  if (value.isNotEmpty && widget.code.isNotEmpty) {
+                onFlip: (service) {
+                  if (service.isNotEmpty && widget.code.isNotEmpty) {
                     context
                         .read<BusArrivalCubit>()
-                        .getBusArrival(widget.code, value, false);
+                        .getBusArrival(widget.code, service, false);
                     _flipCardController.state?.toggleCard();
                   }
                 },

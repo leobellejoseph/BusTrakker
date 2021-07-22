@@ -15,4 +15,6 @@ abstract class BaseBusRepository {
   bool isFavorite({required String service, required String code});
   List<Favorite> removeFavorite({required Favorite favorite});
   List<Favorite> addFavorite({required Favorite favorite});
+  SelectedRoute getSelectedRoute();
+  void setSelectedRoute({required String code, required String service});
 }

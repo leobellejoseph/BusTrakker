@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
@@ -16,23 +17,36 @@ class BusArrivalList extends StatelessWidget {
   };
 
   BusArrivalList({required this.onFlip});
-  void _toggleFavorite(
-      BuildContext context, bool isFavorite, String code, String service) {
+
+  void _toggleFavorite(BuildContext context, bool isFavorite) {
+    SelectedRoute selected = context.read<BusRepository>().selected;
+    FavoritesCubit fave = context.read<FavoritesCubit>();
     if (isFavorite) {
-      context
-          .read<FavoritesCubit>()
-          .removeFavorite(code: code, service: service);
+      fave.removeFavorite(code: selected.code, service: selected.service);
     } else {
-      context.read<FavoritesCubit>().addFavorite(code: code, service: service);
+      fave.addFavorite(code: selected.code, service: selected.service);
     }
+  }
+
+  void _showRouteSheet(BuildContext context) {
+    SelectedRoute selected = context.read<BusRepository>().selected;
+    BusRouteCubit route = context.read<BusRouteCubit>();
+    route.fetchRoute(service: selected.service, code: selected.code);
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
+      elevation: 2,
+      context: context,
+      builder: (context) {
+        route.fetchRoute(service: selected.service, code: selected.code);
+        return BusRouteScreen(service: selected.service, code: selected.code);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BusArrivalCubit, BusArrivalState>(
       builder: (context, state) {
-        final code = state.data.busStopCode;
-        final service = state.data.serviceNo;
         if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
         } else {
@@ -65,10 +79,12 @@ class BusArrivalList extends StatelessWidget {
                               Expanded(
                                 child: GestureDetector(
                                   onLongPress: () {
+                                    SelectedRoute selected =
+                                        context.read<BusRepository>().selected;
                                     context
                                         .read<BusArrivalCubit>()
-                                        .getBusArrival(state.data.busStopCode,
-                                            state.data.serviceNo, true);
+                                        .getBusArrival(selected.code,
+                                            selected.service, true);
                                   },
                                   child: RawMaterialButton(
                                     shape: RoundedRectangleBorder(
@@ -79,24 +95,7 @@ class BusArrivalList extends StatelessWidget {
                                     ),
                                     highlightColor: Colors.lightBlue,
                                     onPressed: () {
-                                      context.read<BusRouteCubit>().fetchRoute(
-                                          service: state.data.serviceNo,
-                                          code: state.data.busStopCode);
-                                      showModalBottomSheet(
-                                        backgroundColor: Colors.white,
-                                        elevation: 2,
-                                        context: context,
-                                        builder: (context) {
-                                          context
-                                              .read<BusRouteCubit>()
-                                              .fetchRoute(
-                                                  service: state.data.serviceNo,
-                                                  code: state.data.busStopCode);
-                                          return BusRouteScreen(
-                                              service: state.data.serviceNo,
-                                              code: state.data.busStopCode);
-                                        },
-                                      );
+                                      _showRouteSheet(context);
                                     },
                                     child: Center(
                                       child: Text(
@@ -144,14 +143,16 @@ class BusArrivalList extends StatelessWidget {
                   offset: const Offset(300, 80),
                   child: BlocBuilder<FavoritesCubit, FavoritesState>(
                     builder: (context, state) {
+                      SelectedRoute selected =
+                          context.read<BusRepository>().selected;
                       if (state.status == FavoriteStatus.loading) {
                         return Container();
                       } else {
-                        final isFavorite = state.data.contains(
-                            Favorite(busStopCode: code, serviceNo: service));
+                        final isFavorite = state.data.contains(Favorite(
+                            busStopCode: selected.code,
+                            serviceNo: selected.service));
                         return IconButton(
-                          onPressed: () => _toggleFavorite(
-                              context, isFavorite, code, service),
+                          onPressed: () => _toggleFavorite(context, isFavorite),
                           icon: Icon(
                             isFavorite ? Icons.star : Icons.star_border,
                             color: Colors.yellow.shade600,
