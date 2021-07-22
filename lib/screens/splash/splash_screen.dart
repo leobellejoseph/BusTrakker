@@ -16,6 +16,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) {
           if (state.status == BusDataStatus.allLoaded) {
@@ -24,16 +25,20 @@ class SplashScreen extends StatelessWidget {
             // load bus routes in the background
             context.read<BusRouteCubit>().fetchAllRoutes();
             // navigate to home screen
-            Navigator.pushNamed(context, HomeScreen.id);
+            Future.delayed(const Duration(milliseconds: 500), () {
+              Navigator.pushNamed(context, HomeScreen.id);
+            });
           }
         },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              BlocBuilder<BusDataBloc, BusDataState>(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image(image: AssetImage('images/MyBusLogo.jpg'), fit: BoxFit.fill),
+            const SizedBox(height: 10),
+            Center(
+              child: BlocBuilder<BusDataBloc, BusDataState>(
                 builder: (context, state) {
                   switch (state.status) {
                     case BusDataStatus.busServiceLoading:
@@ -49,12 +54,14 @@ class SplashScreen extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(height: 10),
-              const CircularProgressIndicator(
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: CircularProgressIndicator(
                 color: Colors.lightBlueAccent,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
