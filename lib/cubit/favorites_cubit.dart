@@ -54,7 +54,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       final favorite = Favorite(busStopCode: code, serviceNo: service);
       final list = state.data;
       list.remove(favorite);
-      emit(state.copyWith(data: list, status: FavoriteStatus.loaded));
+      if (list.isEmpty) {
+        emit(state.copyWith(data: [], status: FavoriteStatus.no_data));
+      } else {
+        emit(state.copyWith(data: list, status: FavoriteStatus.loaded));
+      }
     } on Failure catch (_) {
       emit(
         state.copyWith(
