@@ -135,14 +135,12 @@ class FavoritesList extends StatelessWidget {
             },
             child: FlipCard(
               onFlipDone: (event) {
-                if (event) _refreshArrival(context, state, false);
+                if (event == true) _refreshArrival(context, state, false);
               },
               controller: _controller,
               direction: FlipDirection.HORIZONTAL,
               front: FavoriteFront(
-                favorite: favorite,
-                arrival: state.data.firstBus,
-              ),
+                  favorite: favorite, arrival: state.data.firstBus),
               back: FavoriteBack(
                   favorite: favorite, arrival: state.data.secondBus),
             ),

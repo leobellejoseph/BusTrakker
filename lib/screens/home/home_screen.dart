@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,22 +18,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
   TextEditingController _textEditingController = TextEditingController();
   int _tabIndex = 0;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      print('Fore Ground');
+      context.read<FavoritesCubit>().fetch();
+    }
+  }
+
+  @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
     _tabController.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 

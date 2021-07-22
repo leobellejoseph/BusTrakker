@@ -26,15 +26,39 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusService>> fetchBusServices() async {
-    final data = await HTTPRequest.loadBusServices();
-    _services.addAll(data);
+    dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusServices);
+    if (fromJson == null) {
+      final data = await HTTPRequest.loadBusServices();
+      _services.addAll(data);
+      final dynamic tmpData = _services.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(tmpData));
+    } else {
+      final List<BusService> data = (jsonDecode(fromJson) as List)
+          .map((e) => BusService.fromJson(e))
+          .toList();
+      _services.addAll(data);
+    }
     return _services;
   }
 
   @override
   Future<List<BusStop>> fetchBusStops() async {
-    final data = await HTTPRequest.loadBusStops();
-    _stops.addAll(data);
+    dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusStops);
+    if (fromJson == null) {
+      //load data from API
+      final data = await HTTPRequest.loadBusStops();
+      _stops.addAll(data);
+      //parse data for storage
+      final dynamic storage = _stops.map((e) => e.toJson()).toList();
+      //save data
+      HydratedBloc.storage.write(StorageKey.BusStops, jsonEncode(storage));
+    } else {
+      final List<BusStop> data = (jsonDecode(fromJson) as List)
+          .map((e) => BusStop.fromJson(e))
+          .toList();
+      _stops.addAll(data);
+    }
+
     return _stops;
   }
 
@@ -50,8 +74,18 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusRoute>> fetchBusRoutes() async {
-    final data = await HTTPRequest.loadBusRoutes();
-    _routes.addAll(data);
+    dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
+    if (fromJson == null) {
+      final data = await HTTPRequest.loadBusRoutes();
+      _routes.addAll(data);
+      dynamic tmpData = _routes.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(tmpData));
+    } else {
+      List<BusRoute> routes = (jsonDecode(fromJson) as List)
+          .map((e) => BusRoute.fromJson(e))
+          .toList();
+      _routes.addAll(routes);
+    }
     return _routes;
   }
 
@@ -84,11 +118,7 @@ class BusRepository extends BaseBusRepository {
   List<Favorite> addFavorite({required Favorite favorite}) {
     if (!_favorites.contains(favorite)) {
       _favorites.add(favorite);
-      // List<Favorite> temp = [favorite];
-      // temp.addAll(_favorites);
-      // _favorites.clear();
-      // _favorites.addAll(temp);
-
+      // write to cache
       dynamic data = _favorites.map((e) => e.toJson()).toList();
       HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
     }
