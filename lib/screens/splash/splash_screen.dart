@@ -12,7 +12,6 @@ class SplashScreen extends StatelessWidget {
         settings: RouteSettings(name: SplashScreen.id),
         builder: (context) => SplashScreen(),
       );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +24,7 @@ class SplashScreen extends StatelessWidget {
             // load bus routes in the background
             context.read<BusRouteCubit>().fetchAllRoutes();
             // navigate to home screen
-            Future.delayed(const Duration(milliseconds: 500), () {
+            Future.delayed(const Duration(seconds: 1), () {
               Navigator.pushNamed(context, HomeScreen.id);
             });
           }

@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
-      print('Fore Ground');
       context.read<FavoritesCubit>().fetch();
     }
   }

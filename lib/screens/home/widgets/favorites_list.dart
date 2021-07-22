@@ -35,25 +35,24 @@ class FavoritesList extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final favorite = state.data[index];
-                return Slidable(
-                  direction: Axis.vertical,
-                  actions: [
-                    IconSlideAction(
-                      //caption: 'Delete',
-                      color: Colors.red,
-                      icon: Icons.delete,
-                      onTap: () => context
-                          .read<FavoritesCubit>()
-                          .removeFavorite(
-                              code: favorite.busStopCode,
-                              service: favorite.serviceNo),
-                    ),
-                  ],
-                  actionPane: SlidableDrawerActionPane(),
-                  child: BlocProvider<BusArrivalCubit>(
-                    create: (context) => BusArrivalCubit()
-                      ..getBusArrival(
-                          favorite.busStopCode, favorite.serviceNo, false),
+                final cubit = context.read<FavoritesCubit>();
+                return BlocProvider<BusArrivalCubit>(
+                  create: (context) => BusArrivalCubit()
+                    ..getBusArrival(
+                        favorite.busStopCode, favorite.serviceNo, true),
+                  child: Slidable(
+                    direction: Axis.vertical,
+                    actions: [
+                      IconSlideAction(
+                        //caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => cubit.removeFavorite(
+                            code: favorite.busStopCode,
+                            service: favorite.serviceNo),
+                      ),
+                    ],
+                    actionPane: SlidableDrawerActionPane(),
                     child: _showCardContent(context, favorite),
                   ),
                 );
