@@ -44,30 +44,13 @@ class FavoritesList extends StatelessWidget {
                   child: Slidable(
                     direction: Axis.vertical,
                     actions: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: IconSlideAction(
-                              //caption: 'Delete',
-                              color: Colors.green,
-                              icon: Icons.refresh,
-                              onTap: () => arrival.getBusArrival(
-                                  favorite.busStopCode,
-                                  favorite.serviceNo,
-                                  true),
-                            ),
-                          ),
-                          Expanded(
-                            child: IconSlideAction(
-                              //caption: 'Delete',
-                              color: Colors.red,
-                              icon: Icons.delete,
-                              onTap: () => cubit.removeFavorite(
-                                  code: favorite.busStopCode,
-                                  service: favorite.serviceNo),
-                            ),
-                          ),
-                        ],
+                      IconSlideAction(
+                        //caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => cubit.removeFavorite(
+                            code: favorite.busStopCode,
+                            service: favorite.serviceNo),
                       ),
                     ],
                     actionPane: SlidableDrawerActionPane(),
@@ -141,16 +124,18 @@ class FavoritesList extends StatelessWidget {
         if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
         } else {
-          return FlipCard(
-            onFlipDone: (event) {
-              if (event == true) _refreshArrival(context, state, true);
-            },
-            controller: _controller,
-            direction: FlipDirection.HORIZONTAL,
-            front:
-                FavoriteFront(favorite: favorite, arrival: state.data.firstBus),
-            back:
-                FavoriteBack(favorite: favorite, arrival: state.data.secondBus),
+          return GestureDetector(
+            onDoubleTap: () => context
+                .read<BusArrivalCubit>()
+                .getBusArrival(favorite.busStopCode, favorite.serviceNo, true),
+            child: FlipCard(
+              controller: _controller,
+              direction: FlipDirection.HORIZONTAL,
+              front: FavoriteFront(
+                  favorite: favorite, arrival: state.data.firstBus),
+              back: FavoriteBack(
+                  favorite: favorite, arrival: state.data.secondBus),
+            ),
           );
         }
       },
