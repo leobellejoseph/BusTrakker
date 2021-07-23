@@ -65,6 +65,7 @@ class _LocationEnableScreenState extends State<LocationEnableScreen>
                   'This app uses location with permission to see which Bus Stops are near to you. Do you want to enable locations?'),
               TextButton(
                 onPressed: () {
+                  HydratedBloc.storage.write('location', '{true}');
                   Geolocator.openLocationSettings();
                 },
                 child: Row(

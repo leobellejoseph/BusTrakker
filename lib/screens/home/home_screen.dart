@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,10 +26,13 @@ class _HomeScreenState extends State<HomeScreen>
   int _tabIndex = 0;
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       context.read<FavoritesCubit>().fetch();
-      context.read<NearBusCubit>().getNearMeBusStops();
+      final bool isLocationEnabled = await LocationRequest.isLocationEnabled();
+      if (isLocationEnabled == true) {
+        context.read<NearBusCubit>().getNearMeBusStops();
+      }
     }
     super.didChangeAppLifecycleState(state);
   }
