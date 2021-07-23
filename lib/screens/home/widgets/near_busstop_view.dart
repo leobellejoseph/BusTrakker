@@ -2,32 +2,47 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/helpers/helpers.dart';
+import 'package:my_bus/widgets/centered_text.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class NearBusStopsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BusDataBloc, BusDataState>(
+    return BlocBuilder<NearBusCubit, NearBusState>(
       builder: (context, state) {
-        if (state.status == BusDataStatus.nearBusStopsLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
+        if (state.status == NearBusStatus.loading) {
+          return CenteredSpinner();
+        } else if (state.status == NearBusStatus.no_location) {
+          return CenteredTextButton(
+              title: 'Location not enabled', subTitle: '', onTap: () {});
+        } else if (state.status == NearBusStatus.no_permission) {
+          return CenteredTextButton(
+            title: 'Location Permission not set',
+            subTitle: '',
+            onTap: () {
+              print('open settings');
+              LocationRequest.openAppSettings();
+              print('resume settings');
+            },
           );
         } else {
           return RefreshIndicator(
             onRefresh: () async {
-              if (state.nearData.isEmpty) {
-                context.read<BusDataBloc>()
-                  ..add(BusDataDownload())
-                  ..add(NearBusStopsFetch(''));
+              final BusDataBloc bloc = context.read<BusDataBloc>();
+              final NearBusCubit cubit = context.read<NearBusCubit>();
+              if (state.data.isEmpty) {
+                bloc..add(BusDataDownload());
+                cubit.getNearMeBusStops();
               } else {
-                context.read<BusDataBloc>()..add(NearBusStopsFetch(''));
+                cubit.getNearMeBusStops();
               }
             },
             child: ListView.builder(
-              itemCount: state.nearData.length,
+              itemCount: state.data.length,
               itemBuilder: (context, index) {
-                final item = state.nearData[index];
+                final item = state.data[index];
                 return BusStopTile(item: item, showDistance: true);
               },
             ),

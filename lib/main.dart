@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
+import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/cubit/favorites_cubit.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:path_provider/path_provider.dart';
@@ -38,19 +39,16 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => BusDataBloc(busRepository: busRepository)
-              ..add(
-                BusDataDownload(),
-              )
-              ..add(
-                NearBusStopsFetch(''),
-              ),
-          ),
+              create: (context) => BusDataBloc(busRepository: busRepository)
+                ..add(BusDataDownload())),
           BlocProvider(
             create: (context) => BusRouteCubit(busRepository: busRepository),
           ),
           BlocProvider(
             create: (context) => FavoritesCubit(busRepository: busRepository),
+          ),
+          BlocProvider(
+            create: (context) => NearBusCubit(busRepository: busRepository),
           ),
         ],
         child: MaterialApp(

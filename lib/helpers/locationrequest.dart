@@ -15,10 +15,10 @@ class LocationRequest {
   static Future<Position> getLocationPosition() async {
     Position _position = LocationRequest.defaultPosition();
     // check if phone location setting is enabled
-    bool isLocationEnabled = await LocationRequest.isLocationEnabled();
+    //bool isLocationEnabled = await LocationRequest.isLocationEnabled();
 
     // if not enabled, open location settings and let user enable.
-    if (!isLocationEnabled) LocationRequest.openLocationSettings();
+    //if (!isLocationEnabled) LocationRequest.openLocationSettings();
 
     // check if location permission is enabled
     LocationPermission permission =

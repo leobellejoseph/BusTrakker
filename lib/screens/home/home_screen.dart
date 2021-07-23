@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       context.read<FavoritesCubit>().fetch();
+      context.read<NearBusCubit>().getNearMeBusStops();
     }
   }
 

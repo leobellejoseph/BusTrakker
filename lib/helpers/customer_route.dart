@@ -8,6 +8,8 @@ class CustomRoute {
         return SplashScreen.route();
       case HomeScreen.id:
         return HomeScreen.route();
+      case LocationEnableScreen.id:
+        return LocationEnableScreen.route();
       default:
         return _erorrRoute();
     }

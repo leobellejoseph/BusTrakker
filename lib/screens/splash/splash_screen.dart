@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 
@@ -17,15 +19,27 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocListener<BusDataBloc, BusDataState>(
-        listener: (bloc, state) {
+        listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
+            final bool isLocationEnabled =
+                await LocationRequest.isLocationEnabled();
+            final dynamic location = HydratedBloc.storage.read('locationx');
+            if (isLocationEnabled) {
+              // load near bus stops
+              context.read<NearBusCubit>().getNearMeBusStops();
+            }
             // load favorites
             context.read<FavoritesCubit>().fetch();
             // load bus routes in the background
             context.read<BusRouteCubit>().fetchAllRoutes();
             // navigate to home screen
+
             Future.delayed(const Duration(seconds: 1), () {
-              Navigator.pushNamed(context, HomeScreen.id);
+              if (isLocationEnabled) {
+                Navigator.pushNamed(context, HomeScreen.id);
+              } else {
+                Navigator.pushNamed(context, LocationEnableScreen.id);
+              }
             });
           }
         },
