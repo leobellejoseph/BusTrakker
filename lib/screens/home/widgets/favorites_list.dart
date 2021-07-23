@@ -84,7 +84,6 @@ class FavoritesList extends StatelessWidget {
 
   Widget _showCardContent(BuildContext context, Favorite favorite) {
     return Container(
-      //margin: const EdgeInsets.all(2),
       height: double.infinity,
       width: 150,
       child: Card(
@@ -97,7 +96,6 @@ class FavoritesList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _showCardHeader(context, favorite),
-            //const Divider(),
             Expanded(
               child: _showArrival(context, favorite),
             ),
@@ -145,7 +143,7 @@ class FavoritesList extends StatelessWidget {
         } else {
           return FlipCard(
             onFlipDone: (event) {
-              if (event == true) _refreshArrival(context, state, false);
+              if (event == true) _refreshArrival(context, state, true);
             },
             controller: _controller,
             direction: FlipDirection.HORIZONTAL,
