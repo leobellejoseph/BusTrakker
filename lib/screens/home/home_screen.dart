@@ -51,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen>
   void _onFilterData(String query) {
     context.read<BusDataBloc>()
       ..add(BusStopFetch(query))
-      ..add(BusServiceFetch(query))
-      ..add(NearBusStopsFetch(query));
+      ..add(BusServiceFetch(query));
+    context.read<NearBusCubit>().getNearMeBusStops(query);
   }
 
   @override
