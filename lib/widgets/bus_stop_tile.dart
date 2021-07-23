@@ -93,13 +93,6 @@ class BusStopTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                // child: Text(
-                //   item.roadName,
-                //   style: TextStyle(
-                //       color: Color(0xFF1b7b90),
-                //       fontWeight: FontWeight.w600,
-                //       fontSize: 14),
-                // ),
               ),
             ),
             const Divider(

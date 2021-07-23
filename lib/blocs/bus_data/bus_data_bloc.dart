@@ -30,49 +30,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     } else if (event is BusServiceFetch) {
       yield* _mapEventBusServiceFetchToState(event);
     }
-    // } else if (event is NearBusStopsFetch) {
-    //   yield* _mapEventNearBusStopsToState(event);
-    // }
   }
-
-  // Stream<BusDataState> _mapEventNearBusStopsToState(
-  //     NearBusStopsFetch event) async* {
-  //   yield state.copyWith(status: BusDataStatus.nearBusStopsLoading);
-  //   try {
-  //     final List<BusStop> data = [];
-  //     final _stops = _busRepository.getAllBusStops();
-  //     if (_stops.isNotEmpty) {
-  //       Position _position = await LocationRequest.getLocationPosition();
-  //       final newData = _stops.where((stop) {
-  //         stop.setDistance(_position);
-  //         final _query = event.query.toLowerCase();
-  //
-  //         final _busStopCode = stop.busStopCode.toLowerCase();
-  //         final _roadName = stop.roadName.toLowerCase();
-  //         final _description = stop.description.toLowerCase();
-  //         return stop.distanceInt < 400 &&
-  //             (_busStopCode.contains(_query) ||
-  //                 _roadName.contains(_query) ||
-  //                 _description.contains(_query));
-  //       }).toList()
-  //         ..sort((a, b) => a.distanceInt - b.distanceInt);
-  //       data.addAll(newData);
-  //     }
-  //     yield state.copyWith(
-  //       nearData: data,
-  //       status: BusDataStatus.nearBusStopsLoaded,
-  //     );
-  //   } on Failure catch (_) {
-  //     yield state.copyWith(
-  //       status: BusDataStatus.error,
-  //       failure: Failure(
-  //         code: 'Bus Stops',
-  //         message: 'Unable to fetch Near Bus Stops',
-  //       ),
-  //     );
-  //   }
-  //   // TODO: implement mapEventToState
-  // }
 
   Stream<BusDataState> _mapEventBusStopsToState() async* {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);

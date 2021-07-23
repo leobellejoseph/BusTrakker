@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,7 +16,7 @@ class NearBusCubit extends Cubit<NearBusState> {
         super(NearBusState.initial());
 
   void getNearMeBusStops([String query = '']) async {
-    emit(state.copyWith(status: NearBusStatus.loading));
+    emit(state.copyWith(data: [], status: NearBusStatus.loading));
     try {
       final List<BusStop> data = [];
       final bool isLocationEnabled = await LocationRequest.isLocationEnabled();
@@ -22,10 +24,12 @@ class NearBusCubit extends Cubit<NearBusState> {
           await LocationRequest.checkLocationPermission();
       final bool validPermission = (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse);
-      if (isLocationEnabled && validPermission) {
+      if (isLocationEnabled == true && validPermission == true) {
         final _stops = _repository.getAllBusStops();
         if (_stops.isNotEmpty) {
-          Position _position = await LocationRequest.getLocationPosition();
+          Position _position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.best,
+              timeLimit: const Duration(seconds: 2));
           final newData = _stops.where((stop) {
             stop.setDistance(_position);
             final _query = query.toLowerCase();
@@ -39,8 +43,8 @@ class NearBusCubit extends Cubit<NearBusState> {
           }).toList()
             ..sort((a, b) => a.distanceInt - b.distanceInt);
           data.addAll(newData);
+          emit(state.copyWith(data: data, status: NearBusStatus.loaded));
         }
-        emit(state.copyWith(data: data, status: NearBusStatus.loaded));
       } else {
         if (isLocationEnabled == false) {
           emit(state.copyWith(data: [], status: NearBusStatus.no_location));
@@ -55,6 +59,8 @@ class NearBusCubit extends Cubit<NearBusState> {
           status: NearBusStatus.error,
           failure:
               Failure(code: 'Near Bus', message: 'Failed to fetch Near Bus')));
+    } on TimeoutException catch (_) {
+      emit(state.copyWith(data: [], status: NearBusStatus.no_data));
     }
   }
 }

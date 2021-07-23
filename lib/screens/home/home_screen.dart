@@ -26,11 +26,11 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       context.read<FavoritesCubit>().fetch();
       context.read<NearBusCubit>().getNearMeBusStops();
     }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override

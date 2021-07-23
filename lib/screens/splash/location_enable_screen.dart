@@ -24,8 +24,8 @@ class _LocationEnableScreenState extends State<LocationEnableScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       final bool isLocationEnabled = await LocationRequest.isLocationEnabled();
-      if (isLocationEnabled) {
-        BlocProvider.of<NearBusCubit>(context).getNearMeBusStops();
+      if (isLocationEnabled == true) {
+        BlocProvider.of<NearBusCubit>(context).getNearMeBusStops('');
         Navigator.pushNamed(context, HomeScreen.id);
       }
     }

@@ -14,6 +14,13 @@ class NearBusStopsView extends StatelessWidget {
       builder: (context, state) {
         if (state.status == NearBusStatus.loading) {
           return CenteredSpinner();
+        } else if (state.status == NearBusStatus.no_data) {
+          return CenteredTextButton(
+              title: 'No Data. Pull down to refresh.',
+              subTitle: '',
+              onTap: () {
+                context.read<NearBusCubit>().getNearMeBusStops();
+              });
         } else if (state.status == NearBusStatus.no_location) {
           return CenteredTextButton(
               title: 'Location not enabled', subTitle: '', onTap: () {});
@@ -21,32 +28,37 @@ class NearBusStopsView extends StatelessWidget {
           return CenteredTextButton(
             title: 'Location Permission not set',
             subTitle: '',
-            onTap: () {
-              print('open settings');
-              LocationRequest.openAppSettings();
-              print('resume settings');
-            },
+            onTap: () => LocationRequest.openAppSettings(),
           );
         } else {
-          return RefreshIndicator(
-            onRefresh: () async {
-              final BusDataBloc bloc = context.read<BusDataBloc>();
-              final NearBusCubit cubit = context.read<NearBusCubit>();
-              if (state.data.isEmpty) {
-                bloc..add(BusDataDownload());
-                cubit.getNearMeBusStops();
-              } else {
-                cubit.getNearMeBusStops();
-              }
-            },
-            child: ListView.builder(
-              itemCount: state.data.length,
-              itemBuilder: (context, index) {
-                final item = state.data[index];
-                return BusStopTile(item: item, showDistance: true);
+          if (state.data.isNotEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                final BusDataBloc bloc = context.read<BusDataBloc>();
+                final NearBusCubit cubit = context.read<NearBusCubit>();
+                if (state.data.isEmpty) {
+                  bloc.add(BusDataDownload());
+                  cubit.getNearMeBusStops();
+                } else {
+                  cubit.getNearMeBusStops();
+                }
               },
-            ),
-          );
+              child: ListView.builder(
+                itemCount: state.data.length,
+                itemBuilder: (context, index) {
+                  final item = state.data[index];
+                  return BusStopTile(item: item, showDistance: true);
+                },
+              ),
+            );
+          } else {
+            return CenteredTextButton(
+                title: 'No Data. Pull down to refresh.',
+                subTitle: '',
+                onTap: () {
+                  context.read<NearBusCubit>().getNearMeBusStops();
+                });
+          }
         }
       },
     );
