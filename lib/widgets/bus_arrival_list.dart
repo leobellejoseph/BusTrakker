@@ -77,34 +77,24 @@ class BusArrivalList extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: GestureDetector(
-                                  onLongPress: () {
-                                    SelectedRoute selected =
-                                        context.read<BusRepository>().selected;
-                                    context
-                                        .read<BusArrivalCubit>()
-                                        .getBusArrival(selected.code,
-                                            selected.service, true);
-                                  },
-                                  child: RawMaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8),
-                                      ),
+                                child: RawMaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      topRight: Radius.circular(8),
                                     ),
-                                    highlightColor: Colors.lightBlue,
-                                    onPressed: () {
-                                      _showRouteSheet(context);
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        state.data.serviceNo,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black54),
-                                      ),
+                                  ),
+                                  highlightColor: Colors.lightBlue,
+                                  onPressed: () {
+                                    _showRouteSheet(context);
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      state.data.serviceNo,
+                                      style: TextStyle(
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54),
                                     ),
                                   ),
                                 ),
@@ -132,7 +122,15 @@ class BusArrivalList extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: _nextBus(bus: state.data.firstBus, index: 1),
+                      child: GestureDetector(
+                        onDoubleTap: () {
+                          SelectedRoute selected =
+                              context.read<BusRepository>().selected;
+                          context.read<BusArrivalCubit>().getBusArrival(
+                              selected.code, selected.service, true);
+                        },
+                        child: _nextBus(bus: state.data.firstBus, index: 1),
+                      ),
                     ),
                     Expanded(
                       child: _nextBus(bus: state.data.secondBus, index: 2),
