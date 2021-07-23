@@ -27,6 +27,7 @@ class BusRepository extends BaseBusRepository {
   @override
   Future<List<BusService>> fetchBusServices() async {
     dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusServices);
+    _services.clear();
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusServices();
       _services.addAll(data);
@@ -44,6 +45,7 @@ class BusRepository extends BaseBusRepository {
   @override
   Future<List<BusStop>> fetchBusStops() async {
     dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusStops);
+    _stops.clear();
     if (fromJson == null) {
       //load data from API
       final data = await HTTPRequest.loadBusStops();
@@ -75,6 +77,7 @@ class BusRepository extends BaseBusRepository {
   @override
   Future<List<BusRoute>> fetchBusRoutes() async {
     dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
+    _routes.clear();
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusRoutes();
       _routes.addAll(data);
