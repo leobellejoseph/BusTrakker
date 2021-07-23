@@ -23,7 +23,10 @@ class NearBusStopsView extends StatelessWidget {
               });
         } else if (state.status == NearBusStatus.no_location) {
           return CenteredTextButton(
-              title: 'Location not enabled', subTitle: '', onTap: () {});
+            title: 'Location not enabled',
+            subTitle: '',
+            onTap: () => LocationRequest.openAppSettings(),
+          );
         } else if (state.status == NearBusStatus.no_permission) {
           return CenteredTextButton(
             title: 'Location Permission not set',
