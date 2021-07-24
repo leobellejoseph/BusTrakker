@@ -56,7 +56,7 @@ class NearBusStopsView extends StatelessWidget {
             );
           } else {
             return CenteredTextButton(
-                title: 'No Data. Pull down to refresh.',
+                title: 'No Data. Click to refresh.',
                 subTitle: '',
                 onTap: () {
                   context.read<NearBusCubit>().getNearMeBusStops();
