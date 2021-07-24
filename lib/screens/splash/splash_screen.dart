@@ -48,7 +48,7 @@ class SplashScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image(image: AssetImage('images/MyBusLogo.jpg'), fit: BoxFit.fill),
+            Image(image: AssetImage('images/splash.png'), fit: BoxFit.cover),
             const SizedBox(height: 10),
             Center(
               child: BlocBuilder<BusDataBloc, BusDataState>(
