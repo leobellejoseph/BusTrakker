@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/settings/settings.dart';
 
@@ -67,13 +66,14 @@ class HTTPRequest {
         if (resp == null) break;
         final dynamic services = resp['value'];
         if (services == null) break;
-        final List<BusService> svcs =
-            (services as List).map((e) => BusService.fromJson(e)).toList();
+        final List<BusService> svcs = (services as List)
+            .map((e) => BusService.fromJson(e))
+            .toList()
+            .where((element) => element.direction == 1)
+            .toList();
         _services.addAll(svcs);
         skip += 500;
       }
-      final dynamic data = _services.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(data));
     } catch (e) {
       print('Load Bus Services: $e');
     }
@@ -146,8 +146,6 @@ class HTTPRequest {
         _routes.addAll(routes);
         skip += 500;
       }
-      dynamic data = _routes.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(data));
     } catch (e) {
       print('Load Bus Routes: $e');
     }
