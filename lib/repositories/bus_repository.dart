@@ -130,7 +130,11 @@ class BusRepository extends BaseBusRepository {
 
   @override
   List<Favorite> removeFavorite({required Favorite favorite}) {
-    if (_favorites.contains(favorite)) _favorites.remove(favorite);
+    if (_favorites.contains(favorite)) {
+      _favorites.remove(favorite);
+      dynamic data = _favorites.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
+    }
     return _favorites;
   }
 
