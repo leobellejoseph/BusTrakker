@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 
+const kItemSize = 210.0;
 const kAppName = 'myBus';
-// const kBusLoad = {
-//   'SEA': 'Seats Available',
-//   'SDA': 'Standing Available',
-//   'LSD': 'Limited Standing'
-// };
-// const kBusFeature = {'WAB': FontAwesomeIcons.wheelchair};
-// const kOperators = {
-//   'SBST': 'SBS', // 'SBST': 'SBS Transit',
-//   'SMRT': 'SMRT', // 'SMRT': 'SMRT Corporation',
-//   'TTS': 'TowerTransit', // 'TTS': 'Tower Transit Singapore',
-//   'GAS': 'GoAhead', // 'GAS': 'Go Ahead Singapore',
-// };
 const kBusType = {
   'DD': 'Double',
   'SD': 'Single',
