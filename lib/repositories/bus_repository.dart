@@ -94,7 +94,6 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<Favorite>> fetchFavorites() async {
-    final List<Favorite> data = [];
     dynamic fromJson = HydratedBloc.storage.read(StorageKey.Favorites);
     _favorites.clear();
     if (fromJson != null) {

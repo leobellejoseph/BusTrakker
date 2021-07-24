@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/helpers/helpers.dart';
@@ -23,7 +22,7 @@ class SplashScreen extends StatelessWidget {
           if (state.status == BusDataStatus.allLoaded) {
             final bool isLocationEnabled =
                 await LocationRequest.isLocationEnabled();
-            final dynamic location = HydratedBloc.storage.read('locationx');
+            //final dynamic location = HydratedBloc.storage.read('location');
             if (isLocationEnabled) {
               // load near bus stops
               context.read<NearBusCubit>().getNearMeBusStops();

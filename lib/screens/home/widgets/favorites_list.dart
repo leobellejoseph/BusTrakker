@@ -13,12 +13,6 @@ import 'widgets.dart';
 class FavoritesList extends StatelessWidget {
   final FlipCardController _controller = FlipCardController();
 
-  void _refreshArrival(
-          BuildContext context, BusArrivalState state, bool delay) =>
-      context
-          .read<BusArrivalCubit>()
-          .getBusArrival(state.data.busStopCode, state.data.serviceNo, delay);
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesCubit, FavoritesState>(

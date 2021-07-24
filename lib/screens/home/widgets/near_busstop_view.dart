@@ -16,7 +16,7 @@ class NearBusStopsView extends StatelessWidget {
           return CenteredSpinner();
         } else if (state.status == NearBusStatus.no_data) {
           return CenteredTextButton(
-              title: 'No Data. Pull down to refresh.',
+              title: 'No Data. Tap to refresh.',
               subTitle: '',
               onTap: () {
                 context.read<NearBusCubit>().getNearMeBusStops();
@@ -29,7 +29,7 @@ class NearBusStopsView extends StatelessWidget {
           );
         } else if (state.status == NearBusStatus.no_permission) {
           return CenteredTextButton(
-            title: 'Location Permission not set',
+            title: 'Location Permission not set.',
             subTitle: '',
             onTap: () => LocationRequest.openAppSettings(),
           );
@@ -56,7 +56,7 @@ class NearBusStopsView extends StatelessWidget {
             );
           } else {
             return CenteredTextButton(
-                title: 'No Data. Click to refresh.',
+                title: 'No Data. Tap to refresh.',
                 subTitle: '',
                 onTap: () {
                   context.read<NearBusCubit>().getNearMeBusStops();
