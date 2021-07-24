@@ -7,6 +7,7 @@ import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
+import 'package:my_bus/widgets/centered_text.dart';
 
 class BusArrivalList extends StatelessWidget {
   final Function onFlip;
@@ -49,6 +50,9 @@ class BusArrivalList extends StatelessWidget {
       builder: (context, state) {
         if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
+        } else if (state.status == BusArrivalStatus.no_internet) {
+          return CenteredText(
+              text: 'No Connection. Please check network connection.');
         } else {
           return Padding(
             padding: const EdgeInsets.all(4.0),

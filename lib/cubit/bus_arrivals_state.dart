@@ -1,6 +1,6 @@
 part of 'bus_arrivals_cubit.dart';
 
-enum Status { initial, loading, loaded, error, no_service }
+enum Status { initial, loading, loaded, error, no_service, no_internet }
 
 class BusArrivalsState extends Equatable {
   final List<BusArrival> data;

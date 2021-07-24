@@ -5,6 +5,8 @@ import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/bus_route/bus_route_screen.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
+import 'package:my_bus/widgets/centered_spinner.dart';
+import 'package:my_bus/widgets/centered_text.dart';
 
 class BusServiceView extends StatelessWidget {
   @override
@@ -12,9 +14,9 @@ class BusServiceView extends StatelessWidget {
     return BlocBuilder<BusDataBloc, BusDataState>(
       builder: (context, state) {
         if (state.status == BusDataStatus.busServiceLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return CenteredSpinner();
+        } else if (state.status == BusDataStatus.no_internet) {
+          return CenteredText(text: 'No internet. Please check connection.');
         } else {
           return GridView.builder(
               itemCount: state.serviceData.length,

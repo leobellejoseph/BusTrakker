@@ -25,6 +25,7 @@ dependencies:
   hydrated_bloc: ^7.0.1
   path_provider: ^2.0.2
   flutter_slidable: ^0.6.0
+  internet_connection_checker: ^0.0.1+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

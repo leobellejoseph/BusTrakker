@@ -7,3 +7,4 @@ export 'favorites_list.dart';
 export 'favorites_view.dart';
 export 'near_busstop_view.dart';
 export 'tab_view.dart';
+export 'favorite_arrival_card.dart';

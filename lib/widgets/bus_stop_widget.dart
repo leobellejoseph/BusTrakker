@@ -29,6 +29,8 @@ class _BusStopWidgetState extends State<BusStopWidget> {
       builder: (context, state) {
         if (state.status == Status.loading) {
           return LinearProgressIndicator();
+        } else if (state.status == Status.no_internet) {
+          return CenteredText(text: 'Please check internet connection.');
         } else if (state.status == Status.no_service) {
           return CenteredText(text: 'No Service');
         } else {

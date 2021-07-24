@@ -10,11 +10,9 @@ class BusStopsView extends StatelessWidget {
     return BlocBuilder<BusDataBloc, BusDataState>(
       builder: (context, state) {
         if (state.status == BusDataStatus.busStopsLoading) {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator(color: Colors.green),
-            ),
-          );
+          return SliverToBoxAdapter(child: CenteredSpinner());
+        } else if (state.status == BusDataStatus.no_internet) {
+          return CenteredText(text: 'No internet. Please check connection.');
         } else {
           return ListView.builder(
             itemCount: state.stopsData.length,

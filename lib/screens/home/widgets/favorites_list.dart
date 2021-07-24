@@ -1,14 +1,12 @@
-import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
 import 'package:my_bus/widgets/centered_text.dart';
-
-import 'widgets.dart';
 
 class FavoritesList extends StatelessWidget {
   final FlipCardController _controller = FlipCardController();
@@ -74,7 +72,8 @@ class FavoritesList extends StatelessWidget {
           children: [
             _showCardHeader(context, favorite),
             Expanded(
-              child: _showArrival(context, favorite),
+              child: FavoriteArrivalCard(fave: favorite),
+              //child: _showArrival(context, favorite),
             ),
           ],
         ),
@@ -109,30 +108,6 @@ class FavoritesList extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _showArrival(BuildContext context, Favorite favorite) {
-    return BlocBuilder<BusArrivalCubit, BusArrivalState>(
-      builder: (context, state) {
-        if (state.status == BusArrivalStatus.loading) {
-          return CenteredSpinner();
-        } else {
-          return GestureDetector(
-            onDoubleTap: () => context
-                .read<BusArrivalCubit>()
-                .getBusArrival(favorite.busStopCode, favorite.serviceNo, true),
-            child: FlipCard(
-              controller: _controller,
-              direction: FlipDirection.HORIZONTAL,
-              front: FavoriteFront(
-                  favorite: favorite, arrival: state.data.firstBus),
-              back: FavoriteBack(
-                  favorite: favorite, arrival: state.data.secondBus),
-            ),
-          );
-        }
-      },
     );
   }
 }

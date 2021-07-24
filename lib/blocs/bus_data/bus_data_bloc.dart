@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 
@@ -36,10 +37,13 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
       final data = await _busRepository.fetchBusStops();
-      yield state.copyWith(
-        stopsData: data,
-        status: BusDataStatus.busStopsLoaded,
-      );
+      final bool isConnected = await InternetConnectionChecker().hasConnection;
+      if (data.isEmpty && isConnected == false) {
+        yield state.copyWith(status: BusDataStatus.no_internet);
+      } else {
+        yield state.copyWith(
+            stopsData: data, status: BusDataStatus.busStopsLoaded);
+      }
     } on Failure catch (_) {
       yield state.copyWith(
         status: BusDataStatus.error,
@@ -57,8 +61,14 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     try {
       final data = await _busRepository.fetchBusServices();
       final dir1 = data.where((element) => element.direction == 1).toList();
-      yield state.copyWith(
-          serviceData: dir1, status: BusDataStatus.busServiceLoaded);
+      final bool isConnected = await InternetConnectionChecker().hasConnection;
+      if (data.isEmpty && isConnected == false) {
+        yield state.copyWith(
+            serviceData: dir1, status: BusDataStatus.no_internet);
+      } else {
+        yield state.copyWith(
+            serviceData: dir1, status: BusDataStatus.busServiceLoaded);
+      }
     } on Failure catch (_) {
       yield state.copyWith(
         status: BusDataStatus.error,
