@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/widgets/widgets.dart';
@@ -7,14 +8,13 @@ import 'package:my_bus/widgets/widgets.dart';
 class BusStopTile extends StatelessWidget {
   final BusStop item;
   final bool showDistance;
-  final double height;
-  BusStopTile(
-      {required this.item, required this.showDistance, required this.height});
+
+  BusStopTile({required this.item, required this.showDistance});
   @override
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: height,
+        height: kItemSize,
         child: MultiBlocProvider(
           providers: [
             BlocProvider<BusArrivalsCubit>(

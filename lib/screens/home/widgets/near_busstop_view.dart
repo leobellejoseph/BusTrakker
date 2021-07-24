@@ -79,11 +79,9 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
                   final difference =
                       scrollController.offset - itemPositionOffset;
                   final percent =
-                      1.2 - (difference / (kItemSize * heightFactor));
-                  double opacity = percent;
+                      1.5 - (difference / (kItemSize * heightFactor));
+                  double opacity = percent > 1.0 ? 1.0 : 0.0;
                   double scale = percent;
-                  if (opacity > 1.0) opacity = 1.0;
-                  if (opacity < 0.0) opacity = 0.0;
                   if (percent > 1.0) scale = 1.0;
                   return Align(
                     alignment: Alignment.center,
@@ -93,13 +91,10 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
                       child: Transform(
                         alignment: Alignment.center,
                         transform: Matrix4.identity()..scale(scale, 1),
-                        child: BusStopTile(
-                            item: item, showDistance: true, height: kItemSize),
+                        child: BusStopTile(item: item, showDistance: true),
                       ),
                     ),
                   );
-                  // return BusStopTile(
-                  //     item: item, showDistance: true, height: kItemSize);
                 },
               ),
             );

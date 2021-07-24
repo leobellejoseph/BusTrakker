@@ -61,8 +61,7 @@ class _BusStopsViewState extends State<BusStopsView> {
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.identity()..scale(scale, 1),
-                      child: BusStopTile(
-                          item: item, showDistance: false, height: kItemSize),
+                      child: BusStopTile(item: item, showDistance: false),
                     ),
                   ),
                 ),
