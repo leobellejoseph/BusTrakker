@@ -24,12 +24,13 @@ class NearBusCubit extends Cubit<NearBusState> {
           await LocationRequest.checkLocationPermission();
       final bool validPermission = (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse);
+
       if (isLocationEnabled == true && validPermission == true) {
         final _stops = _repository.getAllBusStops();
         if (_stops.isNotEmpty) {
           Position _position = await Geolocator.getCurrentPosition(
               desiredAccuracy: LocationAccuracy.best,
-              timeLimit: const Duration(seconds: 2));
+              timeLimit: const Duration(seconds: 5));
           final newData = _stops.where((stop) {
             stop.setDistance(_position);
             final _query = query.toLowerCase();
