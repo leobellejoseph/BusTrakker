@@ -4,7 +4,7 @@ A simple Singapore bus arrival app that is developed using flutter with Bloc as 
 
 All data used in this app is provided by https://datamall.lta.gov.sg/.
 
-# Landing Page
+# Landing View
 1. Favorites: Tap to view next bus arrival timing. Double Tap to refresh bus arrival timings.
 
 ![image](https://user-images.githubusercontent.com/79257863/126892993-76e8d549-c56b-4307-bfac-6fe8f58f0ef5.png)
