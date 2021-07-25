@@ -29,13 +29,13 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(MyApp(busRepository: BusRepository()));
+  runApp(Main(busRepository: BusRepository()));
 }
 
-class MyApp extends StatelessWidget {
+class Main extends StatelessWidget {
   // This widget is the root of your application.
   final BusRepository busRepository;
-  MyApp({required this.busRepository});
+  Main({required this.busRepository});
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(

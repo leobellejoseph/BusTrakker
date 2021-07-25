@@ -54,6 +54,7 @@ class BusArrivalList extends StatelessWidget {
           return CenteredText(
               text: 'No Connection. Please check network connection.');
         } else {
+          SelectedRoute selected = context.read<BusRepository>().selected;
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: Stack(
@@ -94,7 +95,7 @@ class BusArrivalList extends StatelessWidget {
                                   },
                                   child: Center(
                                     child: Text(
-                                      state.data.serviceNo,
+                                      selected.service,
                                       style: TextStyle(
                                           fontSize: 26,
                                           fontWeight: FontWeight.bold,
