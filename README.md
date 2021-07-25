@@ -33,4 +33,4 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 ![image](https://user-images.githubusercontent.com/79257863/126893047-3c6bace6-19db-49df-870c-a0d9de0aac91.png)
 
 
-APK: https://drive.google.com/file/d/1yNKnwuJ7wjniy5qQB8ULUfREqJLlhk6w/view?usp=sharing
+APK: https://drive.google.com/file/d/1yrn7jgaxYKVau0z5VTjpND3nE-4V0-6C/view?usp=sharing
