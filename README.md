@@ -29,7 +29,7 @@ https://user-images.githubusercontent.com/79257863/126899339-226670b3-82c0-4ffe-
 # Bus Arrival Selection View
 1. Tap favorite(star) icon to bookmark or unmark as favorite.
 2. Double Tap middle section to refresh Bus Arrival Timing.
-3. Tap ^ button to to back to Bus Service List.
+3. Tap ^ button to go back to Bus Service List.
 
 https://user-images.githubusercontent.com/79257863/126899440-577ef662-ba7f-49fa-95aa-92d6e283f925.mp4
 
