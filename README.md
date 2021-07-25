@@ -1,6 +1,6 @@
 # BusTracker
 
-A singapore bus arrival app that is developed using flutter.
+A simple Singapore bus arrival app that is developed using flutter.
 
 
 
