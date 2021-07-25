@@ -15,7 +15,6 @@ https://user-images.githubusercontent.com/79257863/126898927-47485ec8-119c-4e4c-
 
 https://user-images.githubusercontent.com/79257863/126899007-d53cd7d0-f859-4522-81fb-98d651a67e7a.mp4
 
-
 # Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
 
