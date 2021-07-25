@@ -38,24 +38,26 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
         if (state.status == NearBusStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == NearBusStatus.no_data) {
-          return CenteredTextButton(
-              title: 'No Data. Tap to refresh.',
-              subTitle: '',
-              onTap: () {
-                context.read<NearBusCubit>().getNearMeBusStops();
-              });
+          return NoDataWidget(
+              title: 'No Data',
+              subTitle: 'Unable to retrieve data.',
+              caption: 'Refresh',
+              onTap: () => context.read<NearBusCubit>().getNearMeBusStops(),
+              showButton: true);
         } else if (state.status == NearBusStatus.no_location) {
-          return CenteredTextButton(
-            title: 'Location not enabled',
-            subTitle: '',
-            onTap: () => LocationRequest.openAppSettings(),
-          );
+          return NoDataWidget(
+              title: 'Location not enabled',
+              subTitle: 'Please enable location service.',
+              caption: 'Open App Settings',
+              onTap: () => LocationRequest.openAppSettings(),
+              showButton: true);
         } else if (state.status == NearBusStatus.no_permission) {
-          return CenteredTextButton(
-            title: 'Location Permission not set.',
-            subTitle: '',
-            onTap: () => LocationRequest.openAppSettings(),
-          );
+          return NoDataWidget(
+              title: 'Location Permission not set',
+              subTitle: 'Please allow to retrieve location.',
+              caption: 'Open App Settings',
+              onTap: () => LocationRequest.openAppSettings(),
+              showButton: true);
         } else {
           if (state.data.isNotEmpty) {
             return RefreshIndicator(

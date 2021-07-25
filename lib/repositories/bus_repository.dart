@@ -65,7 +65,7 @@ class BusRepository extends BaseBusRepository {
   }
 
   @override
-  List<BusRoute> getBusRoute({String service = '', String code = ''}) =>
+  List<BusRoute> getBusRoute({required String service, String code = ''}) =>
       _routes.where((element) => element.serviceNo == service).toList();
 
   @override

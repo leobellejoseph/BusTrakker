@@ -27,23 +27,66 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     final currentState = state;
     emit(state.copyWith(data: [], status: BusRouteStatus.loading));
     try {
-      if (currentState.status == BusRouteStatus.loaded_all ||
-          currentState.status == BusRouteStatus.loaded) {
+      if (currentState.status == BusRouteStatus.loading_all) {
+        emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
+      } else {
         final routes = _busRepository.getBusRoute(service: service, code: code);
-
         if (routes.isNotEmpty) {
-          final directionRoute = routes
-              .where((element) => element.busStopCode.contains(code))
-              .first;
+          // check the direction
+          final directionRoute =
+              routes.where((element) => element.busStopCode == code).first;
+
           final filtered = routes
               .where((element) => element.direction == directionRoute.direction)
               .toList();
-          emit(state.copyWith(data: filtered, status: BusRouteStatus.loaded));
+
+          final begin = _busRepository.getBusStop(filtered.first.busStopCode);
+          final end = _busRepository.getBusStop(filtered.last.busStopCode);
+          emit(state.copyWith(
+            data: filtered,
+            begin: begin.description,
+            end: end.description,
+            status: BusRouteStatus.loaded,
+            direction: directionRoute.direction,
+          ));
         } else {
           emit(state.copyWith(data: [], status: BusRouteStatus.no_data));
         }
+      }
+    } on Failure catch (_) {
+      emit(state.copyWith(
+          status: BusRouteStatus.error,
+          failure: Failure(
+              code: 'Bus Route', message: 'Unable to fetch Bus Route')));
+    }
+  }
+
+  void toggleRoute({required String service}) {
+    final currentState = state;
+    emit(state.copyWith(data: [], status: BusRouteStatus.loading));
+    try {
+      final routes = _busRepository.getBusRoute(service: service);
+      if (routes.isNotEmpty) {
+        final direction =
+            currentState.direction == 0 || currentState.direction == 2 ? 1 : 2;
+
+        final filtered =
+            routes.where((element) => element.direction == direction).toList();
+        if (filtered.isNotEmpty) {
+          final begin = _busRepository.getBusStop(filtered.first.busStopCode);
+          final end = _busRepository.getBusStop(filtered.last.busStopCode);
+          emit(state.copyWith(
+              data: filtered,
+              begin: begin.description,
+              end: end.description,
+              status: BusRouteStatus.loaded,
+              direction: direction));
+        } else {
+          emit(state.copyWith(
+              data: [], end: 'No Route', status: BusRouteStatus.no_data));
+        }
       } else {
-        emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
+        emit(state.copyWith(data: [], status: BusRouteStatus.no_data));
       }
     } on Failure catch (_) {
       emit(state.copyWith(

@@ -35,7 +35,14 @@ class _BusStopsViewState extends State<BusStopsView> {
         if (state.status == BusDataStatus.busStopsLoading) {
           return SliverToBoxAdapter(child: CenteredSpinner());
         } else if (state.status == BusDataStatus.no_internet) {
-          return CenteredText(text: 'No internet. Please check connection.');
+          return NoDataWidget(
+              title: 'No Internet',
+              subTitle: 'Please check connection settings.',
+              caption: 'Refresh',
+              onTap: () {
+                context.read<BusDataBloc>()..add(BusDataDownload());
+              },
+              showButton: false);
         } else {
           return ListView.builder(
             controller: scrollController,

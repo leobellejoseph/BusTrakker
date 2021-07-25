@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
+import 'package:my_bus/widgets/centered_text.dart';
+import 'package:my_bus/widgets/no_data_widget.dart';
 
 class BusRouteScreen extends StatelessWidget {
   final String service;
@@ -16,19 +18,21 @@ class BusRouteScreen extends StatelessWidget {
     return BlocBuilder<BusRouteCubit, BusRouteState>(
       builder: (context, state) {
         if (state.status == BusRouteStatus.loading_all) {
-          return Center(
-            child: Text(
-              'Data is still being downloaded.Please try again later.',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-          );
+          return CenteredText(
+              text: 'Data is still being downloaded.Please try again later.');
+        } else if (state.status == BusRouteStatus.no_data) {
+          return NoDataWidget(
+              title: 'No Route Found',
+              subTitle: 'Unable to Retrieve Route',
+              caption: 'Back',
+              onTap: () {
+                context
+                    .read<BusRouteCubit>()
+                    .fetchRoute(service: service, code: code);
+              },
+              showButton: true);
         } else if (state.status == BusRouteStatus.error) {
-          return Center(
-            child: Text(
-              'Unable to Retrieve Data',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-          );
+          return CenteredText(text: 'Unable to Retrieve Data');
         } else if (state.status == BusRouteStatus.loading) {
           return Container(
             height: double.infinity,
@@ -84,9 +88,13 @@ class BusRouteScreen extends StatelessWidget {
                               child: TextButton(
                                 style: TextButton.styleFrom(
                                     primary: Colors.blue.shade800),
-                                onPressed: () {},
+                                onPressed: () {
+                                  context
+                                      .read<BusRouteCubit>()
+                                      .toggleRoute(service: service);
+                                },
                                 child: Text(
-                                  'To ${info.description}',
+                                  'To ${state.end}',
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
                               ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
-import 'package:my_bus/widgets/centered_text.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class BusStopWidget extends StatefulWidget {
@@ -30,9 +29,20 @@ class _BusStopWidgetState extends State<BusStopWidget> {
         if (state.status == Status.loading) {
           return LinearProgressIndicator();
         } else if (state.status == Status.no_internet) {
-          return CenteredText(text: 'Please check internet connection.');
+          return NoDataWidget(
+              title: 'No Internet',
+              subTitle: 'Please check connection settings.',
+              caption: '',
+              onTap: () {},
+              showButton: false);
+          //return CenteredText(text: 'Please check internet connection.');
         } else if (state.status == Status.no_service) {
-          return CenteredText(text: 'No Service');
+          return NoDataWidget(
+              title: 'No Service',
+              subTitle: '',
+              caption: '',
+              onTap: () {},
+              showButton: false);
         } else {
           final repository = context.read<BusRepository>();
           return FlipCard(

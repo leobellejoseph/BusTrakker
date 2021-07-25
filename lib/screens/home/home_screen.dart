@@ -27,8 +27,9 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      //context.read<FavoritesCubit>().fetch();
       context.read<NearBusCubit>().getNearMeBusStops();
+      setState(() => _tabIndex = 0);
+      _tabController.animateTo(0);
     }
     super.didChangeAppLifecycleState(state);
   }

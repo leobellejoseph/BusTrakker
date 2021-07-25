@@ -10,8 +10,8 @@ class Favorite extends Equatable {
         'serviceNo': serviceNo,
       };
   Favorite.fromJson(Map<String, dynamic> data) {
-    busStopCode = data['busStopCode'];
-    serviceNo = data['serviceNo'];
+    busStopCode = data['busStopCode'] ?? '';
+    serviceNo = data['serviceNo'] ?? '';
   }
   @override
   List<Object?> get props => [this.busStopCode, this.serviceNo];

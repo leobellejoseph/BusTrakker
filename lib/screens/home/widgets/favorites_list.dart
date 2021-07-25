@@ -1,4 +1,3 @@
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,11 +5,9 @@ import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
-import 'package:my_bus/widgets/centered_text.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class FavoritesList extends StatelessWidget {
-  final FlipCardController _controller = FlipCardController();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesCubit, FavoritesState>(
@@ -18,10 +15,19 @@ class FavoritesList extends StatelessWidget {
         if (state.status == FavoriteStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == FavoriteStatus.no_data) {
-          return CenteredText(text: 'No Favorites Selected');
-        } else {
-          return Container(
+          return SizedBox(
             height: 125,
+            child: NoDataWidget(
+                title: 'No Favorites Selected',
+                subTitle: '',
+                caption: '',
+                onTap: () {},
+                showButton: false),
+          );
+          // return CenteredText(text: 'No Favorites Selected');
+        } else {
+          return SizedBox(
+            height: 126,
             child: ListView.builder(
               itemCount: state.data.length,
               scrollDirection: Axis.horizontal,
@@ -73,7 +79,6 @@ class FavoritesList extends StatelessWidget {
             _showCardHeader(context, favorite),
             Expanded(
               child: FavoriteArrivalCard(fave: favorite),
-              //child: _showArrival(context, favorite),
             ),
           ],
         ),
