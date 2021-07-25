@@ -13,6 +13,23 @@ class BusRouteScreen extends StatelessWidget {
   final ScrollController _controller = ScrollController();
   BusRouteScreen({required this.service, required this.code});
 
+  Widget _showCircularProgress() => Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Colors.lightBlueAccent.withOpacity(0.8),
+                Colors.lightBlueAccent.withOpacity(0.4),
+              ]),
+        ),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BusRouteCubit, BusRouteState>(
@@ -32,24 +49,14 @@ class BusRouteScreen extends StatelessWidget {
               },
               showButton: true);
         } else if (state.status == BusRouteStatus.error) {
-          return CenteredText(text: 'Unable to Retrieve Data');
+          return NoDataWidget(
+              title: 'Unable to Retrieve Data',
+              subTitle: '',
+              caption: '',
+              onTap: () {},
+              showButton: false);
         } else if (state.status == BusRouteStatus.loading) {
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.lightBlueAccent.withOpacity(0.8),
-                    Colors.lightBlueAccent.withOpacity(0.4),
-                  ]),
-            ),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return _showCircularProgress();
         } else {
           final BusStop info = context
               .read<BusRepository>()
