@@ -9,6 +9,9 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 ![image](https://user-images.githubusercontent.com/79257863/126892993-76e8d549-c56b-4307-bfac-6fe8f58f0ef5.png)
 
+https://user-images.githubusercontent.com/79257863/126898927-47485ec8-119c-4e4c-a354-d6c96b8eee2b.mp4
+
+
 # Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
 
