@@ -1,4 +1,4 @@
-# My Bus
+# BusTracker
 
 A singapore bus arrival app that is developed using flutter.
 
