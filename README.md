@@ -1,4 +1,4 @@
-# BusTracker
+# BusTrakker
 
 A simple Singapore bus arrival app that is developed using flutter with Bloc as state management and with Hydrated Bloc(Hive) for caching json data.
 
@@ -21,7 +21,7 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 # Bus Arrival Selection View
 1. Tap Bus Service button to see Bus Route.
-2. Tap favorite(star) icon to bookmark or unmark as favote.
+2. Tap favorite(star) icon to bookmark or unmark as favorite.
 3. Double Tap middle section to refresh Bus Arrival Timing.
 4. Tap ^ button to to back to Bus Service List.
 
