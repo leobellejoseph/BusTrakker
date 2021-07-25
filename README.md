@@ -22,6 +22,8 @@ Bus Stops Tab View
 Bus Arrival Selection View
 1. Tap Bus Service button to see Bus Route.
 2. Tap favorite(star) icon to bookmark or unmark as favote.
+3. Double Tap middle section to refresh Bus Arrival Timing.
+4. Tap ^ button to to back to Bus Service List.
 
 ![image](https://user-images.githubusercontent.com/79257863/126893028-9c29d671-a92d-448f-8d7c-c1fdc7548c4c.png)
 
