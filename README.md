@@ -8,4 +8,4 @@ A singapore bus arrival app that is developed using flutter.
 
 ![image](https://user-images.githubusercontent.com/79257863/126762837-a8532bf1-4361-4ef7-a60c-a23a66477e24.png)
 
-
+APK: https://drive.google.com/file/d/1yNKnwuJ7wjniy5qQB8ULUfREqJLlhk6w/view?usp=sharing
