@@ -17,7 +17,7 @@ https://user-images.githubusercontent.com/79257863/126899007-d53cd7d0-f859-4522-
 
 # Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
-
+2. Tap direction header to toggle between directions if any.
 https://user-images.githubusercontent.com/79257863/126899288-9c966aa4-ab90-4d5c-a2eb-33846a67948e.mp4
 
 # Bus Stops Tab View
@@ -32,10 +32,5 @@ https://user-images.githubusercontent.com/79257863/126899339-226670b3-82c0-4ffe-
 
 https://user-images.githubusercontent.com/79257863/126899440-577ef662-ba7f-49fa-95aa-92d6e283f925.mp4
 
-# Bus Route View
-1. Tap direction header to toggle between directions if any.
-
-![image](https://user-images.githubusercontent.com/79257863/126893047-3c6bace6-19db-49df-870c-a0d9de0aac91.png)
-
-
-APK: https://drive.google.com/file/d/1yrn7jgaxYKVau0z5VTjpND3nE-4V0-6C/view?usp=sharing
+# APK
+https://drive.google.com/file/d/1yrn7jgaxYKVau0z5VTjpND3nE-4V0-6C/view?usp=sharing
