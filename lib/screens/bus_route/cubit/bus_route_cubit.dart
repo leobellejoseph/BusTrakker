@@ -32,23 +32,33 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       } else {
         final routes = _busRepository.getBusRoute(service: service, code: code);
         if (routes.isNotEmpty) {
-          // check the direction
-          final directionRoute =
-              routes.where((element) => element.busStopCode == code).first;
-
-          final filtered = routes
-              .where((element) => element.direction == directionRoute.direction)
-              .toList();
-
+          final List<BusRoute> filtered = [];
+          int direction = 1;
+          if (code.isNotEmpty) {
+            // check the direction
+            final directionRoute =
+                routes.where((element) => element.busStopCode == code).first;
+            direction = directionRoute.direction;
+            final temp = routes
+                .where(
+                    (element) => element.direction == directionRoute.direction)
+                .toList();
+            filtered.addAll(temp);
+          } else {
+            final temp = routes
+                .where((element) => element.direction == direction)
+                .toList();
+            filtered.addAll(temp);
+          }
           final begin = _busRepository.getBusStop(filtered.first.busStopCode);
           final end = _busRepository.getBusStop(filtered.last.busStopCode);
+
           emit(state.copyWith(
-            data: filtered,
-            begin: begin.description,
-            end: end.description,
-            status: BusRouteStatus.loaded,
-            direction: directionRoute.direction,
-          ));
+              data: filtered,
+              begin: begin.description,
+              end: end.description,
+              status: BusRouteStatus.loaded,
+              direction: direction));
         } else {
           emit(state.copyWith(data: [], status: BusRouteStatus.no_data));
         }
