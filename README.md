@@ -9,17 +9,17 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 ![image](https://user-images.githubusercontent.com/79257863/126892993-76e8d549-c56b-4307-bfac-6fe8f58f0ef5.png)
 
-#Bus Services Tab View
+# Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
 
 ![image](https://user-images.githubusercontent.com/79257863/126893002-46eee694-bde6-486d-a8c2-c08bbb5cfd3f.png)
 
-#Bus Stops Tab View
+# Bus Stops Tab View
 1. Tap Bus Service Number to see Bus Arrival timings.
 
 ![image](https://user-images.githubusercontent.com/79257863/126893016-d38a0ce7-19d6-45c5-8612-15a20f3e561c.png)
 
-#Bus Arrival Selection View
+# Bus Arrival Selection View
 1. Tap Bus Service button to see Bus Route.
 2. Tap favorite(star) icon to bookmark or unmark as favote.
 3. Double Tap middle section to refresh Bus Arrival Timing.
@@ -27,7 +27,7 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 ![image](https://user-images.githubusercontent.com/79257863/126893028-9c29d671-a92d-448f-8d7c-c1fdc7548c4c.png)
 
-#Bus Route View
+# Bus Route View
 1. Tap direction header to toggle between directions if any.
 
 ![image](https://user-images.githubusercontent.com/79257863/126893047-3c6bace6-19db-49df-870c-a0d9de0aac91.png)
