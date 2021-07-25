@@ -3,9 +3,11 @@
 A simple Singapore bus arrival app that is developed using flutter.
 
 Landing Page
+
 ![image](https://user-images.githubusercontent.com/79257863/126892993-76e8d549-c56b-4307-bfac-6fe8f58f0ef5.png)
 
 Bus Services Tab View
+
 ![image](https://user-images.githubusercontent.com/79257863/126893002-46eee694-bde6-486d-a8c2-c08bbb5cfd3f.png)
 
 Bus Stops Tab View
