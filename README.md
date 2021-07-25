@@ -6,6 +6,7 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 # Landing View
 1. Favorites: Tap to view next bus arrival timing. Double Tap to refresh bus arrival timings.
+2. To remove or unmark favorites, pull down the tile to show the delete button and tap to remove.
 
 https://user-images.githubusercontent.com/79257863/126898927-47485ec8-119c-4e4c-a354-d6c96b8eee2b.mp4
 
