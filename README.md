@@ -11,6 +11,12 @@ All data used in this app is provided by https://datamall.lta.gov.sg/.
 
 https://user-images.githubusercontent.com/79257863/126898927-47485ec8-119c-4e4c-a354-d6c96b8eee2b.mp4
 
+# Near Me Tab View
+1. Will show Bus Stops that are within 400 meters from the users current location.
+2. Users can tap the Bus Service from their selected Bus Stop to see Bus Arrival timings.
+
+https://user-images.githubusercontent.com/79257863/126899007-d53cd7d0-f859-4522-81fb-98d651a67e7a.mp4
+
 
 # Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
