@@ -18,9 +18,7 @@ https://user-images.githubusercontent.com/79257863/126899007-d53cd7d0-f859-4522-
 # Bus Services Tab View
 1. Tap Bus Service Number to view Bus Route. 
 
-https://drive.google.com/file/d/1cVsABfMmb8MO8RsPoLdawkAZtuB0ufuB/view?usp=sharing
-
-![image](https://user-images.githubusercontent.com/79257863/126893002-46eee694-bde6-486d-a8c2-c08bbb5cfd3f.png)
+https://user-images.githubusercontent.com/79257863/126899288-9c966aa4-ab90-4d5c-a2eb-33846a67948e.mp4
 
 # Bus Stops Tab View
 1. Tap Bus Service Number to see Bus Arrival timings.
