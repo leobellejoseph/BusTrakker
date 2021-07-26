@@ -43,7 +43,10 @@ class FavoriteBack extends StatelessWidget {
                                   : kMinuteArrival),
                           arrival.eta == 'Arriving'
                               ? TextSpan(text: '')
-                              : TextSpan(text: 'min'),
+                              : int.parse(arrival.eta) == 1
+                                  ? TextSpan(text: 'min')
+                                  : TextSpan(text: 'mins'),
+                          //: TextSpan(text: 'min'),
                         ],
                       ),
                     ),

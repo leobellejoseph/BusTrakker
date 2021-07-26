@@ -203,7 +203,9 @@ class BusArrivalList extends StatelessWidget {
                                   : kMinuteArrival),
                           bus.eta == 'Arriving'
                               ? TextSpan(text: '')
-                              : TextSpan(text: 'min'),
+                              : int.parse(bus.eta) == 1
+                                  ? TextSpan(text: 'min')
+                                  : TextSpan(text: 'mins'),
                         ],
                       ),
                     ),
