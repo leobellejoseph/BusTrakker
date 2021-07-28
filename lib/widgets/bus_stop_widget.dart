@@ -19,7 +19,6 @@ class _BusStopWidgetState extends State<BusStopWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<BusArrivalsCubit>().getBusServices(widget.code);
   }
 
   @override

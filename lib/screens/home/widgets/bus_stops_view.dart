@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
-import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class BusStopsView extends StatefulWidget {
@@ -43,17 +42,23 @@ class _BusStopsViewState extends State<BusStopsView> {
               },
               showButton: false);
         } else {
-          return ListView.builder(
-            controller: scrollController,
-            itemCount: state.stopsData.length,
-            itemBuilder: (context, index) {
-              final item = state.stopsData[index];
-
-              return BlocProvider<BusArrivalsCubit>(
-                create: (context) => BusArrivalsCubit(),
-                child: BusStopTile(item: item, showDistance: false),
-              );
+          return NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollEndNotification) {
+                final index =
+                    (scrollController.position.pixels.toInt() / 100).floor();
+                print(index);
+              } else {}
+              return true;
             },
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: state.stopsData.length,
+              itemBuilder: (context, index) {
+                final item = state.stopsData[index];
+                return BusStopTile(item: item, showDistance: false);
+              },
+            ),
           );
         }
       },
