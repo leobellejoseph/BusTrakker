@@ -13,12 +13,28 @@ class BusStopWidget extends StatefulWidget {
   _BusStopWidgetState createState() => _BusStopWidgetState();
 }
 
-class _BusStopWidgetState extends State<BusStopWidget> {
+class _BusStopWidgetState extends State<BusStopWidget>
+    with WidgetsBindingObserver {
   final FlipCardController _flipCardController = FlipCardController();
   String service = '';
   @override
   void initState() {
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<BusArrivalsCubit>().getBusServices(widget.code);
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
