@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/helpers/helpers.dart';
@@ -24,8 +25,14 @@ class SplashScreen extends StatelessWidget {
                 await LocationRequest.isLocationEnabled();
             //final dynamic location = HydratedBloc.storage.read('location');
             if (isLocationEnabled) {
-              // load near bus stops
-              context.read<NearBusCubit>().getNearMeBusStops();
+              final permission = await LocationRequest.requestPermission();
+              final hasPermission =
+                  (permission == LocationPermission.whileInUse ||
+                      permission == LocationPermission.always);
+              if (hasPermission) {
+                // load near bus stops
+                context.read<NearBusCubit>().getNearMeBusStops();
+              }
             }
             // load favorites
             context.read<FavoritesCubit>().fetch();
