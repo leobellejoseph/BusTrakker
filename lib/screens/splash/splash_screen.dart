@@ -21,38 +21,38 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
-            final bool location = StorageHelper.exists('location');
+            //final bool location = StorageHelper.exists('location');
 
-            if (location == false) {
-              final bool isLocationEnabled =
-                  await LocationRequest.isLocationEnabled();
-              if (isLocationEnabled) {
-                StorageHelper.write('location', '{true}');
-                final permission = await LocationRequest.requestPermission();
-                final hasPermission =
-                    (permission == LocationPermission.whileInUse ||
-                        permission == LocationPermission.always);
-                if (hasPermission) {
-                  // load near bus stops
-                  context.read<NearBusCubit>().getNearMeBusStops();
-                }
+            //if (location == false) {
+            final bool isLocationEnabled =
+                await LocationRequest.isLocationEnabled();
+            if (isLocationEnabled) {
+              StorageHelper.write('location', '{true}');
+              final permission = await LocationRequest.requestPermission();
+              final hasPermission =
+                  (permission == LocationPermission.whileInUse ||
+                      permission == LocationPermission.always);
+              if (hasPermission) {
+                // load near bus stops
+                context.read<NearBusCubit>().getNearMeBusStops();
               }
-              // load favorites
-              context.read<FavoritesCubit>().fetch();
-              // load bus routes in the background
-              context.read<BusRouteCubit>().fetchAllRoutes();
-              // navigate to home screen
-
-              Future.delayed(const Duration(seconds: 1), () {
-                if (isLocationEnabled) {
-                  Navigator.pushNamed(context, HomeScreen.id);
-                } else {
-                  Navigator.pushNamed(context, LocationEnableScreen.id);
-                }
-              });
-            } else {
-              Navigator.pushNamed(context, HomeScreen.id);
             }
+            // load favorites
+            context.read<FavoritesCubit>().fetch();
+            // load bus routes in the background
+            context.read<BusRouteCubit>().fetchAllRoutes();
+            // navigate to home screen
+
+            Future.delayed(const Duration(seconds: 1), () {
+              if (isLocationEnabled) {
+                Navigator.pushNamed(context, HomeScreen.id);
+              } else {
+                Navigator.pushNamed(context, LocationEnableScreen.id);
+              }
+            });
+            // } else {
+            //   Navigator.pushNamed(context, HomeScreen.id);
+            // }
           }
         },
         child: Column(

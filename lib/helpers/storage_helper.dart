@@ -6,14 +6,7 @@ class StorageHelper {
   static void write(String key, dynamic value) =>
       HydratedBloc.storage.write(key, jsonEncode(value));
 
-  static dynamic read(String key) {
-    dynamic data = HydratedBloc.storage.read(key);
-    if (data != null) {
-      return jsonDecode(data);
-    } else {
-      return '';
-    }
-  }
+  static dynamic read(String key) => HydratedBloc.storage.read(key);
 
   static bool exists(String key) => HydratedBloc.storage.read(key) != null;
 

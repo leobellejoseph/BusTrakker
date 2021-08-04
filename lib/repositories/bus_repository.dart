@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/base_bus_repository.dart';
@@ -32,9 +34,10 @@ class BusRepository extends BaseBusRepository {
       final dynamic tmpData = _services.map((e) => e.toJson()).toList();
       StorageHelper.write(StorageKey.BusServices, tmpData);
     } else {
-      final List<BusService> data =
-          (fromJson as List).map((e) => BusService.fromJson(e)).toList();
-      _services.addAll(data);
+      final data = jsonDecode(fromJson);
+      final List<BusService> list =
+          (data as List).map((e) => BusService.fromJson(e)).toList();
+      _services.addAll(list);
     }
     return _services;
   }
@@ -52,9 +55,10 @@ class BusRepository extends BaseBusRepository {
       //save data
       StorageHelper.write(StorageKey.BusStops, storage);
     } else {
-      final List<BusStop> data =
-          (fromJson as List).map((e) => BusStop.fromJson(e)).toList();
-      _stops.addAll(data);
+      final data = jsonDecode(fromJson);
+      final List<BusStop> list =
+          (data as List).map((e) => BusStop.fromJson(e)).toList();
+      _stops.addAll(list);
     }
 
     return _stops;
@@ -80,9 +84,9 @@ class BusRepository extends BaseBusRepository {
       dynamic tmp = _routes.map((e) => e.toJson()).toList();
       StorageHelper.write(StorageKey.BusRoutes, tmp);
     } else {
-      List<BusRoute> routes =
-          (fromJson as List).map((e) => BusRoute.fromJson(e)).toList();
-      _routes.addAll(routes);
+      final data = jsonDecode(fromJson);
+      final list = (fromJson as List).map((e) => BusRoute.fromJson(e)).toList();
+      _routes.addAll(list);
     }
     return _routes;
   }
