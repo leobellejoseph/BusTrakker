@@ -143,7 +143,7 @@ class BusArrivalList extends StatelessWidget {
                   ],
                 ),
                 Transform.translate(
-                  offset: const Offset(300, 80),
+                  offset: const Offset(310, -5),
                   child: BlocBuilder<FavoritesCubit, FavoritesState>(
                     builder: (context, state) {
                       SelectedRoute selected =
@@ -159,7 +159,7 @@ class BusArrivalList extends StatelessWidget {
                           icon: Icon(
                             isFavorite ? Icons.star : Icons.star_border,
                             color: Colors.yellow.shade600,
-                            size: 35,
+                            size: 40,
                           ),
                         );
                       }
