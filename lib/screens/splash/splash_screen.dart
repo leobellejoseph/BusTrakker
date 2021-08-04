@@ -27,6 +27,7 @@ class SplashScreen extends StatelessWidget {
               final bool isLocationEnabled =
                   await LocationRequest.isLocationEnabled();
               if (isLocationEnabled) {
+                StorageHelper.write('location', '{true}');
                 final permission = await LocationRequest.requestPermission();
                 final hasPermission =
                     (permission == LocationPermission.whileInUse ||
