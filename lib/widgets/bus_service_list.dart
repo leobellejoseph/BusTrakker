@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/cubit/bus_arrivals_cubit.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 
 class BusServiceList extends StatelessWidget {

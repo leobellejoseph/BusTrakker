@@ -6,6 +6,7 @@ class BusStop {
   late String description;
   late double latitude;
   late double longitude;
+  List<String> keywords = [];
   String distanceDisplay = '';
   int distanceInt = 0;
 
@@ -31,4 +32,8 @@ class BusStop {
     distanceDisplay = (distance / 1000).toStringAsFixed(2);
     distanceInt = distance.toInt();
   }
+
+  void setKeywords(String keyword) => keywords.add(keyword);
+
+  String get getKewords => keywords.join(',');
 }

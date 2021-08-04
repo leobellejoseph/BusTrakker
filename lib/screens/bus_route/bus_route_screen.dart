@@ -43,9 +43,7 @@ class BusRouteScreen extends StatelessWidget {
               subTitle: 'Unable to Retrieve Route',
               caption: 'Back',
               onTap: () {
-                context
-                    .read<BusRouteCubit>()
-                    .fetchRoute(service: service, code: code);
+                context.read<BusRouteCubit>().fetchRoute(service: service);
               },
               showButton: true);
         } else if (state.status == BusRouteStatus.error) {
@@ -58,9 +56,6 @@ class BusRouteScreen extends StatelessWidget {
         } else if (state.status == BusRouteStatus.loading) {
           return _showCircularProgress();
         } else {
-          final BusStop info = context
-              .read<BusRepository>()
-              .getBusStop(state.data.last.busStopCode);
           return Container(
             child: Column(
               mainAxisSize: MainAxisSize.max,

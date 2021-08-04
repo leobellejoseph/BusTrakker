@@ -23,6 +23,23 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     }
   }
 
+  void fetchServices({required String code}) {
+    emit(state.copyWith(data: [], status: BusRouteStatus.loading));
+    try {
+      final routes = _busRepository.getBusRouteByBusStop(code: code);
+      if (routes.isEmpty) {
+        emit(state.copyWith(data: routes, status: BusRouteStatus.no_data));
+      } else {
+        emit(state.copyWith(data: routes, status: BusRouteStatus.loaded));
+      }
+    } on Failure catch (_) {
+      emit(state.copyWith(
+          status: BusRouteStatus.error,
+          failure: Failure(
+              code: 'Bus Route', message: 'Unable to fetch Bus Route')));
+    }
+  }
+
   void fetchRoute({required String service, String code = ''}) async {
     final currentState = state;
     emit(state.copyWith(data: [], status: BusRouteStatus.loading));
@@ -30,7 +47,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       if (currentState.status == BusRouteStatus.loading_all) {
         emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
       } else {
-        final routes = _busRepository.getBusRoute(service: service, code: code);
+        final routes = _busRepository.getBusRouteByService(service: service);
         if (routes.isNotEmpty) {
           final List<BusRoute> filtered = [];
           int direction = 1;
@@ -75,7 +92,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     final currentState = state;
     emit(state.copyWith(data: [], status: BusRouteStatus.loading));
     try {
-      final routes = _busRepository.getBusRoute(service: service);
+      final routes = _busRepository.getBusRouteByService(service: service);
       if (routes.isNotEmpty) {
         final direction =
             currentState.direction == 0 || currentState.direction == 2 ? 1 : 2;

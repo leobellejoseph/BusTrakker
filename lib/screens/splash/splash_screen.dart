@@ -21,32 +21,37 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
-            final bool isLocationEnabled =
-                await LocationRequest.isLocationEnabled();
-            //final dynamic location = HydratedBloc.storage.read('location');
-            if (isLocationEnabled) {
-              final permission = await LocationRequest.requestPermission();
-              final hasPermission =
-                  (permission == LocationPermission.whileInUse ||
-                      permission == LocationPermission.always);
-              if (hasPermission) {
-                // load near bus stops
-                context.read<NearBusCubit>().getNearMeBusStops();
-              }
-            }
-            // load favorites
-            context.read<FavoritesCubit>().fetch();
-            // load bus routes in the background
-            context.read<BusRouteCubit>().fetchAllRoutes();
-            // navigate to home screen
+            final bool location = StorageHelper.exists('location');
 
-            Future.delayed(const Duration(seconds: 1), () {
+            if (location == false) {
+              final bool isLocationEnabled =
+                  await LocationRequest.isLocationEnabled();
               if (isLocationEnabled) {
-                Navigator.pushNamed(context, HomeScreen.id);
-              } else {
-                Navigator.pushNamed(context, LocationEnableScreen.id);
+                final permission = await LocationRequest.requestPermission();
+                final hasPermission =
+                    (permission == LocationPermission.whileInUse ||
+                        permission == LocationPermission.always);
+                if (hasPermission) {
+                  // load near bus stops
+                  context.read<NearBusCubit>().getNearMeBusStops();
+                }
               }
-            });
+              // load favorites
+              context.read<FavoritesCubit>().fetch();
+              // load bus routes in the background
+              context.read<BusRouteCubit>().fetchAllRoutes();
+              // navigate to home screen
+
+              Future.delayed(const Duration(seconds: 1), () {
+                if (isLocationEnabled) {
+                  Navigator.pushNamed(context, HomeScreen.id);
+                } else {
+                  Navigator.pushNamed(context, LocationEnableScreen.id);
+                }
+              });
+            } else {
+              Navigator.pushNamed(context, HomeScreen.id);
+            }
           }
         },
         child: Column(

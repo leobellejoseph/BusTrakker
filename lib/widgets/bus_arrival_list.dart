@@ -32,7 +32,7 @@ class BusArrivalList extends StatelessWidget {
   void _showRouteSheet(BuildContext context) {
     SelectedRoute selected = context.read<BusRepository>().selected;
     BusRouteCubit route = context.read<BusRouteCubit>();
-    route.fetchRoute(service: selected.service, code: selected.code);
+    route.fetchRoute(service: selected.service);
     showModalBottomSheet(
       backgroundColor: Colors.white,
       elevation: 2,
