@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/base_bus_repository.dart';
@@ -26,13 +27,13 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusService>> fetchBusServices() async {
-    dynamic fromJson = StorageHelper.read(StorageKey.BusServices);
+    dynamic fromJson = HydratedBloc.storage.read(StorageKey.BusServices);
     _services.clear();
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusServices();
       _services.addAll(data);
-      final dynamic tmpData = _services.map((e) => e.toJson()).toList();
-      StorageHelper.write(StorageKey.BusServices, tmpData);
+      final tmpData = _services.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(tmpData));
     } else {
       final data = jsonDecode(fromJson);
       final List<BusService> list =
@@ -44,7 +45,7 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusStop>> fetchBusStops() async {
-    final fromJson = StorageHelper.read(StorageKey.BusStops);
+    final fromJson = HydratedBloc.storage.read(StorageKey.BusStops);
     _stops.clear();
     if (fromJson == null) {
       //load data from API
@@ -53,11 +54,10 @@ class BusRepository extends BaseBusRepository {
       //parse data for storage
       final dynamic storage = _stops.map((e) => e.toJson()).toList();
       //save data
-      StorageHelper.write(StorageKey.BusStops, storage);
+      HydratedBloc.storage.write(StorageKey.BusStops, jsonEncode(storage));
     } else {
       final data = jsonDecode(fromJson);
-      final List<BusStop> list =
-          (data as List).map((e) => BusStop.fromJson(e)).toList();
+      final list = (data as List).map((e) => BusStop.fromJson(e)).toList();
       _stops.addAll(list);
     }
 
@@ -76,16 +76,16 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusRoute>> fetchBusRoutes() async {
-    final fromJson = StorageHelper.read(StorageKey.BusRoutes);
+    final fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
     _routes.clear();
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusRoutes();
       _routes.addAll(data);
       dynamic tmp = _routes.map((e) => e.toJson()).toList();
-      StorageHelper.write(StorageKey.BusRoutes, tmp);
+      HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(tmp));
     } else {
       final data = jsonDecode(fromJson);
-      final list = (fromJson as List).map((e) => BusRoute.fromJson(e)).toList();
+      final list = (data as List).map((e) => BusRoute.fromJson(e)).toList();
       _routes.addAll(list);
     }
     return _routes;
@@ -93,11 +93,11 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<Favorite>> fetchFavorites() async {
-    final fromJson = StorageHelper.read(StorageKey.Favorites);
+    final fromJson = HydratedBloc.storage.read(StorageKey.Favorites);
     _favorites.clear();
     if (fromJson != null) {
-      List<Favorite> temp =
-          (fromJson as List).map((e) => Favorite.fromJson(e)).toList();
+      final data = jsonDecode(fromJson);
+      final temp = (data as List).map((e) => Favorite.fromJson(e)).toList();
       _favorites.addAll(temp);
     }
     return _favorites;
@@ -121,7 +121,7 @@ class BusRepository extends BaseBusRepository {
       _favorites.add(favorite);
       // write to cache
       dynamic data = _favorites.map((e) => e.toJson()).toList();
-      StorageHelper.write(StorageKey.Favorites, data);
+      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
     }
     return _favorites;
   }
@@ -130,8 +130,8 @@ class BusRepository extends BaseBusRepository {
   List<Favorite> removeFavorite({required Favorite favorite}) {
     if (_favorites.contains(favorite)) {
       _favorites.remove(favorite);
-      dynamic data = _favorites.map((e) => e.toJson()).toList();
-      StorageHelper.write(StorageKey.Favorites, data);
+      final data = _favorites.map((e) => e.toJson()).toList();
+      HydratedBloc.storage.write(StorageKey.Favorites, data);
     }
     return _favorites;
   }

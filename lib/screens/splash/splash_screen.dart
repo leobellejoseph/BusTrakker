@@ -21,9 +21,8 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
-            //final bool location = StorageHelper.exists('location');
-
-            //if (location == false) {
+            final bool location = StorageHelper.exists('location');
+            // if (location == false) {
             final bool isLocationEnabled =
                 await LocationRequest.isLocationEnabled();
             if (isLocationEnabled) {
