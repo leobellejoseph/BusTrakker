@@ -49,12 +49,12 @@ class FavoriteFront extends StatelessWidget {
                                 : int.parse(arrival.eta) == 1
                                     ? TextSpan(text: 'min')
                                     : TextSpan(text: 'mins'),
-                            //: TextSpan(text: 'min'),
                           ],
                         ),
                       ),
+                      Text(kBusType[arrival.type] ?? 'No Svc'),
                       Text(kBusLoad[arrival.load] ?? 'No Svc'),
-                      Text(arrival.feature == 'WAB' ? 'Wheelchair' : ''),
+                      // Text(arrival.feature == 'WAB' ? 'Wheelchair' : ''),
                     ],
                   ),
           ],

@@ -16,6 +16,6 @@ const kOperators = {
   'GAS': 'Go Ahead',
 };
 const kMinuteArrival = TextStyle(
-    fontWeight: FontWeight.bold, fontSize: 24, color: Colors.blueAccent);
+    fontWeight: FontWeight.bold, fontSize: 26, color: Colors.blueAccent);
 const kArriving =
     TextStyle(fontWeight: FontWeight.w600, fontSize: 24, color: Colors.blue);

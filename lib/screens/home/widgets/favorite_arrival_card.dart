@@ -47,15 +47,12 @@ class _FavoriteArrivalCardState extends State<FavoriteArrivalCard>
         if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == BusArrivalStatus.no_internet) {
-          return NoDataWidget(title: 'No Internet', subTitle: '', caption: '', onTap: (){}, showButton: false);
-          // return CenteredTextButton(
-          //   title: 'No Internet',
-          //   subTitle: '',
-          //   onTap: () {
-          //     context.read<BusArrivalCubit>().getBusArrival(
-          //         widget.fave.busStopCode, widget.fave.serviceNo, true);
-          //   },
-          // );
+          return NoDataWidget(
+              title: 'No Internet',
+              subTitle: '',
+              caption: '',
+              onTap: () {},
+              showButton: false);
         } else {
           return GestureDetector(
             onDoubleTap: () => context.read<BusArrivalCubit>().getBusArrival(

@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
 import 'package:my_bus/widgets/widgets.dart';
@@ -89,29 +92,99 @@ class FavoritesList extends StatelessWidget {
   Widget _showCardHeader(BuildContext context, Favorite favorite) {
     return Container(
       padding: const EdgeInsets.all(2),
-      height: 25,
+      height: 29,
       child: Center(
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: favorite.serviceNo,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              const TextSpan(
-                text: ' @ ',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              TextSpan(
-                text: favorite.busStopCode,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              favorite.serviceNo,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            const Text(
+              ' @ ',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            GestureDetector(
+              onTap: () {
+                BusRepository repo = context.read<BusRepository>();
+                BusStop stop = repo.getBusStop(favorite.busStopCode);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: const Duration(milliseconds: 500),
+                    backgroundColor: Colors.lightBlue,
+                    content: Text(
+                      '${stop.description}, ${stop.roadName}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                favorite.busStopCode,
                 style: TextStyle(
+                    decoration: TextDecoration.underline,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.blue[700]),
               ),
-            ],
-          ),
+            )
+          ],
         ),
+        // child: Text.rich(
+        //   TextSpan(
+        //     children: [
+        //       TextSpan(
+        //         text: favorite.serviceNo,
+        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        //       ),
+        //       const TextSpan(
+        //         text: ' @ ',
+        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        //       ),
+        //       TextSpan(
+        //         text: favorite.busStopCode,
+        //         style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 18,
+        //             color: Colors.blue[700]),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+      ),
+    );
+  }
+
+  Widget _showCardFooter(BuildContext context, Favorite favorite) {
+    return Container(
+      padding: const EdgeInsets.all(2),
+      height: 25,
+      child: Center(
+        child: Text(favorite.busStopCode),
+        // child: Text.rich(
+        //   TextSpan(
+        //     children: [
+        //       TextSpan(
+        //         text: favorite.serviceNo,
+        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        //       ),
+        //       const TextSpan(
+        //         text: ' @ ',
+        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        //       ),
+        //       TextSpan(
+        //         text: favorite.busStopCode,
+        //         style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             fontSize: 18,
+        //             color: Colors.blue[700]),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
