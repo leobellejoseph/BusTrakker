@@ -112,7 +112,7 @@ class FavoritesList extends StatelessWidget {
                 BusStop stop = repo.getBusStop(favorite.busStopCode);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(seconds: 1),
                     backgroundColor: Colors.lightBlue,
                     content: Text(
                       '${stop.description}, ${stop.roadName}',
