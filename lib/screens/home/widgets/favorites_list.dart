@@ -116,75 +116,22 @@ class FavoritesList extends StatelessWidget {
                     backgroundColor: Colors.lightBlue,
                     content: Text(
                       '${stop.description}, ${stop.roadName}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 20),
                     ),
                   ),
                 );
               },
               child: Text(
                 favorite.busStopCode,
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.blue[700]),
+                    color: Colors.blueAccent),
               ),
             )
           ],
         ),
-        // child: Text.rich(
-        //   TextSpan(
-        //     children: [
-        //       TextSpan(
-        //         text: favorite.serviceNo,
-        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        //       ),
-        //       const TextSpan(
-        //         text: ' @ ',
-        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        //       ),
-        //       TextSpan(
-        //         text: favorite.busStopCode,
-        //         style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 18,
-        //             color: Colors.blue[700]),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ),
-    );
-  }
-
-  Widget _showCardFooter(BuildContext context, Favorite favorite) {
-    return Container(
-      padding: const EdgeInsets.all(2),
-      height: 25,
-      child: Center(
-        child: Text(favorite.busStopCode),
-        // child: Text.rich(
-        //   TextSpan(
-        //     children: [
-        //       TextSpan(
-        //         text: favorite.serviceNo,
-        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        //       ),
-        //       const TextSpan(
-        //         text: ' @ ',
-        //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        //       ),
-        //       TextSpan(
-        //         text: favorite.busStopCode,
-        //         style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 18,
-        //             color: Colors.blue[700]),
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }
