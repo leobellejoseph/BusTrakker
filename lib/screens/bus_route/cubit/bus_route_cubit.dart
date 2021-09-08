@@ -6,14 +6,12 @@ import 'package:my_bus/repositories/bus_repository.dart';
 part 'bus_route_state.dart';
 
 class BusRouteCubit extends Cubit<BusRouteState> {
-  final BusRepository _busRepository;
-  BusRouteCubit({required BusRepository busRepository})
-      : _busRepository = busRepository,
-        super(BusRouteState.initial());
+  final BusRepository busRepository;
+  BusRouteCubit({required this.busRepository}) : super(BusRouteState.initial());
   void fetchAllRoutes() async {
     emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
     try {
-      final data = await _busRepository.fetchBusRoutes();
+      final data = await busRepository.fetchBusRoutes();
       emit(state.copyWith(data: data, status: BusRouteStatus.loaded_all));
     } on Failure catch (_) {
       emit(state.copyWith(
@@ -26,7 +24,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
   void fetchServices({required String code}) {
     emit(state.copyWith(data: [], status: BusRouteStatus.loading));
     try {
-      final routes = _busRepository.getBusRouteByBusStop(code: code);
+      final routes = busRepository.getBusRouteByBusStop(code: code);
       if (routes.isEmpty) {
         emit(state.copyWith(data: routes, status: BusRouteStatus.no_data));
       } else {
@@ -47,7 +45,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       if (currentState.status == BusRouteStatus.loading_all) {
         emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
       } else {
-        final routes = _busRepository.getBusRouteByService(service: service);
+        final routes = busRepository.getBusRouteByService(service: service);
         if (routes.isNotEmpty) {
           final List<BusRoute> filtered = [];
           int direction = 1;
@@ -67,8 +65,8 @@ class BusRouteCubit extends Cubit<BusRouteState> {
                 .toList();
             filtered.addAll(temp);
           }
-          final begin = _busRepository.getBusStop(filtered.first.busStopCode);
-          final end = _busRepository.getBusStop(filtered.last.busStopCode);
+          final begin = busRepository.getBusStop(filtered.first.busStopCode);
+          final end = busRepository.getBusStop(filtered.last.busStopCode);
 
           emit(state.copyWith(
               data: filtered,
@@ -92,7 +90,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     final currentState = state;
     emit(state.copyWith(data: [], status: BusRouteStatus.loading));
     try {
-      final routes = _busRepository.getBusRouteByService(service: service);
+      final routes = busRepository.getBusRouteByService(service: service);
       if (routes.isNotEmpty) {
         final direction =
             currentState.direction == 0 || currentState.direction == 2 ? 1 : 2;
@@ -100,8 +98,8 @@ class BusRouteCubit extends Cubit<BusRouteState> {
         final filtered =
             routes.where((element) => element.direction == direction).toList();
         if (filtered.isNotEmpty) {
-          final begin = _busRepository.getBusStop(filtered.first.busStopCode);
-          final end = _busRepository.getBusStop(filtered.last.busStopCode);
+          final begin = busRepository.getBusStop(filtered.first.busStopCode);
+          final end = busRepository.getBusStop(filtered.last.busStopCode);
           emit(state.copyWith(
               data: filtered,
               begin: begin.description,

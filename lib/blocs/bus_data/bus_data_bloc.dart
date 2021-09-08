@@ -10,11 +10,8 @@ part 'bus_data_event.dart';
 part 'bus_data_state.dart';
 
 class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
-  final BusRepository _busRepository;
-  BusDataBloc({required BusRepository busRepository})
-      : _busRepository = busRepository,
-        super(BusDataState.initial());
-
+  final BusRepository busRepository;
+  BusDataBloc({required this.busRepository}) : super(BusDataState.initial());
   @override
   Stream<BusDataState> mapEventToState(
     BusDataEvent event,
@@ -36,7 +33,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
   Stream<BusDataState> _mapEventBusStopsToState() async* {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
-      final data = await _busRepository.fetchBusStops();
+      final data = await busRepository.fetchBusStops();
       final bool isConnected = await InternetConnectionChecker().hasConnection;
       if (data.isEmpty && isConnected == false) {
         yield state.copyWith(status: BusDataStatus.no_internet);
@@ -59,7 +56,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
   Stream<BusDataState> _mapEventBusServiceToState() async* {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
-      final data = await _busRepository.fetchBusServices();
+      final data = await busRepository.fetchBusServices();
       final dir1 = data.where((element) => element.direction == 1).toList();
       final bool isConnected = await InternetConnectionChecker().hasConnection;
       if (data.isEmpty && isConnected == false) {
@@ -85,7 +82,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
       final query = event.query.toLowerCase();
-      final _stops = _busRepository.getAllBusStops();
+      final _stops = busRepository.getAllBusStops();
       final data = _stops.where(
         (element) {
           final code = element.busStopCode.toLowerCase();
@@ -116,7 +113,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
       final _query = event.query.toLowerCase();
-      final _services = _busRepository.getAllBusService();
+      final _services = busRepository.getAllBusService();
       final data = _services
           .where((element) => element.serviceNo.contains(_query))
           .toList();
