@@ -1,7 +1,7 @@
 import 'package:my_bus/models/models.dart';
 
 abstract class BaseBusRepository {
-  List<BusStop> getNearStops(int distance);
+  List<BusStop> getNearStops();
   List<BusRoute> getBusRouteByService({required String service});
   List<BusRoute> getBusRouteByBusStop({required String code});
   List<BusStop> getAllBusStops();

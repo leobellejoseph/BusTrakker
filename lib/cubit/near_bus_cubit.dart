@@ -24,15 +24,14 @@ class NearBusCubit extends Cubit<NearBusState> {
           await LocationRequest.checkLocationPermission();
       final bool validPermission = (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse);
-
       if (isLocationEnabled == true && validPermission == true) {
         final _stops = _repository.getAllBusStops();
         if (_stops.isNotEmpty) {
-          Position _position = await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.best,
-              timeLimit: const Duration(seconds: 5));
+          final position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high);
+
           final newData = _stops.where((stop) {
-            stop.setDistance(_position);
+            stop.setDistance(position);
             final _query = query.toLowerCase();
             final _busStopCode = stop.busStopCode.toLowerCase();
             final _roadName = stop.roadName.toLowerCase();

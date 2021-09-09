@@ -13,7 +13,7 @@ class BusRepository extends BaseBusRepository {
   SelectedRoute selected = SelectedRoute(code: '', service: '');
 
   @override
-  List<BusStop> getNearStops(int distance) {
+  List<BusStop> getNearStops() {
     return _stops;
   }
 
