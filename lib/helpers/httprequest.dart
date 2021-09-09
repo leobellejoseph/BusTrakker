@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/settings/settings.dart';
 
@@ -19,13 +20,13 @@ class HTTPRequest {
         'AccountKey': APISettings.ApiKey,
         'accept': APISettings.contentType,
       };
-      http.Response response = await http.get(Uri.parse(url), headers: headers);
+      final client = RetryClient(http.Client());
+      final uri = Uri.parse(url);
+      final response = await client.get(uri, headers: headers);
       if (response.statusCode == 200) {
-        String jsonData = response.body;
-        data = jsonDecode(jsonData);
+        data = jsonDecode(response.body);
       }
     } catch (e) {
-      print(e);
       data = 'nodata';
     }
     return data;
