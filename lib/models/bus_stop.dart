@@ -1,12 +1,12 @@
 import 'package:geolocator/geolocator.dart';
 
 class BusStop {
-  late String busStopCode;
-  late String roadName;
-  late String description;
-  late double latitude;
-  late double longitude;
-  List<String> keywords = [];
+  late final String busStopCode;
+  late final String roadName;
+  late final String description;
+  late final double latitude;
+  late final double longitude;
+  final List<String> keywords = [];
   String distanceDisplay = '';
   int distanceInt = 0;
 
