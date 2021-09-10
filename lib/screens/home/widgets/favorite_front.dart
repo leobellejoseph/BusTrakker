@@ -25,7 +25,7 @@ class FavoriteFront extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: const EdgeInsets.only(left: 4, right: 4),
+        padding: const EdgeInsets.only(left: 3, right: 3),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,10 +52,6 @@ class FavoriteFront extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // const Divider(
-                      //   height: 0,
-                      //   color: Colors.blueGrey,
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,7 +64,7 @@ class FavoriteFront extends StatelessWidget {
                       ),
                     ],
                   ),
-            const Divider(height: 1, color: Colors.grey),
+            const Divider(height: 0, color: Colors.grey),
             Padding(
               padding: const EdgeInsets.only(left: 2.0, right: 2.0),
               child: Text('${stop.description}, ${stop.roadName}',
