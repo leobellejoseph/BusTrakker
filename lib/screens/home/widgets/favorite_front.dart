@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/bus_repository.dart';
 
 class FavoriteFront extends StatelessWidget {
   final Favorite favorite;
   final NextBus arrival;
-
-  FavoriteFront({required this.favorite, required this.arrival});
-
+  final BusRepository repo;
+  FavoriteFront(
+      {required this.favorite, required this.arrival, required this.repo});
   @override
   Widget build(BuildContext context) {
+    final stop = repo.getBusStop(favorite.busStopCode);
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
@@ -28,8 +30,8 @@ class FavoriteFront extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Incoming', style: TextStyle(fontWeight: FontWeight.w600)),
-            const Divider(height: 0),
+            // Text('Incoming', style: TextStyle(fontWeight: FontWeight.w600)),
+            // const Divider(height: 0),
             arrival.eta == 'NA'
                 ? Text('No Svc', style: kArriving)
                 : Column(
@@ -52,11 +54,32 @@ class FavoriteFront extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(kBusType[arrival.type] ?? 'No Svc'),
-                      Text(kBusLoad[arrival.load] ?? 'No Svc'),
+                      const Divider(
+                        height: 0,
+                        color: Colors.blueGrey,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(kBusType[arrival.type] ?? 'No Svc'),
+                          Text(kBusLoad[arrival.load] ?? 'No Svc')
+                        ],
+                      ),
+                      // Text(kBusLoad[arrival.load] ?? 'No Svc'),
                       // Text(arrival.feature == 'WAB' ? 'Wheelchair' : ''),
                     ],
                   ),
+            const Divider(height: 1, color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+              child: Text('${stop.description}, ${stop.roadName}',
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey)),
+            )
           ],
         ),
       ),

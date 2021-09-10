@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
-import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
 import 'package:my_bus/widgets/widgets.dart';
@@ -109,31 +108,32 @@ class FavoritesList extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                final repo = context.read<BusRepository>();
-                final stop = repo.getBusStop(favorite.busStopCode);
-                final content = Text(
-                  '${stop.description}, ${stop.roadName}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.white),
-                );
-                final snackBar = SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    duration: const Duration(seconds: 1),
-                    backgroundColor: Colors.lightBlue,
-                    content: content);
-                final banner = MaterialBanner(
-                  backgroundColor: Colors.blue,
-                  content: SafeArea(child: content),
-                  actions: [
-                    IconButton(
-                        onPressed: () => print('test'),
-                        icon: Icon(CupertinoIcons.clear_circled))
-                  ],
-                );
-                //ScaffoldMessenger.of(context).showMaterialBanner(banner);
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                // final repo = context.read<BusRepository>();
+                // final stop = repo.getBusStop(favorite.busStopCode);
+                // final content = Text(
+                //   '${stop.description}, ${stop.roadName}',
+                //   style: const TextStyle(
+                //       fontWeight: FontWeight.w600,
+                //       fontSize: 20,
+                //       color: Colors.white),
+                // );
+                // final snackBar = SnackBar(
+                //     behavior: SnackBarBehavior.floating,
+                //     duration: const Duration(seconds: 1),
+                //     backgroundColor: Colors.lightBlue,
+                //     content: content);
+                // final banner = MaterialBanner(
+                //   backgroundColor: Colors.blue,
+                //   content: SafeArea(
+                //     child: content,
+                //   ),
+                //   actions: [
+                //     TextButton(onPressed: () {}, child: Text('Dismiss')),
+                //   ],
+                // );
+                // ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                // ScaffoldMessenger.of(context).showMaterialBanner(banner);
+                //ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: Text(
                 favorite.busStopCode,

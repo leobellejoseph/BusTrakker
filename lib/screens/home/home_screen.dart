@@ -63,7 +63,11 @@ class _HomeScreenState extends State<HomeScreen>
       child: WillPopScope(
         onWillPop: () async => false,
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          },
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             body: Padding(

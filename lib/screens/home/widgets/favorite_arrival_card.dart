@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/repositories.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
@@ -17,10 +18,12 @@ class FavoriteArrivalCard extends StatefulWidget {
 class _FavoriteArrivalCardState extends State<FavoriteArrivalCard>
     with WidgetsBindingObserver {
   late FlipCardController _controller;
+  late final BusRepository repo;
   @override
   void initState() {
     WidgetsBinding.instance?.addObserver(this);
     _controller = FlipCardController();
+    repo = context.read<BusRepository>();
     super.initState();
   }
 
@@ -61,7 +64,9 @@ class _FavoriteArrivalCardState extends State<FavoriteArrivalCard>
               controller: _controller,
               direction: FlipDirection.HORIZONTAL,
               front: FavoriteFront(
-                  favorite: widget.fave, arrival: state.data.firstBus),
+                  favorite: widget.fave,
+                  arrival: state.data.firstBus,
+                  repo: repo),
               back: FavoriteBack(
                   favorite: widget.fave, arrival: state.data.secondBus),
             ),
