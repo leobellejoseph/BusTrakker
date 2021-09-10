@@ -64,15 +64,15 @@ class FavoriteFront extends StatelessWidget {
                       ),
                     ],
                   ),
-            const Divider(height: 0, color: Colors.grey),
+            const Divider(height: 1, color: Colors.grey),
             Padding(
               padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-              child: Text('${stop.description}, ${stop.roadName}',
+              child: Text(stop.description,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
-                      fontSize: 11.5,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey)),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black38)),
             )
           ],
         ),

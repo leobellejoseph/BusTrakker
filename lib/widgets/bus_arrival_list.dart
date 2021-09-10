@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
+import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/screens/screens.dart';
-import 'package:my_bus/widgets/centered_spinner.dart';
-import 'package:my_bus/widgets/centered_text.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class BusArrivalList extends StatelessWidget {
   final Function onFlip;
-  final Map<int, String> label = {
-    1: 'Incoming',
-    2: 'Next',
-    3: 'Third',
-  };
 
   BusArrivalList({required this.onFlip});
 
@@ -134,11 +128,12 @@ class BusArrivalList extends StatelessWidget {
                           context.read<BusArrivalCubit>().getBusArrival(
                               selected.code, selected.service, true);
                         },
-                        child: _nextBus(bus: state.data.firstBus, index: 1),
+                        child:
+                            NextBusWidget(bus: state.data.firstBus, index: 1),
                       ),
                     ),
                     Expanded(
-                      child: _nextBus(bus: state.data.secondBus, index: 2),
+                      child: NextBusWidget(bus: state.data.secondBus, index: 2),
                     ),
                   ],
                 ),
@@ -174,47 +169,47 @@ class BusArrivalList extends StatelessWidget {
     );
   }
 
-  Widget _nextBus({required NextBus bus, required int index}) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(label[index] ?? 'No Svc',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Colors.black54,
-                  decoration: TextDecoration.underline)),
-          bus.eta == 'NA'
-              ? Text('No Svc', style: kArriving)
-              : Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: bus.eta,
-                              style: bus.eta == 'Arriving'
-                                  ? kArriving
-                                  : kMinuteArrival),
-                          bus.eta == 'Arriving'
-                              ? TextSpan(text: '')
-                              : int.parse(bus.eta) == 1
-                                  ? TextSpan(text: 'min')
-                                  : TextSpan(text: 'mins'),
-                        ],
-                      ),
-                    ),
-                    Text(kBusLoad[bus.load] ?? 'No Svc'),
-                    Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
-                  ],
-                ),
-        ],
-      ),
-    );
-  }
+  // Widget _nextBus({required NextBus bus, required int index}) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
+  //     child: Column(
+  //       mainAxisSize: MainAxisSize.max,
+  //       crossAxisAlignment: CrossAxisAlignment.stretch,
+  //       children: [
+  //         Text(label[index] ?? 'No Svc',
+  //             style: TextStyle(
+  //                 fontWeight: FontWeight.bold,
+  //                 fontSize: 15,
+  //                 color: Colors.black54,
+  //                 decoration: TextDecoration.underline)),
+  //         bus.eta == 'NA'
+  //             ? Text('No Svc', style: kArriving)
+  //             : Column(
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 crossAxisAlignment: CrossAxisAlignment.stretch,
+  //                 children: [
+  //                   Text.rich(
+  //                     TextSpan(
+  //                       children: [
+  //                         TextSpan(
+  //                             text: bus.eta,
+  //                             style: bus.eta == 'Arriving'
+  //                                 ? kArriving
+  //                                 : kMinuteArrival),
+  //                         bus.eta == 'Arriving'
+  //                             ? TextSpan(text: '')
+  //                             : int.parse(bus.eta) == 1
+  //                                 ? TextSpan(text: 'min')
+  //                                 : TextSpan(text: 'mins'),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   Text(kBusLoad[bus.load] ?? 'No Svc'),
+  //                   Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
+  //                 ],
+  //               ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

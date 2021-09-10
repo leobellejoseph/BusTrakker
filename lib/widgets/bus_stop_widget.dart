@@ -39,53 +39,6 @@ class _BusStopWidgetState extends State<BusStopWidget>
     super.didChangeAppLifecycleState(state);
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return BlocConsumer<BusRouteCubit, BusRouteState>(
-  //     listener: (context, state) {
-  //       if (state.status == BusRouteStatus.loaded) {
-  //         print('${widget.code} : ${state.data.length}');
-  //       }
-  //     },
-  //     builder: (context, state) {
-  //       if (state.status == BusRouteStatus.loading) {
-  //         return LinearProgressIndicator();
-  //       } else if (state.status == BusRouteStatus.no_data) {
-  //         return NoDataWidget(
-  //             title: 'No Data',
-  //             subTitle: '',
-  //             caption: '',
-  //             onTap: () {},
-  //             showButton: false);
-  //       } else {
-  //         final repository = context.read<BusRepository>();
-  //         return FlipCard(
-  //           controller: _flipCardController,
-  //           flipOnTouch: false,
-  //           direction: FlipDirection.VERTICAL,
-  //           front: BusServiceList(
-  //               code: widget.code,
-  //               state: state,
-  //               onFlip: (service) {
-  //                 if (service.isNotEmpty && widget.code.isNotEmpty) {
-  //                   context
-  //                       .read<BusArrivalCubit>()
-  //                       .getBusArrival(widget.code, service, false);
-  //                   _flipCardController.state?.toggleCard();
-  //                 }
-  //               },
-  //               repository: repository),
-  //           back: BusArrivalList(
-  //             onFlip: () {
-  //               _flipCardController.state?.toggleCard();
-  //             },
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BusArrivalsCubit, BusArrivalsState>(
@@ -99,7 +52,6 @@ class _BusStopWidgetState extends State<BusStopWidget>
               caption: '',
               onTap: () {},
               showButton: false);
-          //return CenteredText(text: 'Please check internet connection.');
         } else if (state.status == Status.no_service) {
           return NoDataWidget(
               title: 'No Service',

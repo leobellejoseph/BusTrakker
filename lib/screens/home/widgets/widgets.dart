@@ -7,6 +7,7 @@ export 'favorite_front.dart';
 export 'favorites_list.dart';
 export 'favorites_view.dart';
 export 'near_busstop_view.dart';
+export 'next_bus.dart';
 export 'search_widget.dart';
 export 'service_widget.dart';
 export 'tab_view.dart';

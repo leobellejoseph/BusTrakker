@@ -153,7 +153,6 @@ class BusRouteScreen extends StatelessWidget {
                         width: double.infinity,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
                               flex: 2,
