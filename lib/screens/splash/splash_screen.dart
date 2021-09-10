@@ -4,15 +4,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/helpers/helpers.dart';
-import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
+import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
 
 class SplashScreen extends StatelessWidget {
+  SplashScreen({Key? key}) : super(key: key);
   static const id = 'splash';
-
   static Route route() => MaterialPageRoute(
         settings: RouteSettings(name: SplashScreen.id),
-        builder: (context) => SplashScreen(),
+        builder: (context) => SplashScreen(key: ValueKey('splash')),
       );
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,6 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
-            final bool location = StorageHelper.exists('location');
-            // if (location == false) {
             final bool isLocationEnabled =
                 await LocationRequest.isLocationEnabled();
             if (isLocationEnabled) {
@@ -49,9 +47,6 @@ class SplashScreen extends StatelessWidget {
                 Navigator.pushNamed(context, LocationEnableScreen.id);
               }
             });
-            // } else {
-            //   Navigator.pushNamed(context, HomeScreen.id);
-            // }
           }
         },
         child: Column(

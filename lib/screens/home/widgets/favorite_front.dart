@@ -30,8 +30,6 @@ class FavoriteFront extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Text('Incoming', style: TextStyle(fontWeight: FontWeight.w600)),
-            // const Divider(height: 0),
             arrival.eta == 'NA'
                 ? Text('No Svc', style: kArriving)
                 : Column(
@@ -54,20 +52,20 @@ class FavoriteFront extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Divider(
-                        height: 0,
-                        color: Colors.blueGrey,
-                      ),
+                      // const Divider(
+                      //   height: 0,
+                      //   color: Colors.blueGrey,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(kBusType[arrival.type] ?? 'No Svc'),
-                          Text(kBusLoad[arrival.load] ?? 'No Svc')
+                          Text(kBusType[arrival.type] ?? 'No Svc',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(kBusLoad[arrival.load] ?? 'No Svc',
+                              style: TextStyle(color: Colors.black54)),
                         ],
                       ),
-                      // Text(kBusLoad[arrival.load] ?? 'No Svc'),
-                      // Text(arrival.feature == 'WAB' ? 'Wheelchair' : ''),
                     ],
                   ),
             const Divider(height: 1, color: Colors.grey),

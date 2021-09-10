@@ -2,33 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/models/models.dart';
-import 'package:my_bus/repositories/bus_repository.dart';
-import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
-import 'package:my_bus/widgets/centered_text.dart';
-import 'package:my_bus/widgets/no_data_widget.dart';
+import 'package:my_bus/repositories/repositories.dart';
+import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class BusRouteScreen extends StatelessWidget {
   final String service;
   final String code;
   final ScrollController _controller = ScrollController();
   BusRouteScreen({required this.service, required this.code});
-
-  Widget _showCircularProgress() => Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Colors.lightBlueAccent.withOpacity(0.8),
-                Colors.lightBlueAccent.withOpacity(0.4),
-              ]),
-        ),
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +36,7 @@ class BusRouteScreen extends StatelessWidget {
               onTap: () {},
               showButton: false);
         } else if (state.status == BusRouteStatus.loading) {
-          return _showCircularProgress();
+          return CircularProgress(key: const ValueKey('circularProgress'));
         } else {
           return Container(
             child: Column(

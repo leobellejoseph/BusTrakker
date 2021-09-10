@@ -1,10 +1,12 @@
 export 'bus_service_view.dart';
 export 'bus_stops_view.dart';
 export 'content_view.dart';
+export 'favorite_arrival_card.dart';
 export 'favorite_back.dart';
 export 'favorite_front.dart';
 export 'favorites_list.dart';
 export 'favorites_view.dart';
 export 'near_busstop_view.dart';
+export 'search_widget.dart';
+export 'service_widget.dart';
 export 'tab_view.dart';
-export 'favorite_arrival_card.dart';

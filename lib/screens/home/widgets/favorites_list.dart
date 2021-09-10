@@ -55,7 +55,7 @@ class FavoritesList extends StatelessWidget {
                       ),
                     ],
                     actionPane: SlidableDrawerActionPane(),
-                    child: _showCardContent(context, favorite),
+                    child: FavoriteCardContent(favorite: favorite),
                   ),
                 );
               },
@@ -65,31 +65,14 @@ class FavoritesList extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _showCardContent(BuildContext context, Favorite favorite) {
-    return Container(
-      height: double.infinity,
-      width: 150,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _showCardHeader(context, favorite),
-            Expanded(
-              child: FavoriteArrivalCard(fave: favorite),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _showCardHeader(BuildContext context, Favorite favorite) {
+class FavoriteCardHeader extends StatelessWidget {
+  final Favorite favorite;
+  const FavoriteCardHeader({Key? key, required this.favorite})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(2),
       height: 29,
@@ -106,43 +89,43 @@ class FavoritesList extends StatelessWidget {
               ' @ ',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            GestureDetector(
-              onTap: () {
-                // final repo = context.read<BusRepository>();
-                // final stop = repo.getBusStop(favorite.busStopCode);
-                // final content = Text(
-                //   '${stop.description}, ${stop.roadName}',
-                //   style: const TextStyle(
-                //       fontWeight: FontWeight.w600,
-                //       fontSize: 20,
-                //       color: Colors.white),
-                // );
-                // final snackBar = SnackBar(
-                //     behavior: SnackBarBehavior.floating,
-                //     duration: const Duration(seconds: 1),
-                //     backgroundColor: Colors.lightBlue,
-                //     content: content);
-                // final banner = MaterialBanner(
-                //   backgroundColor: Colors.blue,
-                //   content: SafeArea(
-                //     child: content,
-                //   ),
-                //   actions: [
-                //     TextButton(onPressed: () {}, child: Text('Dismiss')),
-                //   ],
-                // );
-                // ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                // ScaffoldMessenger.of(context).showMaterialBanner(banner);
-                //ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-              child: Text(
-                favorite.busStopCode,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.blueAccent),
-              ),
+            Text(
+              favorite.busStopCode,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.blueAccent),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FavoriteCardContent extends StatelessWidget {
+  final Favorite favorite;
+  const FavoriteCardContent({Key? key, required this.favorite})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: 150,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            FavoriteCardHeader(key: ValueKey('header'), favorite: favorite),
+            Expanded(
+              child: FavoriteArrivalCard(fave: favorite),
+            ),
           ],
         ),
       ),

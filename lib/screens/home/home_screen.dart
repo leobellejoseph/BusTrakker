@@ -75,8 +75,13 @@ class _HomeScreenState extends State<HomeScreen>
               child: Column(
                 children: [
                   SizedBox(height: 158, child: FavoritesView()),
-                  _searchView(),
+                  //_searchView(),
+                  SearchWidget(
+                      key: ValueKey('search'),
+                      onSubmit: _onFilterData,
+                      controller: _textEditingController),
                   TabView(
+                    key: const ValueKey('tab'),
                     tabController: _tabController,
                     onTap: (index) => setState(() => _tabIndex = index),
                   ),
@@ -88,39 +93,6 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _searchView() {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: TextField(
-        textInputAction: TextInputAction.search,
-        textAlignVertical: TextAlignVertical.center,
-        onSubmitted: (value) {
-          _onFilterData(value);
-        },
-        controller: _textEditingController,
-        decoration: InputDecoration(
-            fillColor: Colors.grey[200],
-            filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            prefixIcon: IconButton(
-              onPressed: () => _onFilterData(_textEditingController.text),
-              icon: const Icon(Icons.search, color: Colors.blue, size: 30),
-            ),
-            suffixIcon: IconButton(
-              onPressed: () {
-                _textEditingController.clear();
-                FocusScope.of(context).unfocus();
-                _onFilterData('');
-              },
-              icon: const Icon(Icons.close, color: Colors.blue, size: 30),
-            ),
-            hintText: 'Search'),
       ),
     );
   }
