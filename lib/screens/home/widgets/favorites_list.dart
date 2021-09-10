@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -108,20 +109,31 @@ class FavoritesList extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                BusRepository repo = context.read<BusRepository>();
-                BusStop stop = repo.getBusStop(favorite.busStopCode);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                final repo = context.read<BusRepository>();
+                final stop = repo.getBusStop(favorite.busStopCode);
+                final content = Text(
+                  '${stop.description}, ${stop.roadName}',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.white),
+                );
+                final snackBar = SnackBar(
                     behavior: SnackBarBehavior.floating,
                     duration: const Duration(seconds: 1),
                     backgroundColor: Colors.lightBlue,
-                    content: Text(
-                      '${stop.description}, ${stop.roadName}',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 20),
-                    ),
-                  ),
+                    content: content);
+                final banner = MaterialBanner(
+                  backgroundColor: Colors.blue,
+                  content: SafeArea(child: content),
+                  actions: [
+                    IconButton(
+                        onPressed: () => print('test'),
+                        icon: Icon(CupertinoIcons.clear_circled))
+                  ],
                 );
+                //ScaffoldMessenger.of(context).showMaterialBanner(banner);
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: Text(
                 favorite.busStopCode,

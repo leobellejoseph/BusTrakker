@@ -16,7 +16,7 @@ class HTTPRequest {
   static Future<dynamic> getRequest(String url) async {
     dynamic data;
     try {
-      Map<String, String> headers = {
+      const headers = {
         'AccountKey': APISettings.ApiKey,
         'accept': APISettings.contentType,
       };
