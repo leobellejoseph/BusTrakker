@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/cubit/bus_arrivals_cubit.dart';
-import 'package:my_bus/repositories/bus_repository.dart';
 
 class BusServiceList extends StatelessWidget {
   final String code;
   final BusArrivalsState state;
   final Function onFlip;
-  final BusRepository repository;
   BusServiceList(
-      {required this.code,
-      required this.state,
-      required this.onFlip,
-      required this.repository});
+      {required this.code, required this.state, required this.onFlip});
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -37,10 +32,7 @@ class BusServiceList extends StatelessWidget {
               borderRadius: BorderRadius.circular(2.5),
             ),
             highlightColor: Colors.lightBlueAccent,
-            onPressed: () {
-              repository.setSelectedRoute(code: code, service: item.serviceNo);
-              onFlip(item.serviceNo);
-            },
+            onPressed: () => onFlip(item.serviceNo),
             child: Center(
               child: Text(
                 item.serviceNo,

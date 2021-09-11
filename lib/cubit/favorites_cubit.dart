@@ -31,10 +31,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
-  void addFavorite({required String code, required String service}) {
+  void addFavorite(
+      {required String code,
+      required String service,
+      String description = ''}) {
     emit(state.copyWith(status: FavoriteStatus.loading, index: 0));
     try {
-      final favorite = Favorite(busStopCode: code, serviceNo: service);
+      final stop = _busRepository.getBusStop(code);
+      final favorite = Favorite(
+        busStopCode: code,
+        serviceNo: service,
+        description: stop.description,
+      );
       final data = _busRepository.addFavorite(favorite: favorite);
       emit(state.copyWith(data: data, status: FavoriteStatus.loaded, index: 0));
     } on Failure catch (_) {
@@ -48,11 +56,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
-  void removeFavorite({required String code, required String service}) {
+  void removeFavorite(String code, String service) {
     emit(state.copyWith(status: FavoriteStatus.loading));
     try {
-      final favorite = Favorite(busStopCode: code, serviceNo: service);
       final list = state.data;
+      final favorite = list.firstWhere(
+          (item) => item.busStopCode == code && item.serviceNo == service);
       _busRepository.removeFavorite(favorite: favorite);
       list.remove(favorite);
       if (list.isEmpty) {

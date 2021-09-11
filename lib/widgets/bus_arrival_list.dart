@@ -13,13 +13,15 @@ class BusArrivalList extends StatelessWidget {
 
   BusArrivalList({required this.onFlip});
 
-  void _toggleFavorite(BuildContext context, bool isFavorite) {
-    SelectedRoute selected = context.read<BusRepository>().selected;
-    FavoritesCubit fave = context.read<FavoritesCubit>();
+  void _toggleFavorite(BuildContext context, String code, String service) {
+    final repo = context.read<BusRepository>();
+    final fave = context.read<FavoritesCubit>();
+    final stop = repo.getBusStop(code);
+    final isFavorite = repo.isFavorite(service: service, code: code);
     if (isFavorite) {
-      fave.removeFavorite(code: selected.code, service: selected.service);
+      fave.removeFavorite(code, service);
     } else {
-      fave.addFavorite(code: selected.code, service: selected.service);
+      fave.addFavorite(code: code, service: service);
     }
   }
 
@@ -48,7 +50,8 @@ class BusArrivalList extends StatelessWidget {
           return CenteredText(
               text: 'No Connection. Please check network connection.');
         } else {
-          SelectedRoute selected = context.read<BusRepository>().selected;
+          final service = state.data.serviceNo;
+          final code = state.data.busStopCode;
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: Stack(
@@ -84,12 +87,10 @@ class BusArrivalList extends StatelessWidget {
                                     ),
                                   ),
                                   highlightColor: Colors.lightBlue,
-                                  onPressed: () {
-                                    _showRouteSheet(context);
-                                  },
+                                  onPressed: () => _showRouteSheet(context),
                                   child: Center(
                                     child: Text(
-                                      selected.service,
+                                      state.data.serviceNo,
                                       style: TextStyle(
                                           fontSize: 26,
                                           fontWeight: FontWeight.bold,
@@ -123,10 +124,8 @@ class BusArrivalList extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onDoubleTap: () {
-                          SelectedRoute selected =
-                              context.read<BusRepository>().selected;
-                          context.read<BusArrivalCubit>().getBusArrival(
-                              selected.code, selected.service, true);
+                          final arrival = context.read<BusArrivalCubit>();
+                          arrival.getBusArrival(code, service, true);
                         },
                         child:
                             NextBusWidget(bus: state.data.firstBus, index: 1),
@@ -140,17 +139,19 @@ class BusArrivalList extends StatelessWidget {
                 Transform.translate(
                   offset: const Offset(310, -5),
                   child: BlocBuilder<FavoritesCubit, FavoritesState>(
-                    builder: (context, state) {
-                      SelectedRoute selected =
-                          context.read<BusRepository>().selected;
-                      if (state.status == FavoriteStatus.loading) {
-                        return Container();
+                    builder: (context, fstate) {
+                      if (fstate.status == FavoriteStatus.loading) {
+                        //return Container();
+                        return CircularProgress(key: ValueKey('progress'));
                       } else {
-                        final isFavorite = state.data.contains(Favorite(
-                            busStopCode: selected.code,
-                            serviceNo: selected.service));
+                        final repo = context.read<BusRepository>();
+
+                        final isFavorite =
+                            repo.isFavorite(service: service, code: code);
+
                         return IconButton(
-                          onPressed: () => _toggleFavorite(context, isFavorite),
+                          onPressed: () =>
+                              _toggleFavorite(context, code, service),
                           icon: Icon(
                             isFavorite ? Icons.star : Icons.star_border,
                             color: Colors.yellow.shade600,
@@ -168,48 +169,4 @@ class BusArrivalList extends StatelessWidget {
       },
     );
   }
-
-  // Widget _nextBus({required NextBus bus, required int index}) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.max,
-  //       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //       children: [
-  //         Text(label[index] ?? 'No Svc',
-  //             style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //                 fontSize: 15,
-  //                 color: Colors.black54,
-  //                 decoration: TextDecoration.underline)),
-  //         bus.eta == 'NA'
-  //             ? Text('No Svc', style: kArriving)
-  //             : Column(
-  //                 mainAxisSize: MainAxisSize.max,
-  //                 crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                 children: [
-  //                   Text.rich(
-  //                     TextSpan(
-  //                       children: [
-  //                         TextSpan(
-  //                             text: bus.eta,
-  //                             style: bus.eta == 'Arriving'
-  //                                 ? kArriving
-  //                                 : kMinuteArrival),
-  //                         bus.eta == 'Arriving'
-  //                             ? TextSpan(text: '')
-  //                             : int.parse(bus.eta) == 1
-  //                                 ? TextSpan(text: 'min')
-  //                                 : TextSpan(text: 'mins'),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   Text(kBusLoad[bus.load] ?? 'No Svc'),
-  //                   Text(bus.feature == 'WAB' ? 'Wheelchair' : ''),
-  //                 ],
-  //               ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

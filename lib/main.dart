@@ -33,7 +33,6 @@ void main() async {
 }
 
 class Main extends StatelessWidget {
-  // This widget is the root of your application.
   final BusRepository busRepository;
   Main({required this.busRepository});
   @override

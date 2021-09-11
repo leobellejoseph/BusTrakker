@@ -13,6 +13,13 @@ class BusRepository extends BaseBusRepository {
   SelectedRoute selected = SelectedRoute(code: '', service: '');
 
   @override
+  void updateFavoriteDescription({required Favorite favorite}) {
+    for (final fave in _favorites) {
+      if (fave == favorite) {}
+    }
+  }
+
+  @override
   List<BusStop> getNearStops() {
     return _stops;
   }
@@ -22,8 +29,9 @@ class BusRepository extends BaseBusRepository {
       _services.where((element) => element.serviceNo == service).first;
 
   @override
-  BusStop getBusStop(String code) =>
-      _stops.where((element) => element.busStopCode == code).first;
+  BusStop getBusStop(String code) {
+    return _stops.where((element) => element.busStopCode == code).first;
+  }
 
   @override
   Future<List<BusService>> fetchBusServices() async {
@@ -114,6 +122,11 @@ class BusRepository extends BaseBusRepository {
   bool isFavorite({required String service, required String code}) => _favorites
       .where((e) => e.busStopCode == code && e.serviceNo == service)
       .isNotEmpty;
+
+  @override
+  bool favoriteExists({required Favorite favorite}) {
+    return _favorites.where((item) => item == favorite).isNotEmpty;
+  }
 
   @override
   List<Favorite> addFavorite({required Favorite favorite}) {

@@ -3,7 +3,6 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/cubit/cubit.dart';
-import 'package:my_bus/repositories/bus_repository.dart';
 import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
@@ -16,8 +15,8 @@ class BusStopWidget extends StatefulWidget {
 
 class _BusStopWidgetState extends State<BusStopWidget>
     with WidgetsBindingObserver {
-  final FlipCardController _flipCardController = FlipCardController();
-  String service = '';
+  final FlipCardController controller = FlipCardController();
+
   @override
   void initState() {
     BlocProvider.of<BusRouteCubit>(context).fetchServices(code: widget.code);
@@ -60,9 +59,8 @@ class _BusStopWidgetState extends State<BusStopWidget>
               onTap: () {},
               showButton: false);
         } else {
-          final repository = context.read<BusRepository>();
           return FlipCard(
-            controller: _flipCardController,
+            controller: controller,
             flipOnTouch: false,
             direction: FlipDirection.VERTICAL,
             front: BusServiceList(
@@ -70,18 +68,12 @@ class _BusStopWidgetState extends State<BusStopWidget>
                 state: state,
                 onFlip: (service) {
                   if (service.isNotEmpty && widget.code.isNotEmpty) {
-                    context
-                        .read<BusArrivalCubit>()
-                        .getBusArrival(widget.code, service, false);
-                    _flipCardController.state?.toggleCard();
+                    final arrival = context.read<BusArrivalCubit>();
+                    arrival.getBusArrival(widget.code, service, false);
+                    controller.state?.toggleCard();
                   }
-                },
-                repository: repository),
-            back: BusArrivalList(
-              onFlip: () {
-                _flipCardController.state?.toggleCard();
-              },
-            ),
+                }),
+            back: BusArrivalList(onFlip: () => controller.state?.toggleCard()),
           );
         }
       },

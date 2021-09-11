@@ -14,8 +14,10 @@ abstract class BaseBusRepository {
   Future<List<BusRoute>> fetchBusRoutes();
   Future<List<Favorite>> fetchFavorites();
   bool isFavorite({required String service, required String code});
+  bool favoriteExists({required Favorite favorite});
   List<Favorite> removeFavorite({required Favorite favorite});
   List<Favorite> addFavorite({required Favorite favorite});
   SelectedRoute getSelectedRoute();
   void setSelectedRoute({required String code, required String service});
+  void updateFavoriteDescription({required Favorite favorite});
 }

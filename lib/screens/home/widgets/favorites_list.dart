@@ -50,8 +50,7 @@ class FavoritesList extends StatelessWidget {
                         color: Colors.red,
                         icon: Icons.delete,
                         onTap: () => cubit.removeFavorite(
-                            code: favorite.busStopCode,
-                            service: favorite.serviceNo),
+                            favorite.busStopCode, favorite.serviceNo),
                       ),
                     ],
                     actionPane: SlidableDrawerActionPane(),
