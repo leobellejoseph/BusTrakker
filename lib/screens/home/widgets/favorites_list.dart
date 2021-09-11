@@ -35,13 +35,12 @@ class FavoritesList extends StatelessWidget {
               itemCount: state.data.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final favorite = state.data[index];
+                final fav = state.data[index];
                 final cubit = context.read<FavoritesCubit>();
                 final arrival = BusArrivalCubit();
                 return BlocProvider<BusArrivalCubit>(
                   create: (context) => arrival
-                    ..getBusArrival(
-                        favorite.busStopCode, favorite.serviceNo, true),
+                    ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
                   child: Slidable(
                     direction: Axis.vertical,
                     actions: [
@@ -50,11 +49,11 @@ class FavoritesList extends StatelessWidget {
                         color: Colors.red,
                         icon: Icons.delete,
                         onTap: () => cubit.removeFavorite(
-                            favorite.busStopCode, favorite.serviceNo),
+                            fav.busStopCode, fav.serviceNo),
                       ),
                     ],
                     actionPane: SlidableDrawerActionPane(),
-                    child: FavoriteCardContent(favorite: favorite),
+                    child: FavoriteCardContent(favorite: fav),
                   ),
                 );
               },
