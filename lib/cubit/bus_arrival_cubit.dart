@@ -19,6 +19,7 @@ class BusArrivalCubit extends Cubit<BusArrivalState> {
           Future.delayed(const Duration(milliseconds: 1000), () async {
             BusArrival arrival =
                 await HTTPRequest.loadBusArrivals(code, service);
+            print(state);
             emit(
                 state.copyWith(data: arrival, status: BusArrivalStatus.loaded));
           });

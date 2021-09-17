@@ -9,6 +9,7 @@ import 'package:my_bus/widgets/centered_text.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class NearBusStopsView extends StatefulWidget {
+  NearBusStopsView({Key? key}) : super(key: key);
   @override
   _NearBusStopsViewState createState() => _NearBusStopsViewState();
 }

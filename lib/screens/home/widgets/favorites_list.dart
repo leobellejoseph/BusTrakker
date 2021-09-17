@@ -18,16 +18,13 @@ class FavoritesList extends StatelessWidget {
         if (state.status == FavoriteStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == FavoriteStatus.no_data) {
-          return SizedBox(
-            height: 125,
-            child: NoDataWidget(
-                title: 'No Favorites Selected',
-                subTitle: '',
-                caption: '',
-                onTap: () {},
-                showButton: false),
-          );
-          // return CenteredText(text: 'No Favorites Selected');
+          return NoDataWidget(
+              title: 'No Favorites Selected',
+              subTitle: '',
+              caption: '',
+              onTap: () {},
+              showButton: false);
+          //return CenteredText(text: 'No Favorites Selected');
         } else {
           return SizedBox(
             height: 126,

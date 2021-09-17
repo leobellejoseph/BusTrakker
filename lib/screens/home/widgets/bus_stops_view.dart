@@ -4,6 +4,7 @@ import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class BusStopsView extends StatefulWidget {
+  BusStopsView({Key? key}) : super(key: key);
   @override
   _BusStopsViewState createState() => _BusStopsViewState();
 }

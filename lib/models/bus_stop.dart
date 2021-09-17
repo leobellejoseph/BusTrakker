@@ -9,6 +9,19 @@ class BusStop {
   final List<String> keywords = [];
   String distanceDisplay = '';
   int distanceInt = 0;
+  BusStop(
+      {required this.busStopCode,
+      required this.roadName,
+      required this.description,
+      required this.latitude,
+      required this.longitude});
+
+  factory BusStop.empty() => BusStop(
+      busStopCode: '',
+      roadName: '',
+      description: '',
+      latitude: 0,
+      longitude: 0);
 
   BusStop.fromJson(Map<String, dynamic> data) {
     busStopCode = data['BusStopCode'];

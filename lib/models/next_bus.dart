@@ -53,4 +53,7 @@ class NextBus {
       eta = '${difference.inMinutes.toString()}';
     }
   }
+
+  @override
+  String toString() => 'NextBus($estimatedArrival)';
 }

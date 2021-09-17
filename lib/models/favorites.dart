@@ -9,7 +9,8 @@ class Favorite extends Equatable {
     required this.serviceNo,
     required this.description,
   });
-
+  factory Favorite.empty() =>
+      Favorite(busStopCode: '', serviceNo: '', description: '');
   Map<String, dynamic> toJson() => {
         'busStopCode': busStopCode,
         'serviceNo': serviceNo,

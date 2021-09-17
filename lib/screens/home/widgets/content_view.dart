@@ -11,11 +11,11 @@ class ContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tabIndex == TabIndex.near.index) {
-      return NearBusStopsView();
+      return NearBusStopsView(key: ValueKey('nearBusStopsView'));
     } else if (tabIndex == TabIndex.services.index) {
-      return BusServiceView();
+      return BusServiceView(key: ValueKey('serviceView'));
     } else if (tabIndex == TabIndex.stops.index) {
-      return BusStopsView();
+      return BusStopsView(key: ValueKey('stopsView'));
     } else {
       return SliverToBoxAdapter(child: Container());
     }

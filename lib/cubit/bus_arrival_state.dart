@@ -9,6 +9,27 @@ enum BusArrivalStatus {
   no_internet,
 }
 
+extension on BusArrivalStatus {
+  String get name {
+    switch (this) {
+      case BusArrivalStatus.initial:
+        return 'initial';
+      case BusArrivalStatus.loading:
+        return 'loading';
+      case BusArrivalStatus.loaded:
+        return 'loaded';
+      case BusArrivalStatus.no_service:
+        return 'no service';
+      case BusArrivalStatus.no_internet:
+        return 'no internet';
+      case BusArrivalStatus.error:
+        return 'error';
+      default:
+        return 'NA';
+    }
+  }
+}
+
 class BusArrivalState extends Equatable {
   final BusArrival data;
   final BusArrivalStatus status;
@@ -40,4 +61,8 @@ class BusArrivalState extends Equatable {
 
   @override
   List<Object> get props => [this.data, this.status, this.failure];
+
+  @override
+  String toString() =>
+      'BusArrivalState(${data.serviceNo},${data.busStopCode},${status.name})';
 }

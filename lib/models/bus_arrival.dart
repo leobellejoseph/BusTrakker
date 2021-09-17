@@ -42,4 +42,7 @@ class BusArrival {
     secondBus = NextBus.fromJson(data['NextBus2']);
     thirdBus = NextBus.fromJson(data['NextBus3']);
   }
+  @override
+  String toString() =>
+      'BusArrival($busStopCode,$serviceNo,$operator,$firstBus,$secondBus,$thirdBus)';
 }

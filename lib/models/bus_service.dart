@@ -49,6 +49,37 @@ class BusService {
   late String pmOffPeakFreq;
   late String loopDesc;
   late BusOperator busOperator;
+
+  BusService({
+    required this.serviceNo,
+    required this.operator,
+    required this.direction,
+    required this.category,
+    required this.originCode,
+    required this.destinationCode,
+    required this.amPeakFreq,
+    required this.amOffPeakFreq,
+    required this.pmPeakFreq,
+    required this.pmOffPeakFreq,
+    required this.loopDesc,
+    required this.busOperator,
+  });
+
+  factory BusService.empty() => BusService(
+        serviceNo: '',
+        operator: '',
+        direction: 0,
+        category: '',
+        originCode: '',
+        destinationCode: '',
+        amPeakFreq: '',
+        amOffPeakFreq: '',
+        pmPeakFreq: '',
+        pmOffPeakFreq: '',
+        loopDesc: '',
+        busOperator: BusOperator.NA,
+      );
+
   BusService.fromJson(Map<String, dynamic> data) {
     serviceNo = data['ServiceNo'] ?? 'NA';
     operator = data['Operator'] ?? 'NA';

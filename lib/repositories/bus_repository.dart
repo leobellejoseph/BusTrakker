@@ -25,12 +25,20 @@ class BusRepository extends BaseBusRepository {
   }
 
   @override
-  BusService getBusService(String service) =>
-      _services.where((element) => element.serviceNo == service).first;
+  BusService getBusService(String service) {
+    final list = _services.where((element) => element.serviceNo == service);
+    if (list.isNotEmpty) {
+      return list.first;
+    }
+    return BusService.empty();
+  }
 
   @override
   BusStop getBusStop(String code) {
-    return _stops.where((element) => element.busStopCode == code).first;
+    return _stops.firstWhere(
+      (element) => element.busStopCode == code,
+      orElse: () => BusStop.empty(),
+    );
   }
 
   @override
@@ -40,13 +48,17 @@ class BusRepository extends BaseBusRepository {
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusServices();
       _services.addAll(data);
-      final tmpData = _services.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(tmpData));
+      final list = _services.map((e) => e.toJson()).toList();
+      if (list.isNotEmpty) {
+        HydratedBloc.storage.write(StorageKey.BusServices, jsonEncode(list));
+      }
     } else {
       final data = jsonDecode(fromJson);
       final List<BusService> list =
           (data as List).map((e) => BusService.fromJson(e)).toList();
-      _services.addAll(list);
+      if (list.isNotEmpty) {
+        _services.addAll(list);
+      }
     }
     return _services;
   }
@@ -101,22 +113,20 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<Favorite>> fetchFavorites() async {
-    final fromJson = HydratedBloc.storage.read(StorageKey.Favorites);
     _favorites.clear();
-    if (fromJson != null) {
-      final data = jsonDecode(fromJson);
-      final temp = (data as List).map((e) => Favorite.fromJson(e)).toList();
+    final data = HydratedBloc.storage.read(StorageKey.Favorites);
+    if (data != null && data is List && data.isNotEmpty) {
+      final temp = data.map((e) => Favorite.fromJson(e)).toList();
       _favorites.addAll(temp);
     }
     return _favorites;
   }
 
   @override
-  Favorite getFavorite({required String service, required String code}) =>
-      _favorites
-          .where((element) =>
-              element.serviceNo == service && element.busStopCode == code)
-          .first;
+  Favorite? getFavorite(String service, String code) => _favorites.firstWhere(
+        (item) => item.serviceNo == service && item.busStopCode == code,
+        orElse: () => Favorite.empty(),
+      );
 
   @override
   bool isFavorite({required String service, required String code}) => _favorites
@@ -133,7 +143,7 @@ class BusRepository extends BaseBusRepository {
     if (!_favorites.contains(favorite)) {
       _favorites.add(favorite);
       // write to cache
-      dynamic data = _favorites.map((e) => e.toJson()).toList();
+      final data = _favorites.map((e) => e.toJson()).toList();
       HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
     }
     return _favorites;
@@ -159,5 +169,5 @@ class BusRepository extends BaseBusRepository {
 
   @override
   List<BusRoute> getBusRouteByBusStop({required String code}) =>
-      _routes.where((element) => element.serviceNo == code).toList();
+      _routes.where((element) => element.busStopCode == code).toList();
 }
