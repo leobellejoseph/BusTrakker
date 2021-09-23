@@ -5,7 +5,7 @@ import 'package:my_bus/models/models.dart';
 class NextBusWidget extends StatelessWidget {
   final NextBus bus;
   final int index;
-  const NextBusWidget({Key? key, required this.bus, required this.index})
+  NextBusWidget({Key? key, required this.bus, required this.index})
       : super(key: key);
 
   @override
