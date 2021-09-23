@@ -60,7 +60,7 @@ class BusService {
 
   static Map<String, BusService> _cache = {};
 
-  BusService._instance({
+  const BusService._instance({
     required this.serviceNo,
     required this.operator,
     required this.direction,

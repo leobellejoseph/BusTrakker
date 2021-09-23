@@ -1,34 +1,57 @@
 import 'package:geolocator/geolocator.dart';
 
 class BusStop {
-  late final String busStopCode;
-  late final String roadName;
-  late final String description;
-  late final double latitude;
-  late final double longitude;
+  final String busStopCode;
+  final String roadName;
+  final String description;
+  final double latitude;
+  final double longitude;
   final List<String> keywords = [];
   String distanceDisplay = '';
   int distanceInt = 0;
-  BusStop(
+
+  static Map<String, BusStop> _cache = {};
+
+  BusStop._instance(
       {required this.busStopCode,
       required this.roadName,
       required this.description,
       required this.latitude,
       required this.longitude});
 
-  factory BusStop.empty() => BusStop(
+  factory BusStop(
+          {required String busStopCode,
+          required String roadName,
+          required String description,
+          required double latitude,
+          required double longitude}) =>
+      _cache[busStopCode] ??= BusStop._instance(
+          busStopCode: busStopCode,
+          roadName: roadName,
+          description: description,
+          latitude: latitude,
+          longitude: longitude);
+
+  factory BusStop.empty() => BusStop._instance(
       busStopCode: '',
       roadName: '',
       description: '',
       latitude: 0,
       longitude: 0);
 
-  BusStop.fromJson(Map<String, dynamic> data) {
-    busStopCode = data['BusStopCode'];
-    roadName = data['RoadName'];
-    description = data['Description'];
-    latitude = data['Latitude'];
-    longitude = data['Longitude'];
+  factory BusStop.fromJson(Map<String, dynamic> data) {
+    final code = data['BusStopCode'];
+    final roadName = data['RoadName'];
+    final description = data['Description'];
+    final latitude = data['Latitude'];
+    final longitude = data['Longitude'];
+    return _cache[code] ??= BusStop._instance(
+      busStopCode: code,
+      roadName: roadName,
+      description: description,
+      latitude: latitude,
+      longitude: longitude,
+    );
   }
 
   Map<String, dynamic> toJson() => {
