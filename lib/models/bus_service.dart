@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 
 enum BusOperator { GAS, SMRT, SBST, TTS, NA }
 
+const BusOperatorMap = {
+  'GAS': BusOperator.GAS,
+  'SMRT': BusOperator.SMRT,
+  'SBST': BusOperator.SBST,
+  'TTS': BusOperator.TTS,
+  'NA': BusOperator.NA,
+};
+
 extension BusOperatorExtension on BusOperator {
   String get name {
     switch (this) {
@@ -37,20 +45,22 @@ extension BusOperatorExtension on BusOperator {
 }
 
 class BusService {
-  late String serviceNo;
-  late String operator;
-  late int direction;
-  late String category;
-  late String originCode;
-  late String destinationCode;
-  late String amPeakFreq;
-  late String amOffPeakFreq;
-  late String pmPeakFreq;
-  late String pmOffPeakFreq;
-  late String loopDesc;
-  late BusOperator busOperator;
+  final String serviceNo;
+  final String operator;
+  final int direction;
+  final String category;
+  final String originCode;
+  final String destinationCode;
+  final String amPeakFreq;
+  final String amOffPeakFreq;
+  final String pmPeakFreq;
+  final String pmOffPeakFreq;
+  final String loopDesc;
+  final BusOperator busOperator;
 
-  BusService({
+  static Map<String, BusService> _cache = {};
+
+  BusService._instance({
     required this.serviceNo,
     required this.operator,
     required this.direction,
@@ -65,8 +75,37 @@ class BusService {
     required this.busOperator,
   });
 
+  factory BusService({
+    required String service,
+    required String operator,
+    required int direction,
+    required String category,
+    required String originCode,
+    required String destinationCode,
+    required String amPeakFreq,
+    required String amOffPeakFreq,
+    required String pmPeakFreq,
+    required String pmOffPeakFreq,
+    required String loopDesc,
+    required BusOperator busOperator,
+  }) =>
+      _cache[service] ??= BusService._instance(
+        serviceNo: service,
+        operator: operator,
+        direction: direction,
+        category: category,
+        originCode: originCode,
+        destinationCode: destinationCode,
+        amPeakFreq: amPeakFreq,
+        amOffPeakFreq: amOffPeakFreq,
+        pmPeakFreq: pmPeakFreq,
+        pmOffPeakFreq: pmOffPeakFreq,
+        loopDesc: loopDesc,
+        busOperator: busOperator,
+      );
+
   factory BusService.empty() => BusService(
-        serviceNo: '',
+        service: '',
         operator: '',
         direction: 0,
         category: '',
@@ -80,19 +119,32 @@ class BusService {
         busOperator: BusOperator.NA,
       );
 
-  BusService.fromJson(Map<String, dynamic> data) {
-    serviceNo = data['ServiceNo'] ?? 'NA';
-    operator = data['Operator'] ?? 'NA';
-    direction = data['Direction'] ?? 0;
-    category = data['Category'] ?? 'NA';
-    originCode = data['OriginCode'] ?? 'NA';
-    destinationCode = data['DestinationCode'] ?? 'NA';
-    amPeakFreq = data['AM_Peak_Freq'] ?? 'NA';
-    amOffPeakFreq = data['AM_Offpeak_Freq'] ?? 'NA';
-    pmPeakFreq = data['PM_Peak_Freq'] ?? 'NA';
-    pmOffPeakFreq = data['PM_Offpeak_Freq'] ?? 'NA';
-    loopDesc = data['LoopDesc'] ?? 'NA';
-    busOperator = _getBusOperator(operator);
+  factory BusService.fromJson(Map<String, dynamic> data) {
+    final service = data['ServiceNo'];
+    final operator = data['Operator'];
+    final direction = data['Direction'];
+    final category = data['Category'];
+    final originCode = data['OriginCode'];
+    final destinationCode = data['DestinationCode'];
+    final amPeakFreq = data['AM_Peak_Freq'];
+    final amOffPeakFreq = data['AM_Offpeak_Freq'];
+    final pmPeakFreq = data['PM_Peak_Freq'];
+    final pmOffPeakFreq = data['PM_Offpeak_Freq'];
+    final loopDesc = data['LoopDesc'];
+    final busOperator = BusOperatorMap[operator] ?? BusOperator.NA;
+    return _cache[service] ??= BusService._instance(
+        serviceNo: service,
+        operator: operator,
+        direction: direction,
+        category: category,
+        originCode: originCode,
+        destinationCode: destinationCode,
+        amPeakFreq: amPeakFreq,
+        amOffPeakFreq: amOffPeakFreq,
+        pmPeakFreq: pmPeakFreq,
+        pmOffPeakFreq: pmOffPeakFreq,
+        loopDesc: loopDesc,
+        busOperator: busOperator);
   }
 
   Map<String, dynamic> toJson() => {
@@ -108,19 +160,4 @@ class BusService {
         'PM_Offpeak_Freq': pmOffPeakFreq,
         'LoopDesc': loopDesc
       };
-
-  BusOperator _getBusOperator(String operator) {
-    switch (operator) {
-      case 'GAS':
-        return BusOperator.GAS;
-      case 'SMRT':
-        return BusOperator.SMRT;
-      case 'SBST':
-        return BusOperator.SBST;
-      case 'TTS':
-        return BusOperator.TTS;
-      default:
-        return BusOperator.NA;
-    }
-  }
 }
