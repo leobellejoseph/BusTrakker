@@ -1,15 +1,14 @@
 class NextBus {
-  String originCode = 'NA';
-  String destinationCode = 'NA';
-  String estimatedArrival = '0';
-  String latitude = '0';
-  String longitude = '0';
-  String visitNumber = '0';
-  String load = 'NA';
-  String feature = 'NA';
-  String type = 'NA';
-  String eta = 'NA';
-
+  final String originCode;
+  final String destinationCode;
+  final String estimatedArrival;
+  final String latitude;
+  final String longitude;
+  final String visitNumber;
+  final String load;
+  final String feature;
+  final String type;
+  final String eta;
   NextBus({
     required this.originCode,
     required this.destinationCode,
@@ -20,6 +19,7 @@ class NextBus {
     required this.load,
     required this.feature,
     required this.type,
+    required this.eta,
   });
 
   factory NextBus.empty() => NextBus(
@@ -32,26 +32,51 @@ class NextBus {
         load: 'NA',
         feature: 'NA',
         type: 'NA',
+        eta: 'NA',
       );
 
-  NextBus.fromJson(Map<String, dynamic> data) {
-    originCode = data['OriginCode'];
-    destinationCode = data['DestinationCode'];
-    estimatedArrival = data['EstimatedArrival'] ?? '';
-    latitude = data['Latitude'];
-    longitude = data['Longitude'];
-    visitNumber = data['VisitNumber'];
-    load = data['Load'];
-    feature = data['Feature'];
-    type = data['Type'] ?? '';
-    if (estimatedArrival.isEmpty) return;
+  factory NextBus.noSvc() => NextBus(
+        originCode: 'NA',
+        destinationCode: 'NA',
+        estimatedArrival: '0',
+        latitude: '0',
+        longitude: '0',
+        visitNumber: '0',
+        load: 'NA',
+        feature: 'NA',
+        type: 'NA',
+        eta: 'NoSvc',
+      );
+
+  factory NextBus.fromJson(Map<String, dynamic> data) {
+    final originCode = data['OriginCode'];
+    final destinationCode = data['DestinationCode'];
+    final estimatedArrival = data['EstimatedArrival'] ?? '';
+    final latitude = data['Latitude'];
+    final longitude = data['Longitude'];
+    final visitNumber = data['VisitNumber'];
+    final load = data['Load'];
+    final feature = data['Feature'];
+    final type = data['Type'] ?? '';
+
+    if (estimatedArrival.isEmpty) return NextBus.noSvc();
+
     DateTime etaDate = DateTime.parse(estimatedArrival);
     Duration difference = etaDate.difference(DateTime.now());
-    if (difference.inMinutes <= 0) {
-      eta = 'Arriving';
-    } else {
-      eta = '${difference.inMinutes.toString()}';
-    }
+    final eta = difference.inMinutes <= 0
+        ? 'Arriving'
+        : '${difference.inMinutes.toString()}';
+    return NextBus(
+        originCode: originCode,
+        destinationCode: destinationCode,
+        estimatedArrival: estimatedArrival,
+        latitude: latitude,
+        longitude: longitude,
+        visitNumber: visitNumber,
+        load: load,
+        feature: feature,
+        type: type,
+        eta: eta);
   }
 
   @override
