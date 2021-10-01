@@ -96,17 +96,17 @@ class BusRepository extends BaseBusRepository {
 
   @override
   Future<List<BusRoute>> fetchBusRoutes() async {
-    final fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
     _routes.clear();
+    final fromJson = HydratedBloc.storage.read(StorageKey.BusRoutes);
     if (fromJson == null) {
       final data = await HTTPRequest.loadBusRoutes();
       _routes.addAll(data);
-      dynamic tmp = _routes.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(tmp));
+      HydratedBloc.storage.write(StorageKey.BusRoutes, jsonEncode(_routes));
     } else {
       final data = jsonDecode(fromJson);
-      final list = (data as List).map((e) => BusRoute.fromJson(e)).toList();
-      _routes.addAll(list);
+      if (data != null && data is List && data.isNotEmpty) {
+        _routes.addAll(data.map((e) => BusRoute.fromJson(e)).toList());
+      }
     }
     return _routes;
   }
@@ -116,8 +116,7 @@ class BusRepository extends BaseBusRepository {
     _favorites.clear();
     final data = HydratedBloc.storage.read(StorageKey.Favorites);
     if (data != null && data is List && data.isNotEmpty) {
-      final temp = data.map((e) => Favorite.fromJson(e)).toList();
-      _favorites.addAll(temp);
+      _favorites.addAll(data.map((e) => Favorite.fromJson(e)).toList());
     }
     return _favorites;
   }
@@ -142,9 +141,7 @@ class BusRepository extends BaseBusRepository {
   List<Favorite> addFavorite({required Favorite favorite}) {
     if (!_favorites.contains(favorite)) {
       _favorites.add(favorite);
-      // write to cache
-      final data = _favorites.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(data));
+      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(_favorites));
     }
     return _favorites;
   }
@@ -153,8 +150,7 @@ class BusRepository extends BaseBusRepository {
   List<Favorite> removeFavorite({required Favorite favorite}) {
     if (_favorites.contains(favorite)) {
       _favorites.remove(favorite);
-      final data = _favorites.map((e) => e.toJson()).toList();
-      HydratedBloc.storage.write(StorageKey.Favorites, data);
+      HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(_favorites));
     }
     return _favorites;
   }
@@ -170,4 +166,7 @@ class BusRepository extends BaseBusRepository {
   @override
   List<BusRoute> getBusRouteByBusStop({required String code}) =>
       _routes.where((element) => element.busStopCode == code).toList();
+
+  @override
+  String toString() => 'bus_repository.dart';
 }
