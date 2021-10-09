@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class CenteredText extends StatelessWidget {
   final String text;
-  CenteredText({required this.text});
+  const CenteredText({required this.text});
+
+  factory CenteredText.noInternet() =>
+      CenteredText(text: 'No Internet Connection');
+
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -21,7 +21,6 @@ class _BusStopWidgetState extends State<BusStopWidget>
 
   @override
   void initState() {
-    BlocProvider.of<BusRouteCubit>(context).fetchServices(code: widget.code);
     WidgetsBinding.instance?.addObserver(this);
     super.initState();
   }
@@ -62,12 +61,7 @@ class _BusStopWidgetState extends State<BusStopWidget>
         if (state.status == BusRouteStatus.loading) {
           return LinearProgressIndicator();
         } else if (state.status == BusRouteStatus.no_data) {
-          return NoDataWidget(
-              title: 'No Internet',
-              subTitle: 'Please check connection settings.',
-              caption: '',
-              onTap: () {},
-              showButton: false);
+          return NoDataWidget.noInternet();
         } else {
           return FlipCard(
             controller: controller,
@@ -75,17 +69,15 @@ class _BusStopWidgetState extends State<BusStopWidget>
             direction: FlipDirection.VERTICAL,
             front: BusServiceList(
                 code: widget.code,
-                onFlip: (service) {
-                  if (service.isNotEmpty && widget.code.isNotEmpty) {
+                onFlip: (value) {
+                  if (value.isNotEmpty && widget.code.isNotEmpty) {
                     final arrival = context.read<BusArrivalCubit>();
-                    arrival.getBusArrival(widget.code, service, false);
+                    arrival.getBusArrival(widget.code, value, false);
                     controller.state?.toggleCard();
                   }
                 }),
             back: BusArrivalList(
               onFlip: () => controller.state?.toggleCard(),
-              code: widget.code,
-              service: '106',
             ),
           );
         }

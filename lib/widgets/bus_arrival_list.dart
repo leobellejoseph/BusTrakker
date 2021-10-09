@@ -6,47 +6,9 @@ import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/screens/screens.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
-// class BusArrivalList extends StatelessWidget {
-//   final String code;
-//   final String service;
-//   BusArrivalList({required this.code, required this.service});
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<BusArrivalCubit, BusArrivalState>(
-//       builder: (context, state) {
-//         if (state.status == BusArrivalStatus.initial) {
-//           return Container();
-//         } else if (state.status == BusArrivalStatus.loading) {
-//           return CenteredSpinner();
-//         } else if (state.status == BusArrivalStatus.no_internet) {
-//           return CenteredText(
-//               text: 'No Connection. Please check network connection.');
-//         } else {
-//           return Row(
-//             children: [
-//               Expanded(
-//                 child: NextBusWidget(bus: state.data.firstBus, index: 1),
-//               ),
-//               Expanded(
-//                 child: NextBusWidget(bus: state.data.secondBus, index: 2),
-//               ),
-//             ],
-//           );
-//         }
-//       },
-//     );
-//   }
-// }
-
 class BusArrivalList extends StatelessWidget {
-  final String code;
-  final String service;
   final Function onFlip;
-  BusArrivalList(
-      {Key? key,
-      required this.onFlip,
-      required this.code,
-      required this.service});
+  BusArrivalList({Key? key, required this.onFlip});
 
   // void _toggleFavorite(BuildContext context, String code, String service) {
   //   final repo = context.read<BusRepository>();
@@ -59,7 +21,7 @@ class BusArrivalList extends StatelessWidget {
   //   }
   // }
 
-  void _showRouteSheet(BuildContext context) {
+  void _showRouteSheet(BuildContext context, String service, String code) {
     BusRouteCubit route = context.read<BusRouteCubit>();
     route.fetchRoute(service: service);
     showModalBottomSheet(
@@ -82,76 +44,26 @@ class BusArrivalList extends StatelessWidget {
         } else if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == BusArrivalStatus.no_internet) {
-          return CenteredText(
-              text: 'No Connection. Please check network connection.');
-        } else {
+          return CenteredText.noInternet();
+          // return CenteredText(
+          //     text: 'No Connection. Please check network connection.');
+        } else if (state.status == BusArrivalStatus.loaded) {
+          final service = state.data.serviceNo;
+          final code = state.data.busStopCode;
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: Stack(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.lightBlue.withOpacity(0.6),
-                                Colors.lightBlue.withOpacity(0.2),
-                              ],
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: RawMaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(8),
-                                      topRight: Radius.circular(8),
-                                    ),
-                                  ),
-                                  highlightColor: Colors.lightBlue,
-                                  onPressed: () => _showRouteSheet(context),
-                                  child: Center(
-                                    child: Text(
-                                      state.data.serviceNo,
-                                      style: TextStyle(
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black54),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Divider(color: Colors.white, height: 0),
-                              Expanded(
-                                child: RawMaterialButton(
-                                  highlightColor: Colors.lightBlue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(8),
-                                      bottomRight: Radius.circular(8),
-                                    ),
-                                  ),
-                                  onPressed: onFlip(),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_up_sharp,
-                                    color: Colors.blue.shade700,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: BusArrivalToggleButton(
+                        onFlip: () => onFlip(),
+                        service: state.data.serviceNo,
+                        onShowRoute: () =>
+                            _showRouteSheet(context, service, code),
                       ),
                     ),
                     Expanded(
@@ -181,6 +93,8 @@ class BusArrivalList extends StatelessWidget {
               ],
             ),
           );
+        } else {
+          return NoDataWidget.noInternet();
         }
       },
     );

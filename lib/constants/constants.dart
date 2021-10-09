@@ -23,4 +23,4 @@ const kOperators = {
 const kMinuteArrival = TextStyle(
     fontWeight: FontWeight.bold, fontSize: 26, color: Colors.blueAccent);
 const kArriving =
-    TextStyle(fontWeight: FontWeight.w600, fontSize: 24, color: Colors.blue);
+    TextStyle(fontWeight: FontWeight.w600, fontSize: 22, color: Colors.blue);

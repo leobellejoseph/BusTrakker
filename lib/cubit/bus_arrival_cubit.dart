@@ -8,7 +8,6 @@ part 'bus_arrival_state.dart';
 
 class BusArrivalCubit extends Cubit<BusArrivalState> {
   BusArrivalCubit() : super(BusArrivalState.initial());
-
   void getBusArrival(String code, String service, bool delay) async {
     emit(state.copyWith(status: BusArrivalStatus.loading));
     try {
