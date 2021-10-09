@@ -78,11 +78,12 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
                 itemBuilder: (context, index) {
                   final item = state.data[index];
                   final heightFactor = 1;
-                  final itemPositionOffset = index * kItemSize * heightFactor;
+                  final itemPositionOffset =
+                      index * kBusStopTileSize * heightFactor;
                   final difference =
                       scrollController.offset - itemPositionOffset;
                   final percent =
-                      1.5 - (difference / (kItemSize * heightFactor));
+                      1.5 - (difference / (kBusStopTileSize * heightFactor));
                   double opacity = percent > 1.0 ? 1.0 : 0.0;
                   double scale = percent;
                   if (percent > 1.0) scale = 1.0;
