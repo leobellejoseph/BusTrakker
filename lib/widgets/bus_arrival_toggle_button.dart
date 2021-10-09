@@ -61,7 +61,7 @@ class BusArrivalToggleButton extends StatelessWidget {
             const Divider(color: Colors.white, height: 0),
             Expanded(
               child: RawMaterialButton(
-                highlightColor: Colors.lightBlue,
+                highlightColor: busService.busOperator.color,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(8),
@@ -69,10 +69,9 @@ class BusArrivalToggleButton extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => onFlip(),
-                child: Icon(
-                  Icons.keyboard_arrow_up_sharp,
-                  color: Colors.blue.shade700,
-                ),
+                child: Text('Back',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700, color: Colors.blue[800])),
               ),
             ),
           ],

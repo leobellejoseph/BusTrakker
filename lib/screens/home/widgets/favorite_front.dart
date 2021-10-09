@@ -12,6 +12,7 @@ class FavoriteFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stop = repo.getBusStop(favorite.busStopCode);
+    final service = repo.getBusService(favorite.serviceNo);
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
@@ -19,8 +20,8 @@ class FavoriteFront extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.lightBlueAccent.withOpacity(0.2),
-              Colors.lightBlueAccent.withOpacity(0.6),
+              service.busOperator.color.withOpacity(0.2),
+              service.busOperator.color.withOpacity(0.5),
             ],
           ),
           borderRadius: BorderRadius.circular(8),
@@ -72,7 +73,7 @@ class FavoriteFront extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black38)),
+                      color: Colors.black54)),
             )
           ],
         ),

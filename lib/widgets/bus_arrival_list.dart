@@ -49,49 +49,59 @@ class BusArrivalList extends StatelessWidget {
         } else if (state.status == BusArrivalStatus.loaded) {
           final service = state.data.serviceNo;
           final code = state.data.busStopCode;
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Stack(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: BusArrivalToggleButton(
-                        onFlip: () => onFlip(),
-                        service: state.data.serviceNo,
-                        onShowRoute: () =>
-                            _showRouteSheet(context, service, code),
+          if (service == 'NA') {
+            return NoDataWidget(
+                title: 'No Service',
+                subTitle: '',
+                caption: 'Back',
+                onTap: () => onFlip(),
+                showButton: true);
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: BusArrivalToggleButton(
+                          onFlip: () => onFlip(),
+                          service: state.data.serviceNo,
+                          onShowRoute: () =>
+                              _showRouteSheet(context, service, code),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onDoubleTap: () {
-                          final arrival = context.read<BusArrivalCubit>();
-                          arrival.getBusArrival(code, service, true);
-                        },
+                      Expanded(
+                        child: GestureDetector(
+                          onDoubleTap: () {
+                            final arrival = context.read<BusArrivalCubit>();
+                            arrival.getBusArrival(code, service, true);
+                          },
+                          child:
+                              NextBusWidget(bus: state.data.firstBus, index: 1),
+                        ),
+                      ),
+                      Expanded(
                         child:
-                            NextBusWidget(bus: state.data.firstBus, index: 1),
+                            NextBusWidget(bus: state.data.secondBus, index: 2),
                       ),
-                    ),
-                    Expanded(
-                      child: NextBusWidget(bus: state.data.secondBus, index: 2),
-                    ),
-                  ],
-                ),
-                Transform.translate(
-                  offset: const Offset(310, -5),
-                  child: FavoriteButton(
-                    key: const ValueKey('FavoritesButton'),
-                    service: service,
-                    code: code,
-                    onPress: () => _toggleFavorite(context, code, service),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          );
+                  Transform.translate(
+                    offset: const Offset(310, -5),
+                    child: FavoriteButton(
+                      key: const ValueKey('FavoritesButton'),
+                      service: service,
+                      code: code,
+                      onPress: () => _toggleFavorite(context, code, service),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
         } else {
           return NoDataWidget.noInternet();
         }
