@@ -16,12 +16,14 @@ class NextBusWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(label[index] ?? 'No Svc',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Colors.black54,
-                  decoration: TextDecoration.underline)),
+          bus.eta == 'NA'
+              ? Text(label[index] ?? 'No Svc',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.black54,
+                      decoration: TextDecoration.underline))
+              : SizedBox(),
           bus.eta == 'NA'
               ? Text('No Svc', style: kArriving)
               : Column(
