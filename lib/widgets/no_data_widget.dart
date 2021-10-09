@@ -14,7 +14,7 @@ class NoDataWidget extends StatelessWidget {
     required this.caption,
     required this.onTap,
     required this.showButton,
-  }): super(key:key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,8 @@ class NoDataWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700, color: Colors.black54))
             : Container(),
         showButton
-            ? TextButton(
+            ? ElevatedButton(
+                style: ElevatedButton.styleFrom(shape: StadiumBorder()),
                 onPressed: () => onTap(),
                 child: Text(
                   caption,
