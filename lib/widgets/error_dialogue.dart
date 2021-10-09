@@ -25,7 +25,8 @@ class ErrorDialogue extends StatelessWidget {
         title: Text(title),
         content: Text(content),
         actions: [
-          TextButton(
+          ElevatedButton(
+            style:ElevatedButton.styleFrom(shape: StadiumBorder()),
             child: const Text('Ok'),
             onPressed: () => Navigator.pop(context),
           ),
