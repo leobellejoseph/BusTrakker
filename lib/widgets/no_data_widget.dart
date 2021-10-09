@@ -27,12 +27,24 @@ class NoDataWidget extends StatelessWidget {
       caption: '',
       onTap: () {},
       showButton: false);
+  factory NoDataWidget.noInternetRefresh(Function onClick) => NoDataWidget(
+      title: 'No Internet',
+      subTitle: 'Please check connection settings.',
+      caption: 'Refresh',
+      onTap: () => onClick(),
+      showButton: true);
   factory NoDataWidget.noData() => NoDataWidget(
       title: 'No Data',
       subTitle: 'Please check connection settings.',
       caption: '',
       onTap: () {},
       showButton: false);
+  factory NoDataWidget.noService(Function onFlip) => NoDataWidget(
+      title: 'No Service',
+      subTitle: '',
+      caption: 'Back',
+      onTap: () => onFlip(),
+      showButton: true);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,7 +62,7 @@ class NoDataWidget extends StatelessWidget {
             ? Text(subTitle,
                 style: TextStyle(
                     fontWeight: FontWeight.w700, color: Colors.black54))
-            : Container(),
+            : SizedBox(),
         showButton
             ? SizedBox.fromSize(
                 size: const Size(150, 30),
