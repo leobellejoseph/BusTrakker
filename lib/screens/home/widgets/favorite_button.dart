@@ -26,7 +26,7 @@ class FavoriteButton extends StatelessWidget {
         } else {
           final isFavorite = repo.isFavorite(service: service, code: code);
           return IconButton(
-            onPressed: onPress(),
+            onPressed: () => onPress(),
             icon: Icon(
               isFavorite ? Icons.star : Icons.star_border,
               color: Colors.yellow.shade600,

@@ -10,7 +10,6 @@ import 'package:my_bus/widgets/widgets.dart';
 class BusStopWidget extends StatefulWidget {
   final String code;
   BusStopWidget({required this.code});
-
   @override
   _BusStopWidgetState createState() => _BusStopWidgetState();
 }
@@ -38,21 +37,6 @@ class _BusStopWidgetState extends State<BusStopWidget>
     }
     super.didChangeAppLifecycleState(state);
   }
-
-  // void _showRouteSheet(BuildContext context, String service) {
-  //   ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-  //   BusRouteCubit route = context.read<BusRouteCubit>();
-  //   route.fetchRoute(service: service);
-  //   showModalBottomSheet(
-  //     backgroundColor: Colors.white,
-  //     elevation: 2,
-  //     context: context,
-  //     builder: (context) {
-  //       route.fetchRoute(service: service, code: widget.code);
-  //       return BusRouteScreen(service: service, code: widget.code);
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

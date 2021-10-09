@@ -70,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen>
           },
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Padding(
-              padding: const EdgeInsets.only(top: 40),
+            body: SafeArea(
               child: Column(
                 children: [
                   SearchWidget(

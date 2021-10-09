@@ -15,7 +15,12 @@ class NoDataWidget extends StatelessWidget {
     required this.onTap,
     required this.showButton,
   }) : super(key: key);
-
+  factory NoDataWidget.noFavorites() => NoDataWidget(
+      title: 'No Favorites Selected',
+      subTitle: '',
+      caption: '',
+      onTap: () {},
+      showButton: false);
   factory NoDataWidget.noInternet() => NoDataWidget(
       title: 'No Internet',
       subTitle: 'Please check connection settings.',

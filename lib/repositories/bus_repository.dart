@@ -114,9 +114,11 @@ class BusRepository extends BaseBusRepository {
   @override
   Future<List<Favorite>> fetchFavorites() async {
     _favorites.clear();
-    final data = HydratedBloc.storage.read(StorageKey.Favorites);
-    if (data != null && data is List && data.isNotEmpty) {
-      _favorites.addAll(data.map((e) => Favorite.fromJson(e)).toList());
+    final json = HydratedBloc.storage.read(StorageKey.Favorites);
+    if (json != null) {
+      final data = jsonDecode(json);
+      final list = (data as List).map((e) => Favorite.fromJson(e)).toList();
+      _favorites.addAll(list);
     }
     return _favorites;
   }
@@ -139,6 +141,7 @@ class BusRepository extends BaseBusRepository {
 
   @override
   List<Favorite> addFavorite({required Favorite favorite}) {
+    print('add favorite');
     if (!_favorites.contains(favorite)) {
       _favorites.add(favorite);
       HydratedBloc.storage.write(StorageKey.Favorites, jsonEncode(_favorites));

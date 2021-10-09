@@ -21,7 +21,7 @@ void main() async {
   );
   //HydratedBloc.storage.clear();
   EquatableConfig.stringify = kDebugMode;
-  Bloc.observer = SimpleBlocObserver();
+  //Bloc.observer = SimpleBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.black,
   ));
