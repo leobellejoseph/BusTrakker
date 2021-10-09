@@ -54,14 +54,14 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
       final data = await busRepository.fetchBusServices();
-      final dir1 = data.where((element) => element.direction == 1).toList();
       final bool isConnected = await InternetConnectionChecker().hasConnection;
       if (data.isEmpty && isConnected == false) {
-        yield state.copyWith(
-            serviceData: dir1, status: BusDataStatus.no_internet);
+        yield state
+            .copyWith(serviceData: [], status: BusDataStatus.no_internet);
       } else {
+        final list = data.toSet().toList();
         yield state.copyWith(
-            serviceData: dir1, status: BusDataStatus.busServiceLoaded);
+            serviceData: list, status: BusDataStatus.busServiceLoaded);
       }
     } on Failure catch (_) {
       yield state.copyWith(

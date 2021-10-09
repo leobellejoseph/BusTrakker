@@ -175,7 +175,7 @@ class BusRepository extends BaseBusRepository {
   List<BusService> getBusServices(String code) {
     final list = _routes
         .where((element) => element.busStopCode == code)
-        .toList()
+        .toSet()
         .map((e) => getBusService(e.serviceNo))
         .toSet()
         .toList();
