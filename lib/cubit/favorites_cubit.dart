@@ -23,10 +23,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     } on Failure catch (_) {
       emit(
         state.copyWith(
-          status: FavoriteStatus.error,
-          failure:
-              Failure(code: 'Favorites', message: 'Unable to fetch Favorites.'),
-        ),
+            status: FavoriteStatus.error, failure: Failure.favorite()),
       );
     }
   }
@@ -49,8 +46,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       emit(
         state.copyWith(
           status: FavoriteStatus.error,
-          failure:
-              Failure(code: 'Favorites', message: 'Unable to Add Favorite.'),
+          failure: Failure.addFavorite(),
         ),
       );
     }
@@ -73,8 +69,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       emit(
         state.copyWith(
           status: FavoriteStatus.error,
-          failure: Failure(
-              code: 'Favorites', message: 'Unable to Remove Favorites.'),
+          failure: Failure.removeFavorite(),
         ),
       );
     }

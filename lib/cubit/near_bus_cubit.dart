@@ -54,11 +54,9 @@ class NearBusCubit extends Cubit<NearBusState> {
           emit(state.copyWith(data: [], status: NearBusStatus.no_data));
         }
       }
-    } on Failure catch (_) {
+    } on Failure catch (e) {
       emit(state.copyWith(
-          status: NearBusStatus.error,
-          failure:
-              Failure(code: 'Near Bus', message: 'Failed to fetch Near Bus')));
+          status: NearBusStatus.error, failure: Failure.nearBus(e.trace)));
     } on TimeoutException catch (_) {
       emit(state.copyWith(data: [], status: NearBusStatus.no_data));
     }
