@@ -15,9 +15,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       emit(state.copyWith(data: data, status: BusRouteStatus.loaded_all));
     } on Failure catch (_) {
       emit(state.copyWith(
-          status: BusRouteStatus.error,
-          failure: Failure(
-              code: 'Bus Route', message: 'Unable to fetch All Bus Route')));
+          status: BusRouteStatus.error, failure: Failure.route()));
     }
   }
 
@@ -32,9 +30,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       }
     } on Failure catch (_) {
       emit(state.copyWith(
-          status: BusRouteStatus.error,
-          failure: Failure(
-              code: 'Bus Route', message: 'Unable to fetch Bus Route')));
+          status: BusRouteStatus.error, failure: Failure.route()));
     }
   }
 
@@ -80,9 +76,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       }
     } on Failure catch (_) {
       emit(state.copyWith(
-          status: BusRouteStatus.error,
-          failure: Failure(
-              code: 'Bus Route', message: 'Unable to fetch Bus Route')));
+          status: BusRouteStatus.error, failure: Failure.route()));
     }
   }
 
@@ -115,9 +109,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       }
     } on Failure catch (_) {
       emit(state.copyWith(
-          status: BusRouteStatus.error,
-          failure: Failure(
-              code: 'Bus Route', message: 'Unable to fetch Bus Route')));
+          status: BusRouteStatus.error, failure: Failure.route()));
     }
   }
 }

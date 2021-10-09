@@ -44,10 +44,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     } on Failure catch (_) {
       yield state.copyWith(
         status: BusDataStatus.error,
-        failure: Failure(
-          code: 'Bus Stops',
-          message: 'Unable to download Bus Stops',
-        ),
+        failure: Failure.stops(),
       );
     }
     // TODO: implement mapEventToState
@@ -68,12 +65,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       }
     } on Failure catch (_) {
       yield state.copyWith(
-        status: BusDataStatus.error,
-        failure: Failure(
-          code: 'Bus Service',
-          message: 'Unable to download Bus Services',
-        ),
-      );
+          status: BusDataStatus.error, failure: Failure.service());
     }
   }
 
@@ -82,8 +74,8 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
     yield state.copyWith(status: BusDataStatus.busStopsLoading);
     try {
       final query = event.query.toLowerCase();
-      final _stops = busRepository.getAllBusStops();
-      final data = _stops.where(
+      final stops = busRepository.getAllBusStops();
+      final data = stops.where(
         (element) {
           final code = element.busStopCode.toLowerCase();
           final road = element.roadName.toLowerCase();
@@ -99,12 +91,7 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       );
     } on Failure catch (_) {
       yield state.copyWith(
-        status: BusDataStatus.error,
-        failure: Failure(
-          code: 'Bus Stops',
-          message: 'Unable to fetch Bus Stops',
-        ),
-      );
+          status: BusDataStatus.error, failure: Failure.stops());
     }
   }
 
@@ -112,23 +99,16 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       BusServiceFetch event) async* {
     yield state.copyWith(status: BusDataStatus.busServiceLoading);
     try {
-      final _query = event.query.toLowerCase();
-      final _services = busRepository.getAllBusService();
-      final data = _services
-          .where((element) => element.serviceNo.contains(_query))
+      final query = event.query.toLowerCase();
+      final services = busRepository.getAllBusService();
+      final data = services
+          .where((element) => element.serviceNo.contains(query))
           .toList();
       yield state.copyWith(
-        serviceData: data,
-        status: BusDataStatus.busServiceLoaded,
-      );
+          serviceData: data, status: BusDataStatus.busServiceLoaded);
     } on Failure catch (_) {
       yield state.copyWith(
-        status: BusDataStatus.error,
-        failure: Failure(
-          code: 'Bus Service',
-          message: 'Unable to fetch Bus Services',
-        ),
-      );
+          status: BusDataStatus.error, failure: Failure.service());
     }
   }
 }
