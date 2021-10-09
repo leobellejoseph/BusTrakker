@@ -26,9 +26,7 @@ class BusArrivalsCubit extends Cubit<BusArrivalsState> {
       emit(
         state.copyWith(
           status: Status.error,
-          failure: Failure(
-              code: 'Bus Arrival',
-              message: 'Failed to fetch Bus Arrival Services'),
+          failure: Failure.arrivals(),
         ),
       );
     }

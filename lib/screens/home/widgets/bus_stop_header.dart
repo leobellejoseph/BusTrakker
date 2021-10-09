@@ -14,7 +14,7 @@ class BusStopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 20,
+      height: 16,
       color: Color(0xFF79ab8c),
       child: Center(
         child: Text.rich(

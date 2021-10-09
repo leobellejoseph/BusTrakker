@@ -8,7 +8,7 @@ class BusStopLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 26,
       decoration: BoxDecoration(
         color: Color(0xFF1b7b90),
         borderRadius: BorderRadius.only(

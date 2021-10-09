@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/screens/screens.dart';
-import 'package:my_bus/widgets/widgets.dart';
 
 class BusArrivalBanner extends StatelessWidget {
   final String code;
@@ -47,7 +46,7 @@ class BusArrivalBanner extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w700)),
                   const Divider(height: 0.4, color: Colors.black54),
-                  BusArrivalList(service: service, code: code),
+                  //BusArrivalList(onFlip:()=>_ca, service: service, code: code),
                 ],
               ),
             ),

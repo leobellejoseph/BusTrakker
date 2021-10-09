@@ -15,7 +15,7 @@ class SimpleBlocObserver extends BlocObserver {
 
   @override
   void onEvent(Bloc bloc, Object? event) {
-    // TODO: implement onEvent
+    print('BLOC:$bloc');
     super.onEvent(bloc, event);
   }
 

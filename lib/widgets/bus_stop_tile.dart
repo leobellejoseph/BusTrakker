@@ -10,61 +10,56 @@ class BusStopTile extends StatelessWidget {
   final BusStop item;
   final bool showDistance;
 
-  BusStopTile({required this.item, required this.showDistance});
+  const BusStopTile({Key? key, required this.item, required this.showDistance})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: kItemSize,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<BusArrivalsCubit>(
-              create: (context) =>
-                  BusArrivalsCubit()..getBusServices(item.busStopCode),
+        height: kBusStopTileSize,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            BusStopLabel(item: item),
+            const Divider(
+              color: Colors.white,
+              height: 0.4,
             ),
-            BlocProvider<BusArrivalCubit>(
-                create: (context) => BusArrivalCubit()),
-          ],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              BusStopLabel(item: item),
-              const Divider(
-                color: Colors.white,
-                height: 0.4,
-              ),
-              BusStopHeader(item: item, showDistance: showDistance),
-              const Divider(
-                color: Colors.white,
-                height: 0.4,
-              ),
-              Flexible(
-                fit: FlexFit.loose,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF1b7b90).withOpacity(0.6),
-                        Color(0xFF1b7b90).withOpacity(0.2),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5),
-                    ),
+            BusStopHeader(item: item, showDistance: showDistance),
+            const Divider(
+              color: Colors.white,
+              height: 0.4,
+            ),
+            Flexible(
+              fit: FlexFit.loose,
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF1b7b90).withOpacity(0.6),
+                      Color(0xFF1b7b90).withOpacity(0.2),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.5),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(2.5),
+                  child: BlocProvider(
+                    create: (context) => BusArrivalCubit(),
                     child: BusStopWidget(code: item.busStopCode),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

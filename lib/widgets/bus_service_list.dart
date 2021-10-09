@@ -16,7 +16,6 @@ class BusServiceList extends StatelessWidget {
   Widget build(BuildContext context) {
     final repo = context.read<BusRepository>();
     final routes = repo.getBusRouteByBusStop(code: code);
-
     return GridView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: routes.length,
@@ -40,9 +39,7 @@ class BusServiceList extends StatelessWidget {
               borderRadius: BorderRadius.circular(2.5),
             ),
             highlightColor: Colors.lightBlueAccent,
-            onPressed: () =>
-              onFlip(item.serviceNo)
-            ,
+            onPressed: () => onFlip(item.serviceNo),
             child: Center(
               child: Text(
                 item.serviceNo,

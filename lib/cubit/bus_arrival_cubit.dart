@@ -19,7 +19,6 @@ class BusArrivalCubit extends Cubit<BusArrivalState> {
           Future.delayed(const Duration(milliseconds: 1000), () async {
             BusArrival arrival =
                 await HTTPRequest.loadBusArrivals(code, service);
-            print(state);
             emit(
                 state.copyWith(data: arrival, status: BusArrivalStatus.loaded));
           });
@@ -33,10 +32,7 @@ class BusArrivalCubit extends Cubit<BusArrivalState> {
     } on Failure catch (_) {
       emit(
         state.copyWith(
-          status: BusArrivalStatus.error,
-          failure: Failure(
-              code: 'Bus Arrival', message: 'Failed to fetch Bus Arrival'),
-        ),
+            status: BusArrivalStatus.error, failure: Failure.arrival()),
       );
     }
   }
