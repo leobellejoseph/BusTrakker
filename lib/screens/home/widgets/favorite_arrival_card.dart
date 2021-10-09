@@ -50,12 +50,7 @@ class _FavoriteArrivalCardState extends State<FavoriteArrivalCard>
         if (state.status == BusArrivalStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == BusArrivalStatus.no_internet) {
-          return NoDataWidget(
-              title: 'No Internet',
-              subTitle: '',
-              caption: '',
-              onTap: () {},
-              showButton: false);
+          return NoDataWidget.noInternet();
         } else {
           return GestureDetector(
             onDoubleTap: () => context.read<BusArrivalCubit>().getBusArrival(

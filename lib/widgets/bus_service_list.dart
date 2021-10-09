@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/repositories.dart';
 
 class BusServiceList extends StatelessWidget {
@@ -15,14 +16,14 @@ class BusServiceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repo = context.read<BusRepository>();
-    final routes = repo.getBusRouteByBusStop(code: code);
+    final services = repo.getBusServices(code);
     return GridView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: routes.length,
+      itemCount: services.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
       itemBuilder: (context, index) {
-        final item = routes[index];
+        final BusService item = services[index];
         return Container(
           decoration: BoxDecoration(
             boxShadow: [
@@ -43,7 +44,10 @@ class BusServiceList extends StatelessWidget {
             child: Center(
               child: Text(
                 item.serviceNo,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 19,
+                    color: item.busOperator.color),
               ),
             ),
           ),

@@ -9,6 +9,7 @@ abstract class BaseBusRepository {
   Favorite? getFavorite(String service, String code);
   BusStop getBusStop(String code);
   BusService getBusService(String service);
+  List<BusService> getBusServices(String code);
   Future<List<BusStop>> fetchBusStops();
   Future<List<BusService>> fetchBusServices();
   Future<List<BusRoute>> fetchBusRoutes();

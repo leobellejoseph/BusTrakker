@@ -27,7 +27,12 @@ class NoDataWidget extends StatelessWidget {
       caption: '',
       onTap: () {},
       showButton: false);
-
+  factory NoDataWidget.noData() => NoDataWidget(
+      title: 'No Data',
+      subTitle: 'Please check connection settings.',
+      caption: '',
+      onTap: () {},
+      showButton: false);
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -167,8 +167,20 @@ class BusRepository extends BaseBusRepository {
   }
 
   @override
-  List<BusRoute> getBusRouteByBusStop({required String code}) =>
-      _routes.where((element) => element.busStopCode == code).toList();
+  List<BusRoute> getBusRouteByBusStop({required String code}) {
+    return _routes.where((element) => element.busStopCode == code).toList();
+  }
+
+  @override
+  List<BusService> getBusServices(String code) {
+    final list = _routes
+        .where((element) => element.busStopCode == code)
+        .toList()
+        .map((e) => getBusService(e.serviceNo))
+        .toSet()
+        .toList();
+    return list;
+  }
 
   @override
   String toString() => 'bus_repository.dart';

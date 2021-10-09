@@ -42,10 +42,12 @@ class _BusStopWidgetState extends State<BusStopWidget>
   Widget build(BuildContext context) {
     return BlocBuilder<BusRouteCubit, BusRouteState>(
       builder: (context, state) {
-        if (state.status == BusRouteStatus.loading) {
-          return LinearProgressIndicator();
+        if (state.status == BusRouteStatus.initial ||
+            state.status == BusRouteStatus.loading_all ||
+            state.status == BusRouteStatus.loading) {
+          return const CenteredSpinner();
         } else if (state.status == BusRouteStatus.no_data) {
-          return NoDataWidget.noInternet();
+          return NoDataWidget.noData();
         } else {
           return FlipCard(
             controller: controller,

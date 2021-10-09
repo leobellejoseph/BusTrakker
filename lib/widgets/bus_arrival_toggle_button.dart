@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/repositories.dart';
+import 'package:provider/src/provider.dart';
 
 class BusArrivalToggleButton extends StatelessWidget {
   final Function onShowRoute;
@@ -13,6 +16,8 @@ class BusArrivalToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repo = context.read<BusRepository>();
+    final BusService busService = repo.getBusService(service);
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
@@ -48,7 +53,7 @@ class BusArrivalToggleButton extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black54),
+                        color: busService.busOperator.color),
                   ),
                 ),
               ),

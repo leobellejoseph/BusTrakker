@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
+import 'package:my_bus/repositories/repositories.dart';
 import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
 import 'package:my_bus/widgets/widgets.dart';
@@ -62,6 +63,8 @@ class FavoriteCardHeader extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final repo = context.read<BusRepository>();
+    final BusService service = repo.getBusService(favorite.serviceNo);
     return Container(
       padding: const EdgeInsets.all(2),
       height: 29,
@@ -72,7 +75,10 @@ class FavoriteCardHeader extends StatelessWidget {
           children: [
             Text(
               favorite.serviceNo,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: service.busOperator.color),
             ),
             const Text(
               ' @ ',
