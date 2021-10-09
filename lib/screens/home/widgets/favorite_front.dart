@@ -25,7 +25,7 @@ class FavoriteFront extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(8),
         ),
-        padding: const EdgeInsets.only(left: 3, right: 3),
+        padding: const EdgeInsets.only(left: 3, right: 3, top: 3),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,14 +59,14 @@ class FavoriteFront extends StatelessWidget {
                           Text(kBusType[arrival.type] ?? 'No Svc',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           Text(kBusLoad[arrival.load] ?? 'No Svc',
-                              style: TextStyle(color: Colors.black54)),
+                              style: TextStyle(color: Colors.green[700])),
                         ],
                       ),
                     ],
                   ),
-            const Divider(height: 1, color: Colors.grey),
+            // const Divider(color: Colors.grey),
             Padding(
-              padding: const EdgeInsets.only(left: 2.0, right: 2.0),
+              padding: const EdgeInsets.only(left: 2, right: 2),
               child: Text(stop.description,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
