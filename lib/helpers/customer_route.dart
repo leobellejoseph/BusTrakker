@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_bus/screens/screens.dart';
+import 'package:my_bus/widgets/bus_arrival_widget.dart';
 
 class CustomRoute {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -10,12 +11,14 @@ class CustomRoute {
         return HomeScreen.route();
       case LocationEnableScreen.id:
         return LocationEnableScreen.route();
+      case BusArrivalWidget.id:
+        return BusArrivalWidget.route();
       default:
-        return _erorrRoute();
+        return _errorRoute();
     }
   }
 
-  static Route _erorrRoute() {
+  static Route _errorRoute() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: '/error'),
       builder: (_) => Scaffold(
