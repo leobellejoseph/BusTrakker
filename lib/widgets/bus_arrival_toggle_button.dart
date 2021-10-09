@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/repositories.dart';
-import 'package:provider/src/provider.dart';
 
 class BusArrivalToggleButton extends StatelessWidget {
   final Function onShowRoute;
