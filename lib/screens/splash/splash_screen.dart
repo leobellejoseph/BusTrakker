@@ -34,10 +34,11 @@ class SplashScreen extends StatelessWidget {
                 context.read<NearBusCubit>().getNearMeBusStops();
               }
             }
-            // load favorites
-            context.read<FavoritesCubit>().fetch();
+
             // load bus routes in the background
             context.read<BusRouteCubit>().fetchAllRoutes();
+            // load favorites
+            context.read<FavoritesCubit>().fetch();
             // navigate to home screen
 
             Future.delayed(const Duration(seconds: 1), () {
