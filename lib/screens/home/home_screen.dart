@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen>
               Positioned(
                 top: 370,
                 child: SizedBox.fromSize(
-                  size: Size(size.width, 200),
+                  size: Size(size.width, 245),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 555,
+                top: 600,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 200),
                   child: Padding(
