@@ -110,8 +110,8 @@ class _HomeScreenState extends State<HomeScreen>
                 top: 2,
                 left: 10,
                 child: SizedBox(
-                    width: 200,
-                    height: 100,
+                    width: 150,
+                    height: 110,
                     child: Image.asset('images/sglovebus.png')),
               ),
               Positioned(
