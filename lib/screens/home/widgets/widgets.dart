@@ -7,6 +7,8 @@ export 'content_view.dart';
 export 'favorite_arrival_card.dart';
 export 'favorite_back.dart';
 export 'favorite_button.dart';
+export 'favorite_card_content.dart';
+export 'favorite_card_header.dart';
 export 'favorite_front.dart';
 export 'favorites_list.dart';
 export 'favorites_view.dart';

@@ -45,7 +45,7 @@ class NextBus {
         load: 'NA',
         feature: 'NA',
         type: 'NA',
-        eta: 'NoSvc',
+        eta: 'NA',
       );
 
   factory NextBus.fromJson(Map<String, dynamic> data) {

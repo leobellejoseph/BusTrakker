@@ -42,7 +42,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/
+    - images/background1.jpg
+    - images/splash.png
+    - images/buslogo.png
+    - images/busstop.png
+    - images/sglovebus.png
 
   # fonts:
   #   - family: Schyler

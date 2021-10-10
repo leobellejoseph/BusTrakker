@@ -15,6 +15,7 @@ class FavoriteFront extends StatelessWidget {
     final service = repo.getBusService(favorite.serviceNo);
     return GestureDetector(
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

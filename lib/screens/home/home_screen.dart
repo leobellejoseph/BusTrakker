@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen>
   final FocusNode _focusNode = FocusNode();
   TextEditingController _textEditingController = TextEditingController();
   int _tabIndex = 0;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
@@ -58,40 +57,239 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final insets = MediaQuery.of(context).viewInsets;
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.dark,
       child: WillPopScope(
         onWillPop: () async => false,
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          },
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  SearchWidget(
-                      key: ValueKey('search'),
-                      onSubmit: _onFilterData,
-                      controller: _textEditingController),
-                  SizedBox(height: 158, child: FavoritesView()),
-                  TabView(
-                    key: const ValueKey('tab'),
-                    tabController: _tabController,
-                    onTap: (index) => setState(() => _tabIndex = index),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    fit: BoxFit.contain,
+                    image: AssetImage('images/background1.jpg'),
                   ),
-                  Expanded(
-                    child: ContentView(tabIndex: _tabIndex),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.blueAccent.withOpacity(0.5),
+                      Colors.blueAccent.withOpacity(0.3),
+                      Colors.blueAccent.withOpacity(0.2),
+                      Colors.blueAccent.withOpacity(0),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.deepPurple.withOpacity(0.2),
+                        Colors.deepPurple.withOpacity(0.6),
+                      ],
+                    ),
+                  ),
+                  height: 250,
+                ),
+              ),
+              Positioned(
+                top: 15,
+                left: 10,
+                child: SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: Image.asset('images/sglovebus.png')),
+              ),
+              Positioned(
+                top: 85,
+                child: SizedBox.fromSize(
+                  size: Size(size.width, 300),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.white.withOpacity(0.5),
+                      child: FavoritesList(),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 370,
+                child: SizedBox.fromSize(
+                  size: Size(size.width, 200),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.white.withOpacity(0.5),
+                      child: Container(),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 555,
+                child: SizedBox.fromSize(
+                  size: Size(size.width, 200),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.white.withOpacity(0.5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Material(
+                                shadowColor: Colors.grey,
+                                elevation: 2,
+                                borderRadius: BorderRadius.circular(10),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10),
+                                  highlightColor: Colors.blue,
+                                  onTap: () {},
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(60),
+                                        child:
+                                            Image.asset('images/buslogo.png'),
+                                      ),
+                                      Positioned(
+                                        left: 30,
+                                        top: 10,
+                                        child: Text('Bus Services',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.blueAccent)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Material(
+                                shadowColor: Colors.grey,
+                                elevation: 2,
+                                borderRadius: BorderRadius.circular(10),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10),
+                                  highlightColor: Colors.blue,
+                                  onTap: () {},
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(60),
+                                        child:
+                                            Image.asset('images/busstop.png'),
+                                      ),
+                                      Positioned(
+                                        left: 45,
+                                        top: 10,
+                                        child: Text('Bus Stops',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.deepPurple)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
+          // body: DecoratedBox(
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       alignment: AlignmentDirectional.bottomEnd,
+          //       fit: BoxFit.contain,
+          //       image: AssetImage('images/background1.jpg'),
+          //     ),
+          //     gradient: LinearGradient(
+          //       begin: Alignment.topCenter,
+          //       end: Alignment.bottomCenter,
+          //       colors: [
+          //         Colors.blueAccent.withOpacity(0.5),
+          //         Colors.blueAccent.withOpacity(0.2),
+          //         Colors.blueAccent.withOpacity(0.1),
+          //       ],
+          //     ),
+          //   ),
+          //   child: Container(),
+          // ),
         ),
       ),
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return AnnotatedRegion(
+  //     value: SystemUiOverlayStyle.dark,
+  //     child: WillPopScope(
+  //       onWillPop: () async => false,
+  //       child: GestureDetector(
+  //         onTap: () {
+  //           FocusScope.of(context).unfocus();
+  //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  //           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+  //         },
+  //         child: Scaffold(
+  //           resizeToAvoidBottomInset: false,
+  //           body: SafeArea(
+  //             child: Column(
+  //               children: [
+  //                 SearchWidget(
+  //                     key: ValueKey('search'),
+  //                     onSubmit: _onFilterData,
+  //                     controller: _textEditingController),
+  //                 FavoritesList(),
+  //                 TabView(
+  //                   key: const ValueKey('tab'),
+  //                   tabController: _tabController,
+  //                   onTap: (index) => setState(() => _tabIndex = index),
+  //                 ),
+  //                 Expanded(child: ContentView(tabIndex: _tabIndex)),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

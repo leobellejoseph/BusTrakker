@@ -1,19 +1,72 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:my_bus/cubit/cubit.dart';
-import 'package:my_bus/models/models.dart';
-import 'package:my_bus/repositories/repositories.dart';
-import 'package:my_bus/screens/home/widgets/favorite_arrival_card.dart';
+import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/widgets/centered_spinner.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
+// class FavoritesList extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final size = MediaQuery.of(context).size;
+//     return BlocBuilder<FavoritesCubit, FavoritesState>(
+//       builder: (context, state) {
+//         if (state.status == FavoriteStatus.loading) {
+//           return CenteredSpinner();
+//         } else if (state.status == FavoriteStatus.no_data) {
+//           return NoDataWidget.noFavorites();
+//         } else {
+//           return Padding(
+//             padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+//             child: Column(
+//               mainAxisSize: MainAxisSize.max,
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 SizedBox(
+//                   height: 126,
+//                   child: ListView.builder(
+//                     itemCount: state.data.length,
+//                     scrollDirection: Axis.horizontal,
+//                     itemBuilder: (context, index) {
+//                       final fav = state.data[index];
+//                       final cubit = context.read<FavoritesCubit>();
+//                       final arrival = BusArrivalCubit();
+//                       return BlocProvider<BusArrivalCubit>(
+//                         create: (context) => arrival
+//                           ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
+//                         child: Slidable(
+//                           direction: Axis.vertical,
+//                           actions: [
+//                             IconSlideAction(
+//                               //caption: 'Delete',
+//                               color: Colors.red,
+//                               icon: Icons.delete,
+//                               onTap: () => cubit.removeFavorite(
+//                                   fav.busStopCode, fav.serviceNo),
+//                             ),
+//                           ],
+//                           actionPane: SlidableDrawerActionPane(),
+//                           child: FavoriteCardContent(favorite: fav),
+//                         ),
+//                       );
+//                     },
+//                   ),
+//                 ),
+//                 const Divider(color: Colors.black54),
+//               ],
+//             ),
+//           );
+//         }
+//       },
+//     );
+//   }
+// }
 class FavoritesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocBuilder<FavoritesCubit, FavoritesState>(
       builder: (context, state) {
         if (state.status == FavoriteStatus.loading) {
@@ -21,109 +74,78 @@ class FavoritesList extends StatelessWidget {
         } else if (state.status == FavoriteStatus.no_data) {
           return NoDataWidget.noFavorites();
         } else {
-          return SizedBox(
-            height: 126,
-            child: ListView.builder(
-              itemCount: state.data.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final fav = state.data[index];
-                final cubit = context.read<FavoritesCubit>();
-                final arrival = BusArrivalCubit();
-                return BlocProvider<BusArrivalCubit>(
-                  create: (context) => arrival
-                    ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
-                  child: Slidable(
-                    direction: Axis.vertical,
-                    actions: [
-                      IconSlideAction(
-                        //caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => cubit.removeFavorite(
-                            fav.busStopCode, fav.serviceNo),
-                      ),
-                    ],
-                    actionPane: SlidableDrawerActionPane(),
-                    child: FavoriteCardContent(favorite: fav),
+          return Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Expanded(
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final fav = state.data[index];
+                      final cubit = context.read<FavoritesCubit>();
+                      final arrival = BusArrivalCubit();
+                      return BlocProvider<BusArrivalCubit>(
+                        create: (context) => arrival
+                          ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
+                        child: Slidable(
+                          direction: Axis.vertical,
+                          actions: [
+                            IconSlideAction(
+                              //caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () => cubit.removeFavorite(
+                                  fav.busStopCode, fav.serviceNo),
+                            ),
+                          ],
+                          actionPane: SlidableDrawerActionPane(),
+                          child: FavoriteCardContent(favorite: fav),
+                        ),
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.9,
+                    ),
                   ),
-                );
-              },
+                  /*
+                  child: ListView.builder(
+                    itemCount: state.data.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final fav = state.data[index];
+                      final cubit = context.read<FavoritesCubit>();
+                      final arrival = BusArrivalCubit();
+                      return BlocProvider<BusArrivalCubit>(
+                        create: (context) => arrival
+                          ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
+                        child: Slidable(
+                          direction: Axis.vertical,
+                          actions: [
+                            IconSlideAction(
+                              //caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () => cubit.removeFavorite(
+                                  fav.busStopCode, fav.serviceNo),
+                            ),
+                          ],
+                          actionPane: SlidableDrawerActionPane(),
+                          child: FavoriteCardContent(favorite: fav),
+                        ),
+                      );
+                    },
+                  ),
+
+                   */
+                ),
+              ],
             ),
           );
         }
       },
-    );
-  }
-}
-
-class FavoriteCardHeader extends StatelessWidget {
-  final Favorite favorite;
-  const FavoriteCardHeader({Key? key, required this.favorite})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final repo = context.read<BusRepository>();
-    final BusService service = repo.getBusService(favorite.serviceNo);
-    return Container(
-      padding: const EdgeInsets.all(2),
-      height: 29,
-      child: Center(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              favorite.serviceNo,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: service.busOperator.color),
-            ),
-            const Text(
-              ' @ ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Text(
-              favorite.busStopCode,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.blueAccent),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class FavoriteCardContent extends StatelessWidget {
-  final Favorite favorite;
-  const FavoriteCardContent({Key? key, required this.favorite})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: 150,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            FavoriteCardHeader(key: ValueKey('header'), favorite: favorite),
-            Expanded(
-              child: FavoriteArrivalCard(fave: favorite),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
