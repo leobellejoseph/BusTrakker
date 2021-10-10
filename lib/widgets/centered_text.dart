@@ -24,6 +24,11 @@ class CenteredTextButton extends StatelessWidget {
   final Function onTap;
   CenteredTextButton(
       {required this.title, required this.subTitle, required this.onTap});
+  factory CenteredTextButton.refresh({required Function onClick}) =>
+      CenteredTextButton(
+          title: 'No Data. Tap to refresh.',
+          subTitle: '',
+          onTap: () => onClick());
   @override
   Widget build(BuildContext context) {
     return Center(

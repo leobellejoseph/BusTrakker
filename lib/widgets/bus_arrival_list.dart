@@ -50,7 +50,7 @@ class BusArrivalList extends StatelessWidget {
           final service = state.data.serviceNo;
           final code = state.data.busStopCode;
           if (service == 'NA') {
-            return NoDataWidget.noService(onFlip);
+            return NoDataWidget.noService(onFlip: () => onFlip());
           } else {
             return Padding(
               padding: const EdgeInsets.all(4.0),

@@ -39,12 +39,32 @@ class NoDataWidget extends StatelessWidget {
       caption: '',
       onTap: () {},
       showButton: false);
-  factory NoDataWidget.noService(Function onFlip) => NoDataWidget(
+  factory NoDataWidget.noService({required Function onFlip}) => NoDataWidget(
       title: 'No Service',
       subTitle: '',
       caption: 'Back',
       onTap: () => onFlip(),
       showButton: true);
+  factory NoDataWidget.noLocation({required Function onClick}) => NoDataWidget(
+      title: 'Location not enabled',
+      subTitle: 'Please enable location service.',
+      caption: 'Open App Settings',
+      onTap: () => onClick(),
+      showButton: true);
+  factory NoDataWidget.noDataRefresh({required Function onClick}) =>
+      NoDataWidget(
+          title: 'No Data',
+          subTitle: 'Unable to retrieve data.',
+          caption: 'Refresh',
+          onTap: () => onClick,
+          showButton: true);
+  factory NoDataWidget.noPermission({required Function onClick}) =>
+      NoDataWidget(
+          title: 'Location Permission not set',
+          subTitle: 'Please allow to retrieve location.',
+          caption: 'Open App Settings',
+          onTap: () => onClick(),
+          showButton: true);
   @override
   Widget build(BuildContext context) {
     return Column(

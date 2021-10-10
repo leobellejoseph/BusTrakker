@@ -39,26 +39,17 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
         if (state.status == NearBusStatus.loading) {
           return CenteredSpinner();
         } else if (state.status == NearBusStatus.no_data) {
-          return NoDataWidget(
-              title: 'No Data',
-              subTitle: 'Unable to retrieve data.',
-              caption: 'Refresh',
-              onTap: () => context.read<NearBusCubit>().getNearMeBusStops(),
-              showButton: true);
+          return NoDataWidget.noDataRefresh(
+            onClick: () => context.read<NearBusCubit>().getNearMeBusStops(),
+          );
         } else if (state.status == NearBusStatus.no_location) {
-          return NoDataWidget(
-              title: 'Location not enabled',
-              subTitle: 'Please enable location service.',
-              caption: 'Open App Settings',
-              onTap: () => LocationRequest.openAppSettings(),
-              showButton: true);
+          return NoDataWidget.noLocation(
+            onClick: () => LocationRequest.openAppSettings(),
+          );
         } else if (state.status == NearBusStatus.no_permission) {
-          return NoDataWidget(
-              title: 'Location Permission not set',
-              subTitle: 'Please allow to retrieve location.',
-              caption: 'Open App Settings',
-              onTap: () => LocationRequest.openAppSettings(),
-              showButton: true);
+          return NoDataWidget.noPermission(
+            onClick: () => LocationRequest.openAppSettings(),
+          );
         } else {
           if (state.data.isNotEmpty) {
             return RefreshIndicator(
@@ -103,12 +94,9 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
               ),
             );
           } else {
-            return CenteredTextButton(
-                title: 'No Data. Tap to refresh.',
-                subTitle: '',
-                onTap: () {
-                  context.read<NearBusCubit>().getNearMeBusStops();
-                });
+            return CenteredTextButton.refresh(
+              onClick: () => context.read<NearBusCubit>().getNearMeBusStops(),
+            );
           }
         }
       },
