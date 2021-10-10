@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 15,
+                top: 2,
                 left: 10,
                 child: SizedBox(
                     width: 200,
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Image.asset('images/sglovebus.png')),
               ),
               Positioned(
-                top: 85,
+                top: 70,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 300),
                   child: Padding(
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 370,
+                top: 350,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 245),
                   child: Padding(
@@ -147,11 +147,11 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 600,
+                top: 580,
                 child: SizedBox.fromSize(
-                  size: Size(size.width, 200),
+                  size: Size(size.width, 180),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen>
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Material(
                                 shadowColor: Colors.grey,
                                 elevation: 2,
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Material(
                                 shadowColor: Colors.grey,
                                 elevation: 2,
@@ -233,63 +233,8 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ],
           ),
-          // body: DecoratedBox(
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       alignment: AlignmentDirectional.bottomEnd,
-          //       fit: BoxFit.contain,
-          //       image: AssetImage('images/background1.jpg'),
-          //     ),
-          //     gradient: LinearGradient(
-          //       begin: Alignment.topCenter,
-          //       end: Alignment.bottomCenter,
-          //       colors: [
-          //         Colors.blueAccent.withOpacity(0.5),
-          //         Colors.blueAccent.withOpacity(0.2),
-          //         Colors.blueAccent.withOpacity(0.1),
-          //       ],
-          //     ),
-          //   ),
-          //   child: Container(),
-          // ),
         ),
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return AnnotatedRegion(
-  //     value: SystemUiOverlayStyle.dark,
-  //     child: WillPopScope(
-  //       onWillPop: () async => false,
-  //       child: GestureDetector(
-  //         onTap: () {
-  //           FocusScope.of(context).unfocus();
-  //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  //           ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-  //         },
-  //         child: Scaffold(
-  //           resizeToAvoidBottomInset: false,
-  //           body: SafeArea(
-  //             child: Column(
-  //               children: [
-  //                 SearchWidget(
-  //                     key: ValueKey('search'),
-  //                     onSubmit: _onFilterData,
-  //                     controller: _textEditingController),
-  //                 FavoritesList(),
-  //                 TabView(
-  //                   key: const ValueKey('tab'),
-  //                   tabController: _tabController,
-  //                   onTap: (index) => setState(() => _tabIndex = index),
-  //                 ),
-  //                 Expanded(child: ContentView(tabIndex: _tabIndex)),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
