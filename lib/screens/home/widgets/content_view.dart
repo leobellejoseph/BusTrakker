@@ -11,7 +11,7 @@ class ContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tabIndex == TabIndex.near.index) {
-      return NearBusStopsView(key: ValueKey('nearBusStopsView'));
+      return NearBusStopsView(key: ValueKey('nearBusStopsView'), showAll: true);
     } else if (tabIndex == TabIndex.services.index) {
       return BusServiceView(key: ValueKey('serviceView'));
     } else if (tabIndex == TabIndex.stops.index) {

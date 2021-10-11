@@ -8,7 +8,8 @@ import 'package:my_bus/widgets/centered_text.dart';
 import 'package:my_bus/widgets/widgets.dart';
 
 class NearBusStopsView extends StatefulWidget {
-  NearBusStopsView({Key? key}) : super(key: key);
+  final bool showAll;
+  NearBusStopsView({Key? key, required this.showAll}) : super(key: key);
   @override
   _NearBusStopsViewState createState() => _NearBusStopsViewState();
 }
@@ -51,29 +52,36 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
           );
         } else {
           if (state.data.isNotEmpty) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                final BusDataBloc bloc = context.read<BusDataBloc>();
-                final NearBusCubit cubit = context.read<NearBusCubit>();
-                if (state.data.isEmpty) {
-                  bloc.add(BusDataDownload());
-                  cubit.getNearMeBusStops();
-                } else {
-                  cubit.getNearMeBusStops();
-                }
-              },
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount: state.data.length,
-                itemBuilder: (context, index) {
-                  final item = state.data[index];
-                  return Align(
-                    alignment: Alignment.center,
-                    child: BusStopTile(item: item, showDistance: true),
-                  );
+            if (widget.showAll) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  final BusDataBloc bloc = context.read<BusDataBloc>();
+                  final NearBusCubit cubit = context.read<NearBusCubit>();
+                  if (state.data.isEmpty) {
+                    bloc.add(BusDataDownload());
+                    cubit.getNearMeBusStops();
+                  } else {
+                    cubit.getNearMeBusStops();
+                  }
                 },
-              ),
-            );
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: state.data.length,
+                  itemBuilder: (context, index) {
+                    final item = state.data[index];
+                    return Align(
+                      alignment: Alignment.center,
+                      child: BusStopTile(item: item, showDistance: true),
+                    );
+                  },
+                ),
+              );
+            } else {
+              final item = state.data[0];
+              return Align(
+                  alignment: Alignment.center,
+                  child: BusStopTile(item: item, showDistance: true));
+            }
           } else {
             return CenteredTextButton.refresh(
               onClick: () => context.read<NearBusCubit>().getNearMeBusStops(),

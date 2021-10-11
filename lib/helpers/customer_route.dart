@@ -17,6 +17,8 @@ class CustomRoute {
         return BusServiceScreen.route();
       case BusStopsScreen.id:
         return BusStopsScreen.route();
+      case NearBusStopsScreen.id:
+        return NearBusStopsScreen.route();
       default:
         return _errorRoute();
     }
