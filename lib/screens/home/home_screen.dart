@@ -107,15 +107,15 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 5,
-                left: 120,
+                top: 0,
+                left: insets.left + 120,
                 child: SizedBox(
                     width: 150,
                     height: 110,
                     child: Image.asset('images/sglovebus.png')),
               ),
               Positioned(
-                top: 70,
+                top: 65,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 300),
                   child: Padding(
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 350,
+                top: 345,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 245),
                   child: Padding(
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 580,
+                top: 573,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 180),
                   child: Padding(
