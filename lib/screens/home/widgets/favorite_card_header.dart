@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/repositories.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 class FavoriteCardHeader extends StatelessWidget {
   final Favorite favorite;
   const FavoriteCardHeader({Key? key, required this.favorite})
@@ -16,12 +17,12 @@ class FavoriteCardHeader extends StatelessWidget {
       child: Center(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               favorite.serviceNo,
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   fontSize: 18,
                   color: service.busOperator.color),
             ),

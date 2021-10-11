@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/helpers/helpers.dart';
@@ -14,10 +16,11 @@ class SplashScreen extends StatelessWidget {
         settings: RouteSettings(name: SplashScreen.id),
         builder: (context) => SplashScreen(key: ValueKey('splash')),
       );
+  final loadingTextStyle = GoogleFonts.permanentMarker(
+      fontSize: 20, fontWeight: FontWeight.w300, color: Colors.green.shade500);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: BlocListener<BusDataBloc, BusDataState>(
         listener: (bloc, state) async {
           if (state.status == BusDataStatus.allLoaded) {
@@ -41,46 +44,72 @@ class SplashScreen extends StatelessWidget {
             context.read<FavoritesCubit>().fetch();
             // navigate to home screen
 
-            Future.delayed(const Duration(seconds: 1), () {
-              if (isLocationEnabled) {
-                Navigator.pushNamed(context, HomeScreen.id);
-              } else {
-                Navigator.pushNamed(context, LocationEnableScreen.id);
-              }
-            });
+            Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                if (isLocationEnabled) {
+                  Navigator.pushNamed(context, HomeScreen.id);
+                } else {
+                  Navigator.pushNamed(context, LocationEnableScreen.id);
+                }
+              },
+            );
           }
         },
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image(image: AssetImage('images/splash.png'), fit: BoxFit.cover),
-            const SizedBox(height: 10),
-            Center(
-              child: BlocBuilder<BusDataBloc, BusDataState>(
-                builder: (context, state) {
-                  switch (state.status) {
-                    case BusDataStatus.busServiceLoading:
-                      return const Text('Loading Bus Services',
-                          style: TextStyle(color: Colors.green));
-                    case BusDataStatus.busStopsLoading:
-                      return const Text('Loading Bus Stops',
-                          style: TextStyle(color: Colors.black54));
-                    case BusDataStatus.allLoaded:
-                      return const Text('Loading Complete...');
-                    default:
-                      return const Text('Loading...');
-                  }
-                },
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.blueGrey.withOpacity(0.0),
+                      Colors.blueGrey.withOpacity(0.2),
+                      Colors.blue.withOpacity(0.1),
+                    ],
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      child: BlocBuilder<BusDataBloc, BusDataState>(
+                        builder: (context, state) {
+                          switch (state.status) {
+                            case BusDataStatus.busServiceLoading:
+                              return Text('Loading Bus Services',
+                                  style: loadingTextStyle.copyWith(
+                                      color: Colors.deepPurple));
+                            case BusDataStatus.busStopsLoading:
+                              return Text('Loading Bus Stops',
+                                  style: loadingTextStyle.copyWith(
+                                      color: Colors.red));
+                            case BusDataStatus.allLoaded:
+                              return Text('Loading Complete...',
+                                  style: loadingTextStyle);
+                            default:
+                              return Text('Loading...',
+                                  style: loadingTextStyle.copyWith(
+                                      color: Colors.yellow.shade600));
+                          }
+                        },
+                      ),
+                    ),
+                    SpinKitPouringHourGlassRefined(
+                        color: Colors.deepPurple, size: 100),
+                    // CircularProgressIndicator(
+                    //   color: Colors.lightBlueAccent,
+                    // ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            Center(
-              child: CircularProgressIndicator(
-                color: Colors.lightBlueAccent,
-              ),
-            ),
+            Image(
+                image: AssetImage('images/background1.jpg'), fit: BoxFit.cover),
           ],
         ),
       ),

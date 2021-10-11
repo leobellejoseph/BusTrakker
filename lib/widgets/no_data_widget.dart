@@ -16,7 +16,7 @@ class NoDataWidget extends StatelessWidget {
     required this.showButton,
   }) : super(key: key);
   factory NoDataWidget.noFavorites() => NoDataWidget(
-      title: 'No Favorites Selected',
+      title: 'Favorites',
       subTitle: '',
       caption: '',
       onTap: () {},

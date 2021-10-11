@@ -127,8 +127,7 @@ class HomeScreenTopOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
-      child: AnimatedContainer(
-        duration: const Duration(seconds: 1),
+      child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
@@ -202,10 +201,7 @@ class HomeScreenButtons extends StatelessWidget {
                           children: [
                             Align(
                               alignment: Alignment.center,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(60),
-                                child: Image.asset('images/buslogo.png'),
-                              ),
+                              child: Image.asset('images/buslogo.png'),
                             ),
                             Positioned(
                               left: 30,
@@ -324,7 +320,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(2),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -350,7 +346,9 @@ class HomeScreenNearBusStops extends StatelessWidget {
                       ),
                       Text('Bus Stop Closest To You',
                           style: GoogleFonts.oxygen(
-                              fontWeight: FontWeight.w700, fontSize: 20)),
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20)),
                       Material(
                         color: Colors.blueAccent,
                         shape: CircleBorder(),
