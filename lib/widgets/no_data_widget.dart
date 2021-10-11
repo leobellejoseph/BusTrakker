@@ -23,7 +23,13 @@ class NoDataWidget extends StatelessWidget {
       showButton: false);
   factory NoDataWidget.noInternet() => NoDataWidget(
       title: 'No Internet',
-      subTitle: 'Please check connection settings.',
+      subTitle: '',
+      caption: '',
+      onTap: () {},
+      showButton: false);
+  factory NoDataWidget.noInternetSubtitle() => NoDataWidget(
+      title: 'No Internet',
+      subTitle: 'Check connection settings.',
       caption: '',
       onTap: () {},
       showButton: false);
