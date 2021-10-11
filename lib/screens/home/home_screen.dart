@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withOpacity(0.3),
                       child: FavoritesList(),
                     ),
                   ),
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withOpacity(0.4),
                       child: Container(),
                     ),
                   ),
