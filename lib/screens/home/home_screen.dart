@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Image.asset('images/sglovebus.png')),
               ),
               Positioned(
-                top: 65,
+                top: 70,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 300),
                   child: Padding(
@@ -131,23 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 345,
-                child: SizedBox.fromSize(
-                  size: Size(size.width, 245),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      color: Colors.white.withOpacity(0.4),
-                      child: Container(),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 573,
+                top: 360,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 180),
                   child: Padding(
@@ -234,6 +218,33 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 530,
+                child: SizedBox.fromSize(
+                  size: Size(size.width, 50),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.white.withOpacity(0.4),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.location_pin,
+                                color: Colors.green.shade700),
+                            Text('Near Me'),
+                            Icon(Icons.expand, color: Colors.deepPurple),
+                          ],
+                        ),
                       ),
                     ),
                   ),
