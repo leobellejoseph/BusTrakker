@@ -276,23 +276,36 @@ class HomeScreenNearBusStops extends StatelessWidget {
       return Positioned(
         top: 530,
         child: SizedBox.fromSize(
-          size: Size(size.width, 50),
+          size: Size(size.width, 80),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+              child: InkWell(
+                highlightColor: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.circular(10),
-              ),
-              color: Colors.white.withOpacity(0.4),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_pin, color: Colors.green.shade700),
-                    Text('Near Me'),
-                    Icon(Icons.expand, color: Colors.deepPurple),
-                  ],
+                onTap: () =>
+                    Navigator.pushNamed(context, NearBusStopsScreen.id),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Colors.white.withOpacity(0.4),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.list,
+                            color: Colors.green.shade700, size: 30),
+                        const SizedBox(width: 10),
+                        Text('Show Bus Stops Near You',
+                            style: GoogleFonts.oxygen(
+                                fontWeight: FontWeight.w500, fontSize: 20)),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
