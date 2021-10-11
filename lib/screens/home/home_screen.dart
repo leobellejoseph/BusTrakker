@@ -155,7 +155,7 @@ class HomeScreenLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 0,
+      top: 3,
       left: insets.left + 120,
       child: SizedBox(
           width: 150, height: 110, child: Image.asset('images/sglovebus.png')),
