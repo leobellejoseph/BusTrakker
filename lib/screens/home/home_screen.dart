@@ -107,8 +107,8 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               Positioned(
-                top: 2,
-                left: 10,
+                top: 5,
+                left: 120,
                 child: SizedBox(
                     width: 150,
                     height: 110,
