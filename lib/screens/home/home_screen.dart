@@ -223,33 +223,53 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
-              Positioned(
-                top: 530,
-                child: SizedBox.fromSize(
-                  size: Size(size.width, 50),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              size.height < 800
+                  ? Positioned(
+                      top: 530,
+                      child: SizedBox.fromSize(
+                        size: Size(size.width, 50),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Colors.white.withOpacity(0.4),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.location_pin,
+                                      color: Colors.green.shade700),
+                                  Text('Near Me'),
+                                  Icon(Icons.expand, color: Colors.deepPurple),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      color: Colors.white.withOpacity(0.4),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.location_pin,
-                                color: Colors.green.shade700),
-                            Text('Near Me'),
-                            Icon(Icons.expand, color: Colors.deepPurple),
-                          ],
+                    )
+                  : Positioned(
+                      top: 530,
+                      child: SizedBox.fromSize(
+                        size: Size(size.width, 250),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Colors.white.withOpacity(0.4),
+                            child: Center(
+                              child: Container(),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
