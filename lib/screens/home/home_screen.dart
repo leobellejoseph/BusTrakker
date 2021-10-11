@@ -174,10 +174,14 @@ class _HomeScreenState extends State<HomeScreen>
                                   onTap: () {},
                                   child: Stack(
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(60),
-                                        child:
-                                            Image.asset('images/buslogo.png'),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          child:
+                                              Image.asset('images/buslogo.png'),
+                                        ),
                                       ),
                                       Positioned(
                                         left: 30,
@@ -206,10 +210,14 @@ class _HomeScreenState extends State<HomeScreen>
                                   onTap: () {},
                                   child: Stack(
                                     children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(60),
-                                        child:
-                                            Image.asset('images/busstop.png'),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          child:
+                                              Image.asset('images/busstop.png'),
+                                        ),
                                       ),
                                       Positioned(
                                         left: 45,
