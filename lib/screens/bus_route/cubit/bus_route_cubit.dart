@@ -14,7 +14,7 @@ class BusRouteCubit extends Cubit<BusRouteState> {
       final data = await busRepository.fetchBusRoutes();
       if (data.isNotEmpty) {
         Future.microtask(() {
-          final route = data.forEach(
+          data.forEach(
             (element) => busRepository.setBusStopService(
                 code: element.busStopCode, services: element.serviceNo),
           );

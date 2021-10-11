@@ -71,7 +71,15 @@ class _HomeScreenState extends State<HomeScreen>
             children: [
               const HomeScreenBackground(),
               const HomeScreenTopOverlay(), //purple overlay
-              HomeScreenLogo(insets: insets), //sg love bus logo
+              HomeScreenLogo(insets: insets),
+              Positioned(
+                right: insets.right + 40,
+                top: 30,
+                child: IconButton(
+                    onPressed: () => Navigator.pushNamed(context, MapScreen.id),
+                    icon:
+                        Icon(Icons.map, color: Colors.blue.shade700, size: 40)),
+              ), //sg love bus logo
               Positioned(
                 top: 70,
                 child: SizedBox.fromSize(

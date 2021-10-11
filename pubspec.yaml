@@ -30,6 +30,7 @@ dependencies:
   http_retry: ^0.2.0
   google_fonts: ^2.1.0
   flutter_spinkit: ^5.1.0
+  webview_flutter: ^2.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,6 +50,7 @@ flutter:
     - images/buslogo.png
     - images/busstop.png
     - images/sglovebus.png
+    - files/onemap.html
 
   # fonts:
   #   - family: Schyler
