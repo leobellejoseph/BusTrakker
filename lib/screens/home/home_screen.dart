@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/screens/bus_services/bus_services_screen.dart';
+import 'package:my_bus/screens/bus_stops/bus_stops_screen.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,10 +87,11 @@ class _HomeScreenState extends State<HomeScreen>
                     ],
                   ),
                 ),
-              ),
+              ), //background
               Align(
                 alignment: Alignment.topCenter,
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(seconds: 1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
@@ -103,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen>
                       ],
                     ),
                   ),
-                  height: 250,
+                  height: 360,
                 ),
-              ),
+              ), //purple overlay
               Positioned(
                 top: 0,
                 left: insets.left + 120,
@@ -113,23 +116,17 @@ class _HomeScreenState extends State<HomeScreen>
                     width: 150,
                     height: 110,
                     child: Image.asset('images/sglovebus.png')),
-              ),
+              ), //sg love bus logo
               Positioned(
                 top: 70,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 300),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      color: Colors.white.withOpacity(0.3),
-                      child: FavoritesList(),
-                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    child: FavoritesList(),
                   ),
                 ),
-              ),
+              ), //favorites
               Positioned(
                 top: 360,
                 child: SizedBox.fromSize(
@@ -155,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen>
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(10),
                                   highlightColor: Colors.blue,
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, BusServiceScreen.id);
+                                  },
                                   child: Stack(
                                     children: [
                                       Align(
@@ -191,7 +191,10 @@ class _HomeScreenState extends State<HomeScreen>
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(10),
                                   highlightColor: Colors.blue,
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, BusStopsScreen.id);
+                                  },
                                   child: Stack(
                                     children: [
                                       Align(
@@ -255,17 +258,15 @@ class _HomeScreenState extends State<HomeScreen>
                   : Positioned(
                       top: 530,
                       child: SizedBox.fromSize(
-                        size: Size(size.width, 250),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            color: Colors.white.withOpacity(0.4),
-                            child: Center(
-                              child: Container(),
-                            ),
+                        size: Size(size.width, size.height),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          color: Colors.white.withOpacity(0.4),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: NearBusStopsView(),
                           ),
                         ),
                       ),

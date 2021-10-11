@@ -13,6 +13,10 @@ class CustomRoute {
         return LocationEnableScreen.route();
       case BusArrivalWidget.id:
         return BusArrivalWidget.route();
+      case BusServiceScreen.id:
+        return BusServiceScreen.route();
+      case BusStopsScreen.id:
+        return BusStopsScreen.route();
       default:
         return _errorRoute();
     }

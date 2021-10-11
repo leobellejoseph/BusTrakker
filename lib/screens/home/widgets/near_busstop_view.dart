@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_bus/blocs/blocs.dart';
-import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/helpers/helpers.dart';
 import 'package:my_bus/widgets/centered_text.dart';
@@ -68,27 +67,9 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
                 itemCount: state.data.length,
                 itemBuilder: (context, index) {
                   final item = state.data[index];
-                  final heightFactor = 1;
-                  final itemPositionOffset =
-                      index * kBusStopTileSize * heightFactor;
-                  final difference =
-                      scrollController.offset - itemPositionOffset;
-                  final percent =
-                      1.5 - (difference / (kBusStopTileSize * heightFactor));
-                  double opacity = percent > 1.0 ? 1.0 : 0.0;
-                  double scale = percent;
-                  if (percent > 1.0) scale = 1.0;
                   return Align(
                     alignment: Alignment.center,
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: opacity,
-                      child: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()..scale(scale, 1),
-                        child: BusStopTile(item: item, showDistance: true),
-                      ),
-                    ),
+                    child: BusStopTile(item: item, showDistance: true),
                   );
                 },
               ),

@@ -66,7 +66,6 @@ import 'package:my_bus/widgets/widgets.dart';
 class FavoritesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return BlocBuilder<FavoritesCubit, FavoritesState>(
       builder: (context, state) {
         if (state.status == FavoriteStatus.loading) {
@@ -75,7 +74,7 @@ class FavoritesList extends StatelessWidget {
           return NoDataWidget.noFavorites();
         } else {
           return Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(3),
             child: Column(
               children: [
                 Expanded(
@@ -110,36 +109,6 @@ class FavoritesList extends StatelessWidget {
                       childAspectRatio: 0.9,
                     ),
                   ),
-                  /*
-                  child: ListView.builder(
-                    itemCount: state.data.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final fav = state.data[index];
-                      final cubit = context.read<FavoritesCubit>();
-                      final arrival = BusArrivalCubit();
-                      return BlocProvider<BusArrivalCubit>(
-                        create: (context) => arrival
-                          ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
-                        child: Slidable(
-                          direction: Axis.vertical,
-                          actions: [
-                            IconSlideAction(
-                              //caption: 'Delete',
-                              color: Colors.red,
-                              icon: Icons.delete,
-                              onTap: () => cubit.removeFavorite(
-                                  fav.busStopCode, fav.serviceNo),
-                            ),
-                          ],
-                          actionPane: SlidableDrawerActionPane(),
-                          child: FavoriteCardContent(favorite: fav),
-                        ),
-                      );
-                    },
-                  ),
-
-                   */
                 ),
               ],
             ),
