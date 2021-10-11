@@ -70,14 +70,15 @@ class _HomeScreenState extends State<HomeScreen>
           body: Stack(
             children: [
               const HomeScreenBackground(),
-              const HomeScreenFavorites(), //purple overlay
+              const HomeScreenTopOverlay(), //purple overlay
               HomeScreenLogo(insets: insets), //sg love bus logo
               Positioned(
                 top: 70,
                 child: SizedBox.fromSize(
                   size: Size(size.width, 300),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(
+                        left: 5, right: 5, top: 10, bottom: 10),
                     child: FavoritesList(),
                   ),
                 ),
@@ -119,8 +120,8 @@ class HomeScreenBackground extends StatelessWidget {
   }
 }
 
-class HomeScreenFavorites extends StatelessWidget {
-  const HomeScreenFavorites({Key? key}) : super(key: key);
+class HomeScreenTopOverlay extends StatelessWidget {
+  const HomeScreenTopOverlay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +157,7 @@ class HomeScreenLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: 3,
-      left: insets.left + 120,
+      left: insets.left + 10,
       child: SizedBox(
           width: 150, height: 110, child: Image.asset('images/sglovebus.png')),
     );
@@ -170,9 +171,9 @@ class HomeScreenButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 360,
+      top: 356,
       child: SizedBox.fromSize(
-        size: Size(size.width, 180),
+        size: Size(size.width, 170),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Card(
@@ -274,9 +275,9 @@ class HomeScreenNearBusStops extends StatelessWidget {
   Widget build(BuildContext context) {
     if (size.height < 800) {
       return Positioned(
-        top: 530,
+        top: 520,
         child: SizedBox.fromSize(
-          size: Size(size.width, 80),
+          size: Size(size.width, 55),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Material(
@@ -314,7 +315,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
       );
     } else {
       return Positioned(
-        top: 535,
+        top: 520,
         child: SizedBox.fromSize(
           size: Size(size.width, 250),
           child: Card(

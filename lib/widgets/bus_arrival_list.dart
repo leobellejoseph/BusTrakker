@@ -88,7 +88,7 @@ class BusArrivalList extends StatelessWidget {
                   ),
                   if (state.data.serviceNo != 'NoSvc')
                     Transform.translate(
-                      offset: const Offset(300, -5),
+                      offset: const Offset(260, -10),
                       child: FavoriteButton(
                         key: const ValueKey('FavoritesButton'),
                         service: service,
