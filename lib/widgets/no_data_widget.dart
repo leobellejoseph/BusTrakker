@@ -84,16 +84,15 @@ class NoDataWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700, color: Colors.black54))
             : SizedBox(),
         showButton
-            ? SizedBox.fromSize(
-                size: const Size(150, 30),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.green[700], shape: StadiumBorder()),
-                  onPressed: () => onTap(),
-                  child: Text(
-                    caption,
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
+            ? TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.green[700],
+                  shape: RoundedRectangleBorder(),
+                ),
+                onPressed: () => onTap(),
+                child: Text(
+                  caption,
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
               )
             : SizedBox(),
