@@ -12,6 +12,14 @@ class BusRouteCubit extends Cubit<BusRouteState> {
     emit(state.copyWith(data: [], status: BusRouteStatus.loading_all));
     try {
       final data = await busRepository.fetchBusRoutes();
+      if (data.isNotEmpty) {
+        Future.microtask(() {
+          final route = data.forEach(
+            (element) => busRepository.setBusStopService(
+                code: element.busStopCode, services: element.serviceNo),
+          );
+        });
+      }
       emit(state.copyWith(data: data, status: BusRouteStatus.loaded_all));
     } on Failure catch (_) {
       emit(state.copyWith(

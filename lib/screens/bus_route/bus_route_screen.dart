@@ -20,21 +20,11 @@ class BusRouteScreen extends StatelessWidget {
           return CenteredText(
               text: 'Data is still being downloaded.Please try again later.');
         } else if (state.status == BusRouteStatus.no_data) {
-          return NoDataWidget(
-              title: 'No Route Found',
-              subTitle: 'Unable to Retrieve Route',
-              caption: 'Back',
-              onTap: () {
-                context.read<BusRouteCubit>().fetchRoute(service: service);
-              },
-              showButton: true);
+          return NoDataWidget.noRouteFound(onClick: () {
+            context.read<BusRouteCubit>().fetchRoute(service: service);
+          });
         } else if (state.status == BusRouteStatus.error) {
-          return NoDataWidget(
-              title: 'Unable to Retrieve Data',
-              subTitle: '',
-              caption: '',
-              onTap: () {},
-              showButton: false);
+          return NoDataWidget.noUnableToRetrieveRoute();
         } else if (state.status == BusRouteStatus.loading) {
           return CircularProgress(key: const ValueKey('circularProgress'));
         } else {
@@ -190,14 +180,19 @@ class BusRouteScreen extends StatelessWidget {
                                         color: Colors.red,
                                         width: 2),
                                     const SizedBox(width: 2),
-                                    Text(
-                                      item.busStopCode,
-                                      style: TextStyle(
-                                        color: currentBusStop
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20,
+                                    TextButton(
+                                      onPressed: () {
+                                        print(item.busStopCode);
+                                      },
+                                      child: Text(
+                                        item.busStopCode,
+                                        style: TextStyle(
+                                          color: currentBusStop
+                                              ? Colors.white
+                                              : Colors.black87,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20,
+                                        ),
                                       ),
                                     ),
                                   ],

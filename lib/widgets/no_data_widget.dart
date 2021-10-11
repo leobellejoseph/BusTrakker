@@ -71,6 +71,20 @@ class NoDataWidget extends StatelessWidget {
           caption: 'Open App Settings',
           onTap: () => onClick(),
           showButton: true);
+  factory NoDataWidget.noUnableToRetrieveRoute() => NoDataWidget(
+      title: 'Unable to Retrieve Data',
+      subTitle: '',
+      caption: '',
+      onTap: () {},
+      showButton: false);
+
+  factory NoDataWidget.noRouteFound({required Function onClick}) =>
+      NoDataWidget(
+          title: 'No Route Found',
+          subTitle: 'Unable to Retrieve Route',
+          caption: 'Back',
+          onTap: () => onClick(),
+          showButton: true);
   @override
   Widget build(BuildContext context) {
     return Column(

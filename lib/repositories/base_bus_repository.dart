@@ -21,4 +21,5 @@ abstract class BaseBusRepository {
   SelectedRoute getSelectedRoute();
   void setSelectedRoute({required String code, required String service});
   void updateFavoriteDescription({required Favorite favorite});
+  void setBusStopService({required String code, required String services});
 }

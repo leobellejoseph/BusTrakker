@@ -80,9 +80,11 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
           final code = element.busStopCode.toLowerCase();
           final road = element.roadName.toLowerCase();
           final desc = element.description.toLowerCase();
+          final keywords = element.keywords;
           return code.contains(query) ||
               road.contains(query) ||
-              desc.contains(query);
+              desc.contains(query) ||
+              keywords.contains(query);
         },
       ).toList();
       yield state.copyWith(

@@ -195,6 +195,7 @@ class HomeScreenButtons extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         highlightColor: Colors.blue,
                         onTap: () {
+                          context.read<BusDataBloc>().add(BusServiceFetch(''));
                           Navigator.pushNamed(context, BusServiceScreen.id);
                         },
                         child: Stack(
@@ -209,7 +210,7 @@ class HomeScreenButtons extends StatelessWidget {
                               child: Text('Bus Services',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.blueAccent)),
+                                      color: Colors.blueGrey.shade700)),
                             ),
                           ],
                         ),
@@ -228,6 +229,7 @@ class HomeScreenButtons extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         highlightColor: Colors.blue,
                         onTap: () {
+                          context.read<BusDataBloc>().add(BusStopFetch(''));
                           Navigator.pushNamed(context, BusStopsScreen.id);
                         },
                         child: Stack(

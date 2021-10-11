@@ -183,5 +183,11 @@ class BusRepository extends BaseBusRepository {
   }
 
   @override
+  void setBusStopService({required String code, required String services}) {
+    final stop = _stops.firstWhere((element) => element.busStopCode == code);
+    stop.keywords.add(services);
+  }
+
+  @override
   String toString() => 'bus_repository.dart';
 }
