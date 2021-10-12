@@ -101,8 +101,11 @@ class BusServiceScreen extends StatelessWidget {
                         ),
                       ),
                       child: FlexibleSpaceBar(
-                        background: Image.asset('images/buslogo.png',
-                            fit: BoxFit.cover),
+                        background: Hero(
+                          tag: 'busservices',
+                          child: Image.asset('images/buslogo.png',
+                              fit: BoxFit.cover),
+                        ),
                       ),
                     ),
                   ),
