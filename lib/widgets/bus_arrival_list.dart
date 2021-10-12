@@ -53,54 +53,50 @@ class BusArrivalList extends StatelessWidget {
             return NoDataWidget.noService(onFlip: () => onFlip());
           } else {
             final insets = MediaQuery.of(context).viewInsets;
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Stack(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox.fromSize(
-                        size: const Size(100, double.infinity),
-                        child: BusArrivalToggleButton(
-                          onFlip: () => onFlip(),
-                          service: state.data.serviceNo,
-                          onShowRoute: () =>
-                              _showRouteSheet(context, service, code),
+            return Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox.fromSize(
+                      size: const Size(100, double.infinity),
+                      child: BusArrivalToggleButton(
+                        onFlip: () => onFlip(),
+                        service: state.data.serviceNo,
+                        onShowRoute: () =>
+                            _showRouteSheet(context, service, code),
+                      ),
+                    ),
+                    SizedBox.fromSize(
+                      size: const Size(40, double.infinity),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: FavoriteButton(
+                          key: const ValueKey('FavoritesButton'),
+                          service: service,
+                          code: code,
+                          onPress: () =>
+                              _toggleFavorite(context, code, service),
                         ),
                       ),
-                      SizedBox.fromSize(
-                        size: const Size(40, double.infinity),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: FavoriteButton(
-                            key: const ValueKey('FavoritesButton'),
-                            service: service,
-                            code: code,
-                            onPress: () =>
-                                _toggleFavorite(context, code, service),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onDoubleTap: () {
-                            final arrival = context.read<BusArrivalCubit>();
-                            arrival.getBusArrival(code, service, true);
-                          },
-                          child:
-                              NextBusWidget(bus: state.data.firstBus, index: 1),
-                        ),
-                      ),
-                      Expanded(
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onDoubleTap: () {
+                          final arrival = context.read<BusArrivalCubit>();
+                          arrival.getBusArrival(code, service, true);
+                        },
                         child:
-                            NextBusWidget(bus: state.data.secondBus, index: 2),
+                            NextBusWidget(bus: state.data.firstBus, index: 1),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Expanded(
+                      child: NextBusWidget(bus: state.data.secondBus, index: 2),
+                    ),
+                  ],
+                ),
+              ],
             );
           }
         } else {
