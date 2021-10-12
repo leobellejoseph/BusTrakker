@@ -9,6 +9,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
+import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/screens/screens.dart';
 
@@ -61,8 +62,8 @@ class _HomeScreenState extends State<HomeScreen>
 
     final resetData = () {
       HydratedBloc.storage.clear();
+      context.read<BusRouteCubit>().fetchAllRoutes();
       context.read<BusDataBloc>().add(BusDataDownload());
-      setState(() => _loading = true);
     };
 
     return AnnotatedRegion(
@@ -73,12 +74,18 @@ class _HomeScreenState extends State<HomeScreen>
           progressIndicator: SpinKitPouringHourGlassRefined(
               color: Colors.deepPurple, size: 60),
           inAsyncCall: _loading,
-          child: BlocListener<BusDataBloc, BusDataState>(
-            listener: (context, state) {
-              if (state.status == BusDataStatus.allLoaded) {
-                setState(() => _loading = false);
-              }
-            },
+          child: MultiBlocListener(
+            listeners: [
+              BlocListener<BusRouteCubit, BusRouteState>(listener: (_, state) {
+                setState(
+                    () => _loading = state.status != BusRouteStatus.loaded_all);
+              }),
+              BlocListener<BusDataBloc, BusDataState>(
+                  listener: (context, state) {
+                setState(
+                    () => _loading = state.status != BusDataStatus.allLoaded);
+              })
+            ],
             child: Scaffold(
               resizeToAvoidBottomInset: false,
               body: Stack(
