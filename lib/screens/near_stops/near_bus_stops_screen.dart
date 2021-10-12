@@ -13,7 +13,19 @@ class NearBusStopsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bus Stops Near You'),
+        backgroundColor: Colors.white,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurpleAccent.withOpacity(0.6),
+                Colors.deepPurpleAccent.withOpacity(0.4),
+              ],
+            ),
+          ),
+        ),
+        title: Text('Bus Stops Near You',
+            style: TextStyle(fontWeight: FontWeight.w700)),
       ),
       body: NearBusStopsView(showAll: true),
     );
