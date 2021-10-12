@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen>
               Positioned(
                 top: 70,
                 child: SizedBox.fromSize(
-                  size: Size(size.width, 270),
+                  size: Size(size.width, 280),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 5, right: 5, top: 10, bottom: 10),
