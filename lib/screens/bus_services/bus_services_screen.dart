@@ -27,7 +27,11 @@ class BusServiceScreen extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              context.read<BusDataBloc>().add(BusServiceFetch(controller.text));
+              if (controller.text.isNotEmpty) {
+                context
+                    .read<BusDataBloc>()
+                    .add(BusServiceFetch(controller.text));
+              }
             }),
         flexibleSpace: Container(
           decoration: BoxDecoration(
