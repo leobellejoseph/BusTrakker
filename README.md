@@ -24,6 +24,14 @@ Tap to clear and refresh of all data.
 
 ![image](https://user-images.githubusercontent.com/79257863/136990888-093a0793-ffed-4ed6-a961-81477be0ccf7.png)
 
+# Map and Location
+Tap the Map Icon to toggle the Map App if there are any installed in your phone otherwise it will open the map via the browser.
+
+![image](https://user-images.githubusercontent.com/79257863/136991123-7be14d02-ed62-477a-9fd8-6cf6abc30fab.png)
+
+# # Bus Service
+
+
 # APK
 https://drive.google.com/file/d/1RtIOJceQx0R1R2jqEWW29vo2G2IgI1e1/view?usp=sharing
 
