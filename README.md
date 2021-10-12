@@ -4,35 +4,9 @@ A simple Singapore bus arrival app that is developed using flutter with Bloc as 
 
 All data used in this app is provided by https://datamall.lta.gov.sg/.
 
-# Landing View
-1. Favorites: Tap to view next bus arrival timing. Double Tap to refresh bus arrival timings.
-2. To remove or unmark favorites, pull down the tile to show the delete button and tap to remove.
+![Screenshots](https://user-images.githubusercontent.com/79257863/136990156-7c169e7e-0650-4d72-bb29-d5b065736874.png)
 
-https://user-images.githubusercontent.com/79257863/126898927-47485ec8-119c-4e4c-a354-d6c96b8eee2b.mp4
-
-# Near Me Tab View
-1. Will show Bus Stops that are within 400 meters from the users current location.
-2. Users can tap the Bus Service from their selected Bus Stop to see Bus Arrival timings.
-
-https://user-images.githubusercontent.com/79257863/126899007-d53cd7d0-f859-4522-81fb-98d651a67e7a.mp4
-
-# Bus Services Tab View
-1. Tap Bus Service Number to view Bus Route. 
-2. Tap direction header to toggle between directions if any.
-
-https://user-images.githubusercontent.com/79257863/126899288-9c966aa4-ab90-4d5c-a2eb-33846a67948e.mp4
-
-# Bus Stops Tab View
-1. Tap Bus Service Number to see Bus Arrival timings.
-
-https://user-images.githubusercontent.com/79257863/126899339-226670b3-82c0-4ffe-a162-dbb2732dd8f5.mp4
-
-# Bus Arrival Selection View
-1. Tap favorite(star) icon to bookmark or unmark as favorite.
-2. Double Tap middle section to refresh Bus Arrival Timing.
-3. Tap ^ button to go back to Bus Service List.
-
-https://user-images.githubusercontent.com/79257863/126899440-577ef662-ba7f-49fa-95aa-92d6e283f925.mp4
 
 # APK
-https://drive.google.com/file/d/1RsQ0tcjs193sFayj--Ef8feLO_BHpR3D/view?usp=sharing
+https://drive.google.com/file/d/1RtIOJceQx0R1R2jqEWW29vo2G2IgI1e1/view?usp=sharing
+
