@@ -69,18 +69,13 @@ class _NearBusStopsViewState extends State<NearBusStopsView> {
                   itemCount: state.data.length,
                   itemBuilder: (context, index) {
                     final item = state.data[index];
-                    return Align(
-                      alignment: Alignment.center,
-                      child: BusStopTile(item: item, showDistance: true),
-                    );
+                    return BusStopTile(item: item, showDistance: true);
                   },
                 ),
               );
             } else {
               final item = state.data[0];
-              return Align(
-                  alignment: Alignment.center,
-                  child: BusStopTile(item: item, showDistance: true));
+              return BusStopTile(item: item, showDistance: true);
             }
           } else {
             return CenteredTextButton.refresh(

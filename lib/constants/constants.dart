@@ -5,7 +5,7 @@ const label = {
   2: 'Next',
   3: 'Third',
 };
-const kBusStopTileSize = 180.0;
+const kBusStopTileSize = 190.0;
 const kAppName = 'myBus';
 const kBusType = {
   'DD': 'Double',

@@ -345,6 +345,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 2),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,6 +383,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 2),
                   NearBusStopsView(showAll: false)
                 ],
               ),

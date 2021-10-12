@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
@@ -19,11 +18,11 @@ class BusStopTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BusArrivalCubit(),
-      child: Stack(
-        children: [
-          Card(
-            child: SizedBox(
-              height: kBusStopTileSize,
+      child: SizedBox.fromSize(
+        size: const Size(double.infinity, 190),
+        child: Stack(
+          children: [
+            Card(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
@@ -65,38 +64,39 @@ class BusStopTile extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Positioned(
-            top: 5,
-            left: 8,
-            child: Material(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-              child: InkWell(
+            Positioned(
+              top: 5,
+              left: 8,
+              child: Material(
                 borderRadius: BorderRadius.circular(20),
-                onTap: () async {
-                  final availableMaps = await MapLauncher.installedMaps;
-                  if (availableMaps.isNotEmpty) {
-                    MapLauncher.showMarker(
-                      mapType: availableMaps.first.mapType,
-                      coords: Coords(item.latitude, item.longitude),
-                      title: item.description,
-                      description: item.busStopCode,
-                    );
-                  } else {
-                    String googleMapUrl =
-                        'https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}';
-                    if (await canLaunch(googleMapUrl)) {
-                      await launch(googleMapUrl);
+                color: Colors.white,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () async {
+                    final availableMaps = await MapLauncher.installedMaps;
+                    if (availableMaps.isNotEmpty) {
+                      MapLauncher.showMarker(
+                        mapType: availableMaps.first.mapType,
+                        coords: Coords(item.latitude, item.longitude),
+                        title: item.description,
+                        description: item.busStopCode,
+                      );
+                    } else {
+                      String googleMapUrl =
+                          'https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}';
+                      if (await canLaunch(googleMapUrl)) {
+                        await launch(googleMapUrl);
+                      }
                     }
-                  }
-                },
-                highlightColor: Colors.blue,
-                child: Image.asset('images/mapicon.png', height: 40, width: 40),
+                  },
+                  highlightColor: Colors.blue,
+                  child:
+                      Image.asset('images/mapicon.png', height: 40, width: 40),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
