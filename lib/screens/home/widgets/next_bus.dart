@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_bus/constants/constants.dart';
 import 'package:my_bus/models/models.dart';
 
@@ -53,12 +55,13 @@ class NextBusWidget extends StatelessWidget {
                     Text(
                       kBusLoad[bus.load] ?? 'No Svc',
                       style: TextStyle(
-                          fontWeight: FontWeight.w700, color: Colors.black54),
+                          fontWeight: FontWeight.w600, color: Colors.black54),
                     ),
-                    Text(
-                      bus.feature == 'WAB' ? '♿️' : '',
-                      style: TextStyle(fontSize: 20),
-                    ),
+                    if (bus.feature == 'WAB')
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Icon(FontAwesomeIcons.wheelchair),
+                      )
                   ],
                 ),
         ],
