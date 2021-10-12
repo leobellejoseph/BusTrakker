@@ -209,7 +209,7 @@ class BusRouteScreen extends StatelessWidget {
                                           color: currentBusStop
                                               ? Colors.white
                                               : Colors.black87,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w700,
                                           fontSize: 20,
                                         ),
                                       ),
