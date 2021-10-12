@@ -67,7 +67,7 @@ class HTTPRequest {
         if (resp == null) break;
         final dynamic services = resp['value'];
         if (services == null) break;
-        final List<BusService> svcs = (services as List)
+        final svcs = (services as List)
             .map((e) => BusService.fromJson(e))
             .toList()
             .where((element) => element.direction == 1)

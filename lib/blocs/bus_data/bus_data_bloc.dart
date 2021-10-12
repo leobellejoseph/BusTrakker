@@ -104,7 +104,8 @@ class BusDataBloc extends Bloc<BusDataEvent, BusDataState> {
       final query = event.query.toLowerCase();
       final services = busRepository.getAllBusService();
       final data = services
-          .where((element) => element.serviceNo.contains(query))
+          .where((svc) => svc.serviceNo.contains(query))
+          .toSet()
           .toList();
       yield state.copyWith(
           serviceData: data, status: BusDataStatus.busServiceLoaded);
