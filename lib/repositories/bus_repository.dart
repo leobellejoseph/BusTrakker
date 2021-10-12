@@ -190,4 +190,9 @@ class BusRepository extends BaseBusRepository {
 
   @override
   String toString() => 'bus_repository.dart';
+
+  @override
+  void removeAllFavorites() {
+    _favorites.clear();
+  }
 }

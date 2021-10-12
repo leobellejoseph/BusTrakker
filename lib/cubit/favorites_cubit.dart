@@ -75,6 +75,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
+  void removeAll() {
+    try {
+      emit(state.copyWith(status: FavoriteStatus.loading));
+      _busRepository.removeAllFavorites();
+      emit(state.copyWith(data: [], status: FavoriteStatus.no_data));
+    } on Failure catch (_) {
+      emit(state.copyWith(
+          failure:
+              Failure(code: 'Remove All', message: 'Unable to remove data')));
+    }
+  }
+
   bool isFavorite({required String code, required String service}) =>
       _busRepository.isFavorite(service: service, code: code);
 }

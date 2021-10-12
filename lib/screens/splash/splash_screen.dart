@@ -48,9 +48,9 @@ class SplashScreen extends StatelessWidget {
               const Duration(seconds: 1),
               () {
                 if (isLocationEnabled) {
-                  Navigator.pushNamed(context, HomeScreen.id);
+                  Navigator.popAndPushNamed(context, HomeScreen.id);
                 } else {
-                  Navigator.pushNamed(context, LocationEnableScreen.id);
+                  Navigator.popAndPushNamed(context, LocationEnableScreen.id);
                 }
               },
             );

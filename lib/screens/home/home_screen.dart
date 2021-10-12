@@ -2,14 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
-import 'package:my_bus/screens/bus_route/cubit/bus_route_cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/screens/screens.dart';
 
@@ -28,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
-  bool _loading = false;
   int _tabIndex = 0;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
@@ -62,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     final resetData = () {
       HydratedBloc.storage.clear();
-      context.read<BusRouteCubit>().fetchAllRoutes();
+      Navigator.popAndPushNamed(context, SplashScreen.id);
       context.read<BusDataBloc>().add(BusDataDownload());
     };
 
@@ -70,58 +66,40 @@ class _HomeScreenState extends State<HomeScreen>
       value: SystemUiOverlayStyle.dark,
       child: WillPopScope(
         onWillPop: () async => false,
-        child: ModalProgressHUD(
-          progressIndicator: SpinKitPouringHourGlassRefined(
-              color: Colors.deepPurple, size: 60),
-          inAsyncCall: _loading,
-          child: MultiBlocListener(
-            listeners: [
-              BlocListener<BusRouteCubit, BusRouteState>(listener: (_, state) {
-                setState(
-                    () => _loading = state.status != BusRouteStatus.loaded_all);
-              }),
-              BlocListener<BusDataBloc, BusDataState>(
-                  listener: (context, state) {
-                setState(
-                    () => _loading = state.status != BusDataStatus.allLoaded);
-              })
-            ],
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Stack(
-                children: [
-                  const HomeScreenBackground(),
-                  const HomeScreenTopOverlay(), //purple overlay
-                  HomeScreenLogo(insets: insets), //sg love bus logo
-                  Positioned(
-                    top: 35,
-                    left: insets.right + 300,
-                    child: IconButton(
-                      tooltip: 'Reset Data',
-                      onPressed: () => _loading ? null : resetData(),
-                      icon: Icon(
-                        FontAwesomeIcons.fileDownload,
-                        color: Colors.green.shade700,
-                        size: 30,
-                      ),
-                    ),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            children: [
+              const HomeScreenBackground(),
+              const HomeScreenTopOverlay(), //purple overlay
+              HomeScreenLogo(insets: insets), //sg love bus logo
+              Positioned(
+                top: 35,
+                left: insets.right + 300,
+                child: IconButton(
+                  tooltip: 'Reset Data',
+                  onPressed: () => resetData(),
+                  icon: Icon(
+                    FontAwesomeIcons.fileDownload,
+                    color: Colors.green.shade700,
+                    size: 30,
                   ),
-                  Positioned(
-                    top: 70,
-                    child: SizedBox.fromSize(
-                      size: Size(size.width, 280),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 5, right: 5, top: 10, bottom: 10),
-                        child: FavoritesList(),
-                      ),
-                    ),
-                  ), //favorites
-                  HomeScreenButtons(size: size),
-                  HomeScreenNearBusStops(size: size),
-                ],
+                ),
               ),
-            ),
+              Positioned(
+                top: 70,
+                child: SizedBox.fromSize(
+                  size: Size(size.width, 280),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 5, right: 5, top: 10, bottom: 10),
+                    child: FavoritesList(),
+                  ),
+                ),
+              ), //favorites
+              HomeScreenButtons(size: size),
+              HomeScreenNearBusStops(size: size),
+            ],
           ),
         ),
       ),
@@ -404,7 +382,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                       ),
                     ],
                   ),
-                  NearBusStopsView(showAll: false),
+                  NearBusStopsView(showAll: false)
                 ],
               ),
             ),
