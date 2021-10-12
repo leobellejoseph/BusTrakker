@@ -110,11 +110,14 @@ class BusStopsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      child: FlexibleSpaceBar(
-                        background: Hero(
-                          tag: 'busstops',
-                          child: Image.asset('images/busstop.png',
-                              fit: BoxFit.cover),
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: FlexibleSpaceBar(
+                          background: Hero(
+                            tag: 'busstops',
+                            child: Image.asset('images/busstop.png',
+                                fit: BoxFit.cover),
+                          ),
                         ),
                       ),
                     ),

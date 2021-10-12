@@ -101,18 +101,18 @@ class BusServiceScreen extends StatelessWidget {
                   ),
                   backgroundColor: Colors.white,
                   expandedHeight: 200.0,
-                  flexibleSpace: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.blue.withOpacity(0.6),
-                            Colors.blue.withOpacity(0.2),
-                          ],
-                        ),
+                  flexibleSpace: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.blue.withOpacity(0.6),
+                          Colors.blue.withOpacity(0.2),
+                        ],
                       ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
                       child: FlexibleSpaceBar(
                         background: Hero(
                           tag: 'busservices',
