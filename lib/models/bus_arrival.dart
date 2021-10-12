@@ -55,9 +55,15 @@ class BusArrival {
     final busStopCode = stopCode;
     final serviceNo = data['ServiceNo'] ?? 'NA';
     final operator = data['Operator'] ?? 'NA';
-    final firstBus = NextBus.fromJson(data['NextBus']);
-    final secondBus = NextBus.fromJson(data['NextBus2']);
-    final thirdBus = NextBus.fromJson(data['NextBus3']);
+    final firstBus = data['NextBus'] == null
+        ? NextBus.noSvc()
+        : NextBus.fromJson(data['NextBus']);
+    final secondBus = data['NextBus2'] == null
+        ? NextBus.noSvc()
+        : NextBus.fromJson(data['NextBus2']);
+    final thirdBus = data['NextBus3'] == null
+        ? NextBus.noSvc()
+        : NextBus.fromJson(data['NextBus3']);
     return _cache[serviceNo + busStopCode] ??= BusArrival._instance(
         busStopCode: busStopCode,
         serviceNo: serviceNo,

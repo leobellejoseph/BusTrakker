@@ -56,9 +56,8 @@ class NextBusWidget extends StatelessWidget {
                           fontWeight: FontWeight.w600, color: Colors.black54),
                     ),
                     Text(
-                      bus.feature == 'WAB' ? 'Wheelchair' : '',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black54),
+                      bus.feature == 'WAB' ? '♿️' : '',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ],
                 ),

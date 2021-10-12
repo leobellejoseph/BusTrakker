@@ -95,29 +95,6 @@ class BusStopTile extends StatelessWidget {
                 child: Image.asset('images/mapicon.png', height: 40, width: 40),
               ),
             ),
-            // child: IconButton(
-            //   highlightColor: Colors.lightBlueAccent,
-            //   tooltip: 'Show Map',
-            //   onPressed: () async {
-            //     final availableMaps = await MapLauncher.installedMaps;
-            //     if (availableMaps.isEmpty) {
-            //       MapLauncher.showMarker(
-            //         mapType: availableMaps.first.mapType,
-            //         coords: Coords(item.latitude, item.longitude),
-            //         title: item.busStopCode,
-            //         description: item.description,
-            //       );
-            //     } else {
-            //       String googleMapUrl =
-            //           'https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}';
-            //       if (await canLaunch(googleMapUrl)) {
-            //         await launch(googleMapUrl);
-            //       }
-            //     }
-            //   },
-            //   icon: Icon(Image.asset('images/mapicon.png'),
-            //       color: Colors.redAccent[900], size: 40),
-            // ),
           ),
         ],
       ),

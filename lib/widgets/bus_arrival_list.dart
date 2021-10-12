@@ -52,6 +52,7 @@ class BusArrivalList extends StatelessWidget {
           if (service == 'NA') {
             return NoDataWidget.noService(onFlip: () => onFlip());
           } else {
+            final insets = MediaQuery.of(context).viewInsets;
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: Stack(
@@ -60,7 +61,8 @@ class BusArrivalList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
+                      SizedBox.fromSize(
+                        size: const Size(100, double.infinity),
                         child: BusArrivalToggleButton(
                           onFlip: () => onFlip(),
                           service: state.data.serviceNo,
@@ -68,34 +70,35 @@ class BusArrivalList extends StatelessWidget {
                               _showRouteSheet(context, service, code),
                         ),
                       ),
-                      if (state.data.firstBus.eta != 'NA')
-                        Expanded(
-                          child: GestureDetector(
-                            onDoubleTap: () {
-                              final arrival = context.read<BusArrivalCubit>();
-                              arrival.getBusArrival(code, service, true);
-                            },
-                            child: NextBusWidget(
-                                bus: state.data.firstBus, index: 1),
+                      Expanded(
+                        child: GestureDetector(
+                          onDoubleTap: () {
+                            final arrival = context.read<BusArrivalCubit>();
+                            arrival.getBusArrival(code, service, true);
+                          },
+                          child:
+                              NextBusWidget(bus: state.data.firstBus, index: 1),
+                        ),
+                      ),
+                      Expanded(
+                        child:
+                            NextBusWidget(bus: state.data.secondBus, index: 2),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(40, double.infinity),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: FavoriteButton(
+                            key: const ValueKey('FavoritesButton'),
+                            service: service,
+                            code: code,
+                            onPress: () =>
+                                _toggleFavorite(context, code, service),
                           ),
                         ),
-                      if (state.data.secondBus.eta != 'NA')
-                        Expanded(
-                          child: NextBusWidget(
-                              bus: state.data.secondBus, index: 2),
-                        ),
+                      ),
                     ],
                   ),
-                  if (state.data.serviceNo != 'NoSvc')
-                    Transform.translate(
-                      offset: const Offset(300, -10),
-                      child: FavoriteButton(
-                        key: const ValueKey('FavoritesButton'),
-                        service: service,
-                        code: code,
-                        onPress: () => _toggleFavorite(context, code, service),
-                      ),
-                    ),
                 ],
               ),
             );

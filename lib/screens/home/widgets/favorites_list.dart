@@ -16,24 +16,21 @@ class FavoritesList extends StatelessWidget {
         } else if (state.status == FavoriteStatus.no_data) {
           return NoDataWidget.noFavorites();
         } else {
-          return Padding(
-            padding: const EdgeInsets.all(3),
-            child: GridView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: state.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                final fav = state.data[index];
-                final arrival = BusArrivalCubit();
-                return BlocProvider<BusArrivalCubit>(
-                  create: (context) => arrival
-                    ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
-                  child: FavoriteCardContent(favorite: fav),
-                );
-              },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.5,
-              ),
+          return GridView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: state.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              final fav = state.data[index];
+              final arrival = BusArrivalCubit();
+              return BlocProvider<BusArrivalCubit>(
+                create: (context) => arrival
+                  ..getBusArrival(fav.busStopCode, fav.serviceNo, true),
+                child: FavoriteCardContent(favorite: fav),
+              );
+            },
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.5,
             ),
           );
         }

@@ -56,61 +56,106 @@ class SplashScreen extends StatelessWidget {
             );
           }
         },
-        child: Column(
-          children: [
-            Image(image: AssetImage('images/splash.png'), fit: BoxFit.cover),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.blueGrey.withOpacity(0.0),
-                      Colors.blueGrey.withOpacity(0.2),
-                      Colors.blue.withOpacity(0.1),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      child: BlocBuilder<BusDataBloc, BusDataState>(
-                        builder: (context, state) {
-                          switch (state.status) {
-                            case BusDataStatus.busServiceLoading:
-                              return Text('Loading Bus Services',
-                                  style: loadingTextStyle.copyWith(
-                                      color: Colors.deepPurple));
-                            case BusDataStatus.busStopsLoading:
-                              return Text('Loading Bus Stops',
-                                  style: loadingTextStyle.copyWith(
-                                      color: Colors.red));
-                            case BusDataStatus.allLoaded:
-                              return Text('Loading Complete...',
-                                  style: loadingTextStyle);
-                            default:
-                              return Text('Loading...',
-                                  style: loadingTextStyle.copyWith(
-                                      color: Colors.yellow.shade600));
-                          }
-                        },
-                      ),
-                    ),
-                    SpinKitPouringHourGlassRefined(
-                        color: Colors.deepPurple, size: 100),
-                    // CircularProgressIndicator(
-                    //   color: Colors.lightBlueAccent,
-                    // ),
-                  ],
-                ),
+        child: SafeArea(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Colors.blueGrey.withOpacity(0.1),
+                  Colors.blue.withOpacity(0.1),
+                ],
               ),
             ),
-            Image(
-                image: AssetImage('images/background1.jpg'), fit: BoxFit.cover),
-          ],
+            child: Column(
+              children: [
+                Image(
+                    image: AssetImage('images/sglovebus.png'),
+                    fit: BoxFit.cover),
+                Expanded(
+                  child: BlocBuilder<BusDataBloc, BusDataState>(
+                    builder: (context, state) {
+                      switch (state.status) {
+                        case BusDataStatus.busServiceLoading:
+                          return Text('Loading Bus Services',
+                              style: loadingTextStyle.copyWith(
+                                  color: Colors.deepPurple));
+                        case BusDataStatus.busStopsLoading:
+                          return Text('Loading Bus Stops',
+                              style:
+                                  loadingTextStyle.copyWith(color: Colors.red));
+                        case BusDataStatus.allLoaded:
+                          return Text('Loading Complete...',
+                              style: loadingTextStyle);
+                        default:
+                          return Text('Loading...',
+                              style: loadingTextStyle.copyWith(
+                                  color: Colors.yellow.shade600));
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: SpinKitPouringHourGlassRefined(
+                      color: Colors.deepPurple, size: 100),
+                ),
+                // Expanded(
+                //   child: Container(
+                //     width: double.infinity,
+                //     decoration: BoxDecoration(
+                //       gradient: LinearGradient(
+                //         begin: Alignment.topCenter,
+                //         end: Alignment.bottomCenter,
+                //         colors: [
+                //           Colors.blueGrey.withOpacity(0.0),
+                //           Colors.blueGrey.withOpacity(0.2),
+                //           Colors.blue.withOpacity(0.1),
+                //         ],
+                //       ),
+                //     ),
+                //     child: Column(
+                //       children: [
+                //         Expanded(
+                //           child: BlocBuilder<BusDataBloc, BusDataState>(
+                //             builder: (context, state) {
+                //               switch (state.status) {
+                //                 case BusDataStatus.busServiceLoading:
+                //                   return Text('Loading Bus Services',
+                //                       style: loadingTextStyle.copyWith(
+                //                           color: Colors.deepPurple));
+                //                 case BusDataStatus.busStopsLoading:
+                //                   return Text('Loading Bus Stops',
+                //                       style: loadingTextStyle.copyWith(
+                //                           color: Colors.red));
+                //                 case BusDataStatus.allLoaded:
+                //                   return Text('Loading Complete...',
+                //                       style: loadingTextStyle);
+                //                 default:
+                //                   return Text('Loading...',
+                //                       style: loadingTextStyle.copyWith(
+                //                           color: Colors.yellow.shade600));
+                //               }
+                //             },
+                //           ),
+                //         ),
+                //         Expanded(
+                //           child: SpinKitPouringHourGlassRefined(
+                //               color: Colors.deepPurple, size: 100),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                Image(
+                    image: AssetImage('images/background1.jpg'),
+                    fit: BoxFit.cover),
+              ],
+            ),
+          ),
         ),
       ),
     );

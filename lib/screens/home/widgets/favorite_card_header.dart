@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/repositories.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FavoriteCardHeader extends StatelessWidget {
   final Favorite favorite;
@@ -13,9 +15,10 @@ class FavoriteCardHeader extends StatelessWidget {
     final repo = context.read<BusRepository>();
     final BusService service = repo.getBusService(favorite.serviceNo);
     final cubit = context.read<FavoritesCubit>();
+    final stop = repo.getBusStop(favorite.busStopCode);
     return Container(
       padding: const EdgeInsets.all(2),
-      height: 29,
+      height: 28,
       child: Center(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,24 +37,47 @@ class FavoriteCardHeader extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
             Text(
               favorite.serviceNo,
               style: TextStyle(
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w600,
                   fontSize: 18,
                   color: service.busOperator.color),
             ),
             const Text(
-              ' @ ',
+              '@',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            Text(
-              favorite.busStopCode,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.blueAccent),
+            Material(
+              borderRadius: BorderRadius.circular(6),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(6),
+                highlightColor: Colors.grey,
+                onTap: () async {
+                  final availableMaps = await MapLauncher.installedMaps;
+                  if (availableMaps.isNotEmpty) {
+                    MapLauncher.showMarker(
+                      mapType: availableMaps.first.mapType,
+                      coords: Coords(stop.latitude, stop.longitude),
+                      title: stop.description,
+                      description: stop.busStopCode,
+                    );
+                  } else {
+                    String googleMapUrl =
+                        'https://www.google.com/maps/search/?api=1&query=${stop.latitude},${stop.longitude}';
+                    if (await canLaunch(googleMapUrl)) {
+                      await launch(googleMapUrl);
+                    }
+                  }
+                },
+                child: Text(
+                  favorite.busStopCode,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: Colors.blueAccent),
+                ),
+              ),
             )
           ],
         ),

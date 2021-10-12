@@ -21,7 +21,10 @@ class BusServiceList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: services.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 1, crossAxisSpacing: 1, crossAxisCount: 2),
+          mainAxisSpacing: 1,
+          crossAxisSpacing: 1,
+          crossAxisCount: 2,
+          childAspectRatio: 0.8),
       itemBuilder: (context, index) {
         final BusService item = services[index];
         return Container(

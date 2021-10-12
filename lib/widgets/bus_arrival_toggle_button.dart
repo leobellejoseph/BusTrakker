@@ -19,7 +19,7 @@ class BusArrivalToggleButton extends StatelessWidget {
     final repo = context.read<BusRepository>();
     final BusService busService = repo.getBusService(service);
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(3.0),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),

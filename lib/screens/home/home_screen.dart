@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen>
               HomeScreenLogo(insets: insets), //sg love bus logo
               Positioned(
                 top: 35,
-                left: insets.right + 300,
+                left: insets.right + 275,
                 child: IconButton(
                   tooltip: 'Reset Data',
                   onPressed: () => resetData(),
@@ -253,7 +253,7 @@ class HomeScreenButtons extends StatelessWidget {
                             Align(
                               alignment: Alignment.center,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(0),
+                                borderRadius: BorderRadius.circular(8),
                                 child: Hero(
                                     tag: 'busstops',
                                     child: Image.asset('images/busstop.png')),
@@ -289,7 +289,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (size.height <= 600) {
+    if (size.height <= 700) {
       return Positioned(
         top: 510,
         child: SizedBox.fromSize(
