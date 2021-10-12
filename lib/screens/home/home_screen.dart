@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen>
               Positioned(
                 top: 70,
                 child: SizedBox.fromSize(
-                  size: Size(size.width, 300),
+                  size: Size(size.width, 270),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 5, right: 5, top: 10, bottom: 10),
@@ -142,7 +142,7 @@ class HomeScreenTopOverlay extends StatelessWidget {
             ],
           ),
         ),
-        height: 360,
+        height: 340,
       ),
     );
   }
@@ -170,7 +170,7 @@ class HomeScreenButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 356,
+      top: 335,
       child: SizedBox.fromSize(
         size: Size(size.width, 170),
         child: Padding(
@@ -275,9 +275,9 @@ class HomeScreenNearBusStops extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (size.height <= 800) {
+    if (size.height <= 600) {
       return Positioned(
-        top: 520,
+        top: 500,
         child: SizedBox.fromSize(
           size: Size(size.width, 55),
           child: Padding(
@@ -317,7 +317,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
       );
     } else {
       return Positioned(
-        top: 520,
+        top: 500,
         child: SizedBox.fromSize(
           size: Size(size.width, 250),
           child: Card(
