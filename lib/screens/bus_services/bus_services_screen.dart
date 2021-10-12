@@ -14,6 +14,7 @@ class BusServiceScreen extends StatelessWidget {
         builder: (context) => BusServiceScreen(),
       );
   final controller = TextEditingController();
+  final scrollController = ScrollController();
   BusServiceScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -63,6 +64,7 @@ class BusServiceScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
+                scrollController.jumpTo(0);
                 if (controller.text.isNotEmpty) {
                   controller.clear();
                   context
@@ -88,6 +90,7 @@ class BusServiceScreen extends StatelessWidget {
                 showButton: false);
           } else {
             return CustomScrollView(
+              controller: scrollController,
               slivers: [
                 SliverAppBar(
                   leading: IconButton(

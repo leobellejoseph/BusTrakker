@@ -60,6 +60,7 @@ class BusStopsScreen extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
+                scrollController.jumpTo(0);
                 if (controller.text.isNotEmpty) {
                   controller.clear();
                   context
@@ -85,6 +86,7 @@ class BusStopsScreen extends StatelessWidget {
                 showButton: false);
           } else {
             return CustomScrollView(
+              controller: scrollController,
               slivers: [
                 SliverAppBar(
                   leading: IconButton(
