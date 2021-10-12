@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:my_bus/models/models.dart';
 import 'package:my_bus/repositories/repositories.dart';
 import 'package:my_bus/screens/bus_route/cubit/cubit.dart';
 import 'package:my_bus/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BusRouteScreen extends StatelessWidget {
   final String service;
@@ -181,8 +183,25 @@ class BusRouteScreen extends StatelessWidget {
                                         width: 2),
                                     const SizedBox(width: 2),
                                     TextButton(
-                                      onPressed: () {
-                                        print(item.busStopCode);
+                                      onPressed: () async {
+                                        final availableMaps =
+                                            await MapLauncher.installedMaps;
+                                        if (availableMaps.isNotEmpty) {
+                                          MapLauncher.showMarker(
+                                            mapType:
+                                                availableMaps.first.mapType,
+                                            coords: Coords(
+                                                info.latitude, info.longitude),
+                                            title: info.description,
+                                            description: info.busStopCode,
+                                          );
+                                        } else {
+                                          String googleMapUrl =
+                                              'https://www.google.com/maps/search/?api=1&query=${info.latitude},${info.longitude}';
+                                          if (await canLaunch(googleMapUrl)) {
+                                            await launch(googleMapUrl);
+                                          }
+                                        }
                                       },
                                       child: Text(
                                         item.busStopCode,
