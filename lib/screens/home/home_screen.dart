@@ -275,7 +275,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (size.height < 800) {
+    if (size.height <= 800) {
       return Positioned(
         top: 520,
         child: SizedBox.fromSize(
