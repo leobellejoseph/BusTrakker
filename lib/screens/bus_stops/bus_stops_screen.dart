@@ -91,7 +91,8 @@ class BusStopsScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back_ios, color: Colors.blueAccent),
+                    icon: Icon(Icons.arrow_back_ios,
+                        color: Colors.blueAccent, size: 30),
                   ),
                   backgroundColor: Colors.white,
                   expandedHeight: 200.0,
