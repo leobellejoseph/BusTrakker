@@ -30,8 +30,12 @@ Tap the Map Icon to toggle the Map App if there are any installed in your phone 
 ![image](https://user-images.githubusercontent.com/79257863/136991123-7be14d02-ed62-477a-9fd8-6cf6abc30fab.png)
 
 # Bus Service
-
+Tap Service Number to show bus route.
 ![image](https://user-images.githubusercontent.com/79257863/136991562-0d39a03a-8470-4ab8-9397-633228211222.png)
+
+# Bus Stops
+Tap Serice Number tile to show Bus Timing
+![image](https://user-images.githubusercontent.com/79257863/136991963-1bd8b518-1482-476a-92d1-3075fb9d4e7c.png)
 
 
 
