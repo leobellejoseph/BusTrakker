@@ -90,6 +90,12 @@ class BusServiceScreen extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                  ),
                   backgroundColor: Colors.white,
                   expandedHeight: 200.0,
                   flexibleSpace: Padding(
