@@ -239,7 +239,7 @@ class HomeScreenButtons extends StatelessWidget {
                             Align(
                               alignment: Alignment.center,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(60),
+                                borderRadius: BorderRadius.circular(0),
                                 child: Hero(
                                     tag: 'busstops',
                                     child: Image.asset('images/busstop.png')),
