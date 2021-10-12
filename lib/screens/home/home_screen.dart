@@ -349,6 +349,11 @@ class HomeScreenNearBusStops extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text('Bus Stop Closest To You',
+                          style: GoogleFonts.oxygen(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20)),
                       Material(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.transparent,
@@ -364,11 +369,6 @@ class HomeScreenNearBusStops extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text('Bus Stop Closest To You',
-                          style: GoogleFonts.oxygen(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20)),
                       Material(
                         color: Colors.blueAccent,
                         shape: RoundedRectangleBorder(

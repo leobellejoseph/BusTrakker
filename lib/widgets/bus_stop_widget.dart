@@ -32,9 +32,9 @@ class _BusStopWidgetState extends State<BusStopWidget>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      context.read<BusArrivalsCubit>().getBusServices(widget.code);
-    }
+    // if (state == AppLifecycleState.resumed) {
+    //   context.read<BusArrivalsCubit>().getBusServices(widget.code);
+    // }
     super.didChangeAppLifecycleState(state);
   }
 
