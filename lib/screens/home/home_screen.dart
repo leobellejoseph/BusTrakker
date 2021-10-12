@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
@@ -23,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   final FocusNode _focusNode = FocusNode();
-  TextEditingController _textEditingController = TextEditingController();
+  bool _loading = false;
   int _tabIndex = 0;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
@@ -50,42 +54,67 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
-  void _onFilterData(String query) {
-    context.read<BusDataBloc>()
-      ..add(BusStopFetch(query))
-      ..add(BusServiceFetch(query));
-    context.read<NearBusCubit>().getNearMeBusStops(query);
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final insets = MediaQuery.of(context).viewInsets;
+
+    final resetData = () {
+      HydratedBloc.storage.clear();
+      context.read<BusDataBloc>().add(BusDataDownload());
+      setState(() => _loading = true);
+    };
+
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.dark,
       child: WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Stack(
-            children: [
-              const HomeScreenBackground(),
-              const HomeScreenTopOverlay(), //purple overlay
-              HomeScreenLogo(insets: insets), //sg love bus logo
-              Positioned(
-                top: 70,
-                child: SizedBox.fromSize(
-                  size: Size(size.width, 280),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 5, right: 5, top: 10, bottom: 10),
-                    child: FavoritesList(),
+        child: ModalProgressHUD(
+          progressIndicator: SpinKitPouringHourGlassRefined(
+              color: Colors.deepPurple, size: 60),
+          inAsyncCall: _loading,
+          child: BlocListener<BusDataBloc, BusDataState>(
+            listener: (context, state) {
+              if (state.status == BusDataStatus.allLoaded) {
+                setState(() => _loading = false);
+              }
+            },
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Stack(
+                children: [
+                  const HomeScreenBackground(),
+                  const HomeScreenTopOverlay(), //purple overlay
+                  HomeScreenLogo(insets: insets), //sg love bus logo
+                  Positioned(
+                    top: 35,
+                    left: insets.right + 300,
+                    child: IconButton(
+                      tooltip: 'Reset Data',
+                      onPressed: () => _loading ? null : resetData(),
+                      icon: Icon(
+                        FontAwesomeIcons.fileDownload,
+                        color: Colors.green.shade700,
+                        size: 30,
+                      ),
+                    ),
                   ),
-                ),
-              ), //favorites
-              HomeScreenButtons(size: size),
-              HomeScreenNearBusStops(size: size),
-            ],
+                  Positioned(
+                    top: 70,
+                    child: SizedBox.fromSize(
+                      size: Size(size.width, 280),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, top: 10, bottom: 10),
+                        child: FavoritesList(),
+                      ),
+                    ),
+                  ), //favorites
+                  HomeScreenButtons(size: size),
+                  HomeScreenNearBusStops(size: size),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -291,9 +320,9 @@ class HomeScreenNearBusStops extends StatelessWidget {
                 onTap: () =>
                     Navigator.pushNamed(context, NearBusStopsScreen.id),
                 child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(10),
+                  // ),
                   color: Colors.white.withOpacity(0.4),
                   child: Center(
                     child: Row(
@@ -332,7 +361,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Material(
@@ -357,7 +386,8 @@ class HomeScreenNearBusStops extends StatelessWidget {
                               fontSize: 20)),
                       Material(
                         color: Colors.blueAccent,
-                        shape: CircleBorder(),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
                         child: InkWell(
                           onTap: () => Navigator.pushNamed(
                               context, NearBusStopsScreen.id),
