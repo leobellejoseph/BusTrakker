@@ -48,8 +48,10 @@ class BusServiceList extends StatelessWidget {
               child: Text(
                 item.serviceNo,
                 style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 19,
+                    fontWeight: item.serviceNo.length <= 3
+                        ? FontWeight.w800
+                        : FontWeight.w700,
+                    fontSize: item.serviceNo.length <= 3 ? 22 : 19,
                     color: item.busOperator.color),
               ),
             ),
