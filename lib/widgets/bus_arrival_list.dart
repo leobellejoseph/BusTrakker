@@ -70,6 +70,19 @@ class BusArrivalList extends StatelessWidget {
                               _showRouteSheet(context, service, code),
                         ),
                       ),
+                      SizedBox.fromSize(
+                        size: const Size(40, double.infinity),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: FavoriteButton(
+                            key: const ValueKey('FavoritesButton'),
+                            service: service,
+                            code: code,
+                            onPress: () =>
+                                _toggleFavorite(context, code, service),
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: GestureDetector(
                           onDoubleTap: () {
@@ -83,19 +96,6 @@ class BusArrivalList extends StatelessWidget {
                       Expanded(
                         child:
                             NextBusWidget(bus: state.data.secondBus, index: 2),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(40, double.infinity),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: FavoriteButton(
-                            key: const ValueKey('FavoritesButton'),
-                            service: service,
-                            code: code,
-                            onPress: () =>
-                                _toggleFavorite(context, code, service),
-                          ),
-                        ),
                       ),
                     ],
                   ),

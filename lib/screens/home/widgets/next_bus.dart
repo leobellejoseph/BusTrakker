@@ -47,13 +47,13 @@ class NextBusWidget extends StatelessWidget {
                     Text(
                       kBusType[bus.type] ?? 'No Svc',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                           color: Colors.blueAccent.shade700),
                     ),
                     Text(
                       kBusLoad[bus.load] ?? 'No Svc',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black54),
+                          fontWeight: FontWeight.w700, color: Colors.black54),
                     ),
                     Text(
                       bus.feature == 'WAB' ? '♿️' : '',

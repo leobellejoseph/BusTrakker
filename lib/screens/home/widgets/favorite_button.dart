@@ -16,7 +16,6 @@ class FavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Service:$service;Code:$code');
     final repo = context.read<BusRepository>();
     return BlocBuilder<FavoritesCubit, FavoritesState>(
       builder: (context, state) {
@@ -25,12 +24,17 @@ class FavoriteButton extends StatelessWidget {
           //return CircularProgress(key: ValueKey('progress'));
         } else {
           final isFavorite = repo.isFavorite(service: service, code: code);
-          return IconButton(
-            onPressed: () => onPress(),
-            icon: Icon(
-              isFavorite ? Icons.star : Icons.star_border,
-              color: Colors.yellow.shade600,
-              size: 40,
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              highlightColor: Colors.lightBlueAccent,
+              onTap: () => onPress(),
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                color: Colors.yellow.shade600,
+                size: 40,
+              ),
             ),
           );
         }
