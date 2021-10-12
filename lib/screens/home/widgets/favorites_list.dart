@@ -32,7 +32,7 @@ class FavoritesList extends StatelessWidget {
               },
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 1.6,
+                childAspectRatio: 1.5,
               ),
             ),
           );

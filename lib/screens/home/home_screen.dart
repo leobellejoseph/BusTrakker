@@ -142,7 +142,7 @@ class HomeScreenTopOverlay extends StatelessWidget {
             ],
           ),
         ),
-        height: 340,
+        height: 345,
       ),
     );
   }
@@ -170,7 +170,7 @@ class HomeScreenButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 335,
+      top: 345,
       child: SizedBox.fromSize(
         size: Size(size.width, 170),
         child: Padding(
@@ -277,7 +277,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
   Widget build(BuildContext context) {
     if (size.height <= 600) {
       return Positioned(
-        top: 500,
+        top: 510,
         child: SizedBox.fromSize(
           size: Size(size.width, 55),
           child: Padding(
@@ -317,7 +317,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
       );
     } else {
       return Positioned(
-        top: 500,
+        top: 510,
         child: SizedBox.fromSize(
           size: Size(size.width, 250),
           child: Card(
