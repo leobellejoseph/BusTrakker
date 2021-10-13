@@ -33,19 +33,14 @@ dependencies:
   map_launcher: ^2.1.1
   url_launcher: ^6.0.12
   lottie: ^1.2.1
+  flutter_hooks: ^0.18.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - images/background1.jpg
     - images/splash.png

@@ -9,6 +9,7 @@ import 'package:my_bus/blocs/blocs.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/screens/screens.dart';
+import 'package:my_bus/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = 'home';
@@ -113,7 +114,7 @@ class HomeScreenBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag:'bus',
+      tag: 'bus',
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -299,32 +300,27 @@ class HomeScreenNearBusStops extends StatelessWidget {
           size: Size(size.width, 55),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              child: InkWell(
-                highlightColor: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(10),
-                onTap: () =>
-                    Navigator.pushNamed(context, NearBusStopsScreen.id),
-                child: Card(
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(10),
-                  // ),
-                  color: Colors.white.withOpacity(0.4),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.list,
-                            color: Colors.green.shade700, size: 30),
-                        const SizedBox(width: 10),
-                        Text('Show Bus Stops Near You',
-                            style: GoogleFonts.oxygen(
-                                fontWeight: FontWeight.w500, fontSize: 20)),
-                      ],
-                    ),
+            child: InkWellButton(
+              border: RoundedRectangleBorder(),
+              highlightColor: Colors.lightBlueAccent,
+              onPress: () =>
+                  Navigator.pushNamed(context, NearBusStopsScreen.id),
+              widget: Card(
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(10),
+                // ),
+                color: Colors.white.withOpacity(0.4),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.list, color: Colors.green.shade700, size: 30),
+                      const SizedBox(width: 10),
+                      Text('Show Bus Stops Near You',
+                          style: GoogleFonts.oxygen(
+                              fontWeight: FontWeight.w500, fontSize: 20)),
+                    ],
                   ),
                 ),
               ),
@@ -349,7 +345,6 @@ class HomeScreenNearBusStops extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  // const SizedBox(height: 2),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,35 +354,27 @@ class HomeScreenNearBusStops extends StatelessWidget {
                               color: Colors.blueGrey,
                               fontWeight: FontWeight.bold,
                               fontSize: 18)),
-                      Material(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          highlightColor: Colors.white,
-                          onTap: () async =>
-                              context.read<NearBusCubit>().getNearMeBusStops(),
-                          child: Icon(
-                            CupertinoIcons.refresh_circled_solid,
-                            color: Colors.green,
-                            size: 30,
-                          ),
+                      InkWellButton(
+                        onPress: () async =>
+                            context.read<NearBusCubit>().getNearMeBusStops(),
+                        widget: Icon(
+                          CupertinoIcons.refresh_circled_solid,
+                          color: Colors.green,
+                          size: 30,
                         ),
+                        highlightColor: Colors.white,
                       ),
-                      Material(
-                        color: Colors.blueAccent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: InkWell(
-                          onTap: () => Navigator.pushNamed(
-                              context, NearBusStopsScreen.id),
-                          child:
-                              Icon(Icons.list, color: Colors.white, size: 25),
-                        ),
+                      InkWellButton(
+                        borderRadius: BorderRadius.circular(5),
+                        shapeColor: Colors.blueAccent,
+                        highlightColor: Colors.lightBlue,
+                        border: RoundedRectangleBorder(),
+                        onPress: () =>
+                            Navigator.pushNamed(context, NearBusStopsScreen.id),
+                        widget: Icon(Icons.list, color: Colors.white, size: 25),
                       ),
                     ],
                   ),
-                  // const SizedBox(height: 2),
                   Expanded(child: NearBusStopsView(showAll: false))
                 ],
               ),
