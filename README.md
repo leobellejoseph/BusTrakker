@@ -22,7 +22,7 @@ Tap to clear and refresh of all data.
 
 # Bus Stop Closes To Your Current Location
 
-![image](https://user-images.githubusercontent.com/79257863/136990888-093a0793-ffed-4ed6-a961-81477be0ccf7.png)
+![image](https://user-images.githubusercontent.com/79257863/137223353-1bd8dc5c-afa9-4d7f-bd0d-ab70ead20e7a.png)
 
 # Map and Location
 Tap the Map Icon to toggle the Map App if there are any installed in your phone otherwise it will open the map via the browser.
