@@ -17,6 +17,7 @@ class FavoritesList extends StatelessWidget {
           return NoDataWidget.noFavorites();
         } else {
           return GridView.builder(
+            physics: ClampingScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemCount: state.data.length,
             itemBuilder: (BuildContext context, int index) {
