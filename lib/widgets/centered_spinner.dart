@@ -6,7 +6,7 @@ class CenteredSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitFoldingCube(color: Colors.green, size: 50),
+      child: SpinKitThreeBounce(color: Colors.green, size: 40),
     );
   }
 }
