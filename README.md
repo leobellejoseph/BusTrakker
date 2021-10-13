@@ -27,7 +27,7 @@ Tap to clear and refresh of all data.
 # Map and Location
 Tap the Map Icon to toggle the Map App if there are any installed in your phone otherwise it will open the map via the browser.
 
-![image](https://user-images.githubusercontent.com/79257863/136991123-7be14d02-ed62-477a-9fd8-6cf6abc30fab.png)
+![image](https://user-images.githubusercontent.com/79257863/137223522-8038cb6f-185b-411f-af1b-de2572bf5ee9.png)
 
 # Bus Service
 Tap Service Number to show bus route.
