@@ -4,7 +4,7 @@ A simple Singapore bus arrival app that is developed using flutter with Bloc as 
 
 All data used in this app is provided by https://datamall.lta.gov.sg/.
 
-![Screenshots](https://user-images.githubusercontent.com/79257863/136990156-7c169e7e-0650-4d72-bb29-d5b065736874.png)
+![screens](https://user-images.githubusercontent.com/79257863/137224137-bfc547f6-cb8d-451f-9104-d1fb3d527f97.png)
 
 # Favorites
 Tap a tile to toggle between Incomming and Next bus timing.
