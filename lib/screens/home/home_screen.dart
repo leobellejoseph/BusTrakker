@@ -331,7 +331,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
       );
     } else {
       return Positioned(
-        top: 510,
+        top: 508,
         child: SizedBox.fromSize(
           size: Size(size.width, 240),
           child: Card(
