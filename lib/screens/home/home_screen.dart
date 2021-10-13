@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen>
                   size: Size(size.width, 280),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 5, right: 5, top: 10, bottom: 10),
+                        left: 5, right: 5, top: 9, bottom: 9),
                     child: FavoritesList(),
                   ),
                 ),
@@ -184,7 +184,7 @@ class HomeScreenButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 345,
+      top: 343,
       child: SizedBox.fromSize(
         size: Size(size.width, 170),
         child: Padding(
@@ -333,7 +333,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
       return Positioned(
         top: 510,
         child: SizedBox.fromSize(
-          size: Size(size.width, 250),
+          size: Size(size.width, 240),
           child: Card(
             color: Colors.white.withOpacity(0.4),
             shape: RoundedRectangleBorder(
@@ -342,10 +342,11 @@ class HomeScreenNearBusStops extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(2),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 2),
+                  // const SizedBox(height: 2),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -353,8 +354,8 @@ class HomeScreenNearBusStops extends StatelessWidget {
                       Text('Bus Stop Closest To You',
                           style: GoogleFonts.oxygen(
                               color: Colors.blueGrey,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20)),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18)),
                       Material(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.transparent,
@@ -366,7 +367,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                           child: Icon(
                             CupertinoIcons.refresh_circled_solid,
                             color: Colors.green,
-                            size: 35,
+                            size: 30,
                           ),
                         ),
                       ),
@@ -378,12 +379,12 @@ class HomeScreenNearBusStops extends StatelessWidget {
                           onTap: () => Navigator.pushNamed(
                               context, NearBusStopsScreen.id),
                           child:
-                              Icon(Icons.list, color: Colors.white, size: 30),
+                              Icon(Icons.list, color: Colors.white, size: 25),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  // const SizedBox(height: 2),
                   NearBusStopsView(showAll: false)
                 ],
               ),
