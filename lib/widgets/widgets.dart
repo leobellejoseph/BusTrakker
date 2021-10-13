@@ -1,4 +1,4 @@
-export 'animated_map_button.dart';
+export 'animated_button.dart';
 export 'bus_arrival_list.dart';
 export 'bus_arrival_toggle_button.dart';
 export 'bus_arrival_widget.dart';

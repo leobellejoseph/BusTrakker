@@ -63,7 +63,7 @@ class BusStopTile extends StatelessWidget {
             Positioned(
               top: 0,
               left: 0,
-              child: AnimatedMapButton(stop: item),
+              child: AnimatedButton(stop: item),
             ),
           ],
         ),

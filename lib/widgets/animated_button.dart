@@ -7,9 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets.dart';
 
-class AnimatedMapButton extends HookWidget {
+class AnimatedButton extends HookWidget {
   final BusStop stop;
-  const AnimatedMapButton({Key? key, required this.stop}) : super(key: key);
+  const AnimatedButton({Key? key, required this.stop}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final controller = useAnimationController();
