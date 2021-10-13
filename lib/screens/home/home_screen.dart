@@ -342,7 +342,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(2),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
