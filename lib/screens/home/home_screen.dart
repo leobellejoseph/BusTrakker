@@ -112,22 +112,25 @@ class HomeScreenBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          alignment: AlignmentDirectional.bottomEnd,
-          fit: BoxFit.contain,
-          image: AssetImage('images/background1.jpg'),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.blueAccent.withOpacity(0.5),
-            Colors.blueAccent.withOpacity(0.3),
-            Colors.blueAccent.withOpacity(0.2),
-            Colors.blueAccent.withOpacity(0),
-          ],
+    return Hero(
+      tag:'bus',
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            alignment: AlignmentDirectional.bottomEnd,
+            fit: BoxFit.contain,
+            image: AssetImage('images/background1.jpg'),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.blueAccent.withOpacity(0.5),
+              Colors.blueAccent.withOpacity(0.3),
+              Colors.blueAccent.withOpacity(0.2),
+              Colors.blueAccent.withOpacity(0),
+            ],
+          ),
         ),
       ),
     );
