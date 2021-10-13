@@ -47,7 +47,6 @@ flutter:
     - images/buslogo.png
     - images/busstop.png
     - images/sglovebus.png
-    - images/mapicon.png
     - assets/mapmarker.json
   # fonts:
   #   - family: Schyler

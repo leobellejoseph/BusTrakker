@@ -13,6 +13,9 @@ class MapButton extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
+  factory MapButton.lottie(BusStop busStop, String json) =>
+      MapButton(stop: busStop, child: LottieWidget(asset: json));
+
   @override
   Widget build(BuildContext context) {
     return InkWellButton(
