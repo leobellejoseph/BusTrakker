@@ -37,7 +37,7 @@ Tap Service Number to show bus route.
 # Bus Stops
 Tap Serice Number tile to show Bus Timing
 
-![image](https://user-images.githubusercontent.com/79257863/136991963-1bd8b518-1482-476a-92d1-3075fb9d4e7c.png)
+![image](https://user-images.githubusercontent.com/79257863/137223452-66ec72e2-1865-41a0-9dd9-7b94b4d4f712.png)
 
 # APK
 https://drive.google.com/file/d/1QVhxSbeOLzum240oGz7-DlL31Eh1HIH0/view?usp=sharing
