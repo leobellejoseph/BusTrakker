@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:my_bus/cubit/cubit.dart';
 import 'package:my_bus/models/models.dart';
@@ -8,11 +9,24 @@ import 'package:my_bus/screens/home/widgets/widgets.dart';
 import 'package:my_bus/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BusStopTile extends StatelessWidget {
+class BusStopTile extends StatefulWidget {
   final BusStop item;
   final bool showDistance;
   BusStopTile({Key? key, required this.item, required this.showDistance})
       : super(key: key);
+
+  @override
+  State<BusStopTile> createState() => _BusStopTileState();
+}
+
+class _BusStopTileState extends State<BusStopTile>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(vsync: this);
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +41,13 @@ class BusStopTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  BusStopLabel(item: item),
+                  BusStopLabel(item: widget.item),
                   const Divider(
                     color: Colors.white,
                     height: 0.4,
                   ),
-                  BusStopHeader(item: item, showDistance: showDistance),
+                  BusStopHeader(
+                      item: widget.item, showDistance: widget.showDistance),
                   const Divider(
                     color: Colors.white,
                     height: 0.4,
@@ -57,7 +72,7 @@ class BusStopTile extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.5),
-                        child: BusStopWidget(code: item.busStopCode),
+                        child: BusStopWidget(code: widget.item.busStopCode),
                       ),
                     ),
                   ),
@@ -65,33 +80,48 @@ class BusStopTile extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 5,
-              left: 8,
+              top: 0,
+              left: 0,
               child: Material(
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
+                color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
+                  //borderRadius: BorderRadius.circular(20),
+                  customBorder: CircleBorder(),
                   onTap: () async {
                     final availableMaps = await MapLauncher.installedMaps;
                     if (availableMaps.isNotEmpty) {
                       MapLauncher.showMarker(
                         mapType: availableMaps.first.mapType,
-                        coords: Coords(item.latitude, item.longitude),
-                        title: item.description,
-                        description: item.busStopCode,
+                        coords:
+                            Coords(widget.item.latitude, widget.item.longitude),
+                        title: widget.item.description,
+                        description: widget.item.busStopCode,
                       );
                     } else {
                       String googleMapUrl =
-                          'https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}';
+                          'https://www.google.com/maps/search/?api=1&query=${widget.item.latitude},${widget.item.longitude}';
                       if (await canLaunch(googleMapUrl)) {
                         await launch(googleMapUrl);
                       }
                     }
                   },
-                  highlightColor: Colors.blue,
-                  child:
-                      Image.asset('images/mapicon.png', height: 40, width: 40),
+                  highlightColor: Colors.lightBlueAccent,
+                  child: Lottie.asset(
+                    'assets/mapmarker.json',
+                    height: 50,
+                    width: 50,
+                    repeat: true,
+                    controller: _controller,
+                    onLoaded: (composition) {
+                      // Configure the AnimationController with the duration of the
+                      // Lottie file and start the animation.
+                      _controller
+                        ..duration = composition.duration
+                        ..repeat();
+                    },
+                  ),
+                  // Image.asset('images/mapicon.png', height: 40, width: 40),
                 ),
               ),
             ),

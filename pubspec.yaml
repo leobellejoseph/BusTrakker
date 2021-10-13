@@ -32,6 +32,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   map_launcher: ^2.1.1
   url_launcher: ^6.0.12
+  lottie: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,8 +52,8 @@ flutter:
     - images/buslogo.png
     - images/busstop.png
     - images/sglovebus.png
-    - files/onemap.html
     - images/mapicon.png
+    - assets/mapmarker.json
   # fonts:
   #   - family: Schyler
   #     fonts:
