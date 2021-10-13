@@ -385,7 +385,7 @@ class HomeScreenNearBusStops extends StatelessWidget {
                     ],
                   ),
                   // const SizedBox(height: 2),
-                  NearBusStopsView(showAll: false)
+                  Expanded(child: NearBusStopsView(showAll: false))
                 ],
               ),
             ),
