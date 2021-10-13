@@ -6,8 +6,7 @@ class CenteredSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitCubeGrid(color: Colors.green),
-      // child: CircularProgressIndicator(color: Colors.greenAccent),
+      child: SpinKitFoldingCube(color: Colors.green, size: 50),
     );
   }
 }
