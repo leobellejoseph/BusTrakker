@@ -1,4 +1,3 @@
-export 'animated_button.dart';
 export 'bus_arrival_list.dart';
 export 'bus_arrival_toggle_button.dart';
 export 'bus_arrival_widget.dart';
@@ -9,5 +8,6 @@ export 'centered_spinner.dart';
 export 'centered_text.dart';
 export 'circular_progress.dart';
 export 'inkwell_button.dart';
+export 'lottie_widget.dart';
 export 'map_button.dart';
 export 'no_data_widget.dart';

@@ -63,7 +63,9 @@ class BusStopTile extends StatelessWidget {
             Positioned(
               top: 0,
               left: 0,
-              child: AnimatedButton(stop: item),
+              child: MapButton(
+                  stop: item,
+                  child: LottieWidget(asset: 'assets/mapmarker.json')),
             ),
           ],
         ),
