@@ -4,7 +4,7 @@ A simple Singapore bus arrival app that is developed using flutter with Bloc as 
 
 All data used in this app is provided by https://datamall.lta.gov.sg/.
 
-![Screenshots](https://user-images.githubusercontent.com/79257863/136990156-7c169e7e-0650-4d72-bb29-d5b065736874.png)
+![screens](https://user-images.githubusercontent.com/79257863/137224137-bfc547f6-cb8d-451f-9104-d1fb3d527f97.png)
 
 # Favorites
 Tap a tile to toggle between Incomming and Next bus timing.
@@ -22,12 +22,12 @@ Tap to clear and refresh of all data.
 
 # Bus Stop Closes To Your Current Location
 
-![image](https://user-images.githubusercontent.com/79257863/136990888-093a0793-ffed-4ed6-a961-81477be0ccf7.png)
+![image](https://user-images.githubusercontent.com/79257863/137223353-1bd8dc5c-afa9-4d7f-bd0d-ab70ead20e7a.png)
 
 # Map and Location
 Tap the Map Icon to toggle the Map App if there are any installed in your phone otherwise it will open the map via the browser.
 
-![image](https://user-images.githubusercontent.com/79257863/136991123-7be14d02-ed62-477a-9fd8-6cf6abc30fab.png)
+![image](https://user-images.githubusercontent.com/79257863/137223522-8038cb6f-185b-411f-af1b-de2572bf5ee9.png)
 
 # Bus Service
 Tap Service Number to show bus route.
@@ -37,7 +37,7 @@ Tap Service Number to show bus route.
 # Bus Stops
 Tap Serice Number tile to show Bus Timing
 
-![image](https://user-images.githubusercontent.com/79257863/136991963-1bd8b518-1482-476a-92d1-3075fb9d4e7c.png)
+![image](https://user-images.githubusercontent.com/79257863/137223452-66ec72e2-1865-41a0-9dd9-7b94b4d4f712.png)
 
 # APK
-https://drive.google.com/file/d/11L_XaPNXTSIPvkIVGqY9LdamX_61mRN6/view?usp=sharing
+https://drive.google.com/file/d/1QVhxSbeOLzum240oGz7-DlL31Eh1HIH0/view?usp=sharing
