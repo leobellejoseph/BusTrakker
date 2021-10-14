@@ -7,21 +7,27 @@ import 'package:url_launcher/url_launcher.dart';
 class MapButton extends StatelessWidget {
   final BusStop stop;
   final Widget child;
+  final ShapeBorder _border;
   const MapButton({
     Key? key,
     required this.stop,
     required this.child,
-  }) : super(key: key);
+    ShapeBorder? border,
+  })  : _border = border ?? const RoundedRectangleBorder(),
+        super(key: key);
 
-  factory MapButton.lottie(BusStop busStop, String json) =>
-      MapButton(stop: busStop, child: LottieWidget(asset: json));
+  factory MapButton.lottie(BusStop busStop, String json) => MapButton(
+        stop: busStop,
+        child: LottieWidget(asset: json),
+        border: const CircleBorder(),
+      );
 
   @override
   Widget build(BuildContext context) {
     return InkWellButton(
       borderRadius: BorderRadius.circular(2),
       highlightColor: Colors.lightBlueAccent.withOpacity(0.5),
-      border: RoundedRectangleBorder(),
+      border: _border,
       onPress: () async {
         final availableMaps = await MapLauncher.installedMaps;
         if (availableMaps.isNotEmpty) {
